@@ -41,14 +41,3 @@ class GetDetailsForClientTestCase(unittest.TestCase):
 
         self.assertEqual(base_url, 'http://qualtrics.com/api')
         self.assertEqual(auth_token, 'token-456')
-
-    def test_returns_expected_env_vars_when_available_and_parameter_set_explicitly(self):
-        self.os.environ.get.side_effect = [
-            'http://qualtrics.com/api',
-            'token-789',
-        ]
-
-        base_url, auth_token = get_details_for_client(external_user_survey=False)
-
-        self.assertEqual(base_url, 'http://qualtrics.com/api')
-        self.assertEqual(auth_token, 'token-789')

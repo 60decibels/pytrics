@@ -39,8 +39,8 @@ setup_logging()
 logger = logging.getLogger()
 
 
-def get_survey_data(survey_id, external_user_survey):
-    base_url, auth_token = get_details_for_client(external_user_survey)
+def get_survey_data(survey_id):
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     logger.info('Qualtrics API client ready')
@@ -56,8 +56,8 @@ def get_survey_data(survey_id, external_user_survey):
     return file_path_and_name
 
 
-def get_survey_and_response_data(survey_id, external_user_survey):
-    base_url, auth_token = get_details_for_client(external_user_survey)
+def get_survey_and_response_data(survey_id):
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     logger.info('Qualtrics API client ready')

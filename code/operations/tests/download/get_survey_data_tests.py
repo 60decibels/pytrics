@@ -38,7 +38,7 @@ class GetSurveyDataTestCase(unittest.TestCase):
         get_survey_data('SV_abcdefghijk', True)
 
         # assert expected calls made by internal logic of function
-        self.get_details_for_client.assert_called_once_with(True)
+        self.get_details_for_client.assert_called_once()
 
         self.save_survey_to_s3.assert_called_once_with(self.api, 'SV_abcdefghijk')
 

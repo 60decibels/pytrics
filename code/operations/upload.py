@@ -20,7 +20,7 @@ setup_logging()
 logger = logging.getLogger()
 
 
-def create_survey(name, blocks, questions, language_code='EN', external_user_survey=True):
+def create_survey(name, blocks, questions, language_code='EN'):
     '''
     Create a new survey with the specified blocks and questions
 
@@ -32,7 +32,7 @@ def create_survey(name, blocks, questions, language_code='EN', external_user_sur
     '''
     assert blocks and questions, "You must provide lists of blocks and questions for the survey"
 
-    base_url, auth_token = get_details_for_client(external_user_survey)
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     logger.info('Qualtrics API client ready')
@@ -107,7 +107,7 @@ def describe_survey(survey_id):
     3. for each question, get_question
     4. collate into one big json blob and return
     '''
-    base_url, auth_token = get_details_for_client(True)
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     logger.info('Qualtrics API client ready')
@@ -153,7 +153,7 @@ def describe_survey(survey_id):
     return detailed_survey_dict
 
 
-def copy_survey(template_survey_id, new_survey_name, language_code='EN', external_user_survey=True): # pylint: disable=too-many-branches, too-many-statements
+def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pylint: disable=too-many-branches, too-many-statements
     '''
     Copy an existing survey and give it the specified new name
 
@@ -163,7 +163,7 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN', externa
     4. copy questions
     5. return new survey_id
     '''
-    base_url, auth_token = get_details_for_client(external_user_survey)
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     logger.info('Qualtrics API client ready')
@@ -255,7 +255,7 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN', externa
     return new_survey_id
 
 
-def publish_survey(survey_id, survey_name, external_user_survey=True):
+def publish_survey(survey_id, survey_name):
     '''
     Activate and publish the specified survey so it's available to take online
     '''
@@ -265,7 +265,7 @@ def publish_survey(survey_id, survey_name, external_user_survey=True):
     except (AssertionError, AttributeError):
         raise AssertionError('You must provide string values for survey_id and survey_name')
 
-    base_url, auth_token = get_details_for_client(external_user_survey)
+    base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     survey_description = '{}_{}'.format(
