@@ -14,15 +14,25 @@ This repository contains code to work with the Qualtrics API and to create surve
 
 ## Running the tests
 
-`nosetests -w code`
+Tests are written using unittest and can be executed via [nose](https://nose.readthedocs.io/en/latest/index.html). Some example commands are below, refer to [the docs](https://nose.readthedocs.io/en/latest/usage.html) for more options and information.
 
-`nosetests -w code --with-coverage --cover-erase --cover-package=. --cover-html --cover-min-percentage=75`
+- Run all tests;
 
-`nosetests -w code --with-coverage --cover-erase --cover-package=. --cover-html --cover-min-percentage=75 -v --rednose`
+```bash
+nosetests -w code
+```
+
+- Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with colourful output;
+
+```bash
+nosetests -w code --with-coverage --cover-erase --cover-package=code/. --cover-html --cover-min-percentage=75 -v --rednose
+```
 
 ## Linting the code
 
-`PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*`
+```
+PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*
+```
 
 ## Working with surveys
 
