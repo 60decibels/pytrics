@@ -4,9 +4,9 @@ import logging
 from requests import HTTPError
 
 from common.constants import (
-    QUALTRICS_API_DEFAULT_BLOCK_TYPE,
+    QUALTRICS_API_BLOCK_TYPE_DEFAULT,
     QUALTRICS_API_PUBLISHED_SURVEY_URL_PATTERN,
-    QUALTRICS_API_STANDARD_BLOCK_TYPE,
+    QUALTRICS_API_BLOCK_TYPE_STANDARD,
 )
 from common.exceptions import QualtricsAPIException
 from common.logging.configure import setup_logging
@@ -62,13 +62,13 @@ def create_survey(name, blocks, questions, language_code='EN'):
     for index, block in enumerate(blocks):
         if index == 0:
             try:
-                api.update_block(survey_id, default_block_id, block['description'], QUALTRICS_API_DEFAULT_BLOCK_TYPE)
+                api.update_block(survey_id, default_block_id, block['description'], QUALTRICS_API_BLOCK_TYPE_DEFAULT)
             except (AssertionError, HTTPError) as ex:
                 logger.error('Error encountered during API call update_block')
                 raise QualtricsAPIException(ex)
         else:
             try:
-                _, new_block_id = api.create_block(survey_id, block['description'], QUALTRICS_API_STANDARD_BLOCK_TYPE)
+                _, new_block_id = api.create_block(survey_id, block['description'], QUALTRICS_API_BLOCK_TYPE_STANDARD)
 
                 block_ids_dict[index + 1] = new_block_id
             except (AssertionError, HTTPError) as ex:
@@ -219,7 +219,7 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
 
         if index == 0:
             try:
-                api.update_block(new_survey_id, default_block_id, description, QUALTRICS_API_DEFAULT_BLOCK_TYPE)
+                api.update_block(new_survey_id, default_block_id, description, QUALTRICS_API_BLOCK_TYPE_DEFAULT)
                 new_block_id = default_block_id
             except (AssertionError, HTTPError) as ex:
                 logger.error('Error encountered during API call update_block')

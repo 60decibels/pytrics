@@ -7,14 +7,10 @@ import logging
 import os
 import json
 
-from common.constants import (
-    QUALTRICS_API_DEFAULT_BLOCK_TYPE,
-    QUALTRICS_API_STANDARD_BLOCK_TYPE,
-)
 from common.logging.configure import setup_logging
 from common.exceptions import QualtricsAPIException
 
-from qualtrics_api.operations.upload import (
+from operations.upload import (
     copy_survey,
     create_survey,
     describe_survey,

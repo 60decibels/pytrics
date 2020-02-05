@@ -6,7 +6,7 @@ from common.exceptions import (
     QualtricsDataSerialisationException,
 )
 
-from qualtrics_api.operations.download import save_survey_to_s3
+from operations.download import save_survey_to_file
 
 
 class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-instance-attributes
@@ -36,40 +36,40 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         }
         self.api.get_survey.return_value = self.survey_json
 
-        _get_s3_survey_file_path_patch = patch('qualtrics_api.operations.download._get_s3_survey_file_path')
-        self._get_s3_survey_file_path = _get_s3_survey_file_path_patch.start()
-        self.addCleanup(_get_s3_survey_file_path_patch.stop)
+        _get_survey_file_path_patch = patch('operations.download._get_survey_file_path')
+        self._get_survey_file_path = _get_survey_file_path_patch.start()
+        self.addCleanup(_get_survey_file_path_patch.stop)
 
-        self.file_path_and_name = 'testing/response/qualtrics/new/SV_abcdefghijk.json'
-        self._get_s3_survey_file_path.return_value = self.file_path_and_name
+        self.file_path_and_name = 'json/SV_abcdefghijk.json'
+        self._get_survey_file_path.return_value = self.file_path_and_name
 
-        upload_patch = patch('qualtrics_api.operations.download.upload')
+        upload_patch = patch('operations.download.upload')
         self.upload = upload_patch.start()
         self.addCleanup(upload_patch.stop)
 
-        self.mock_open = open_patch = patch('qualtrics_api.operations.download.open', new_callable=mock_open(), create=True)
+        self.mock_open = open_patch = patch('operations.download.open', new_callable=mock_open(), create=True)
         self.mock_open = open_patch.start()
         self.addCleanup(open_patch.stop)
 
         self.survey_file = 'survey_file'
         self.mock_open.return_value.__enter__.return_value = self.survey_file
 
-        json_patch = patch('qualtrics_api.operations.download.json')
+        json_patch = patch('operations.download.json')
         self.json = json_patch.start()
         self.addCleanup(json_patch.stop)
 
-        logger_patch = patch('qualtrics_api.operations.download.logger')
+        logger_patch = patch('operations.download.logger')
         self.logger = logger_patch.start()
         self.addCleanup(logger_patch.stop)
 
     def test_calls_various_functions_as_expected(self):
         # run the function
-        save_survey_to_s3(self.api, 'SV_abcdefghijk')
+        save_survey_to_file(self.api, 'SV_abcdefghijk')
 
         # assert it calls the things we expect it to, with expected args
         self.api.get_survey.assert_called_once_with('SV_abcdefghijk')
 
-        self._get_s3_survey_file_path.assert_called_once_with('SV_abcdefghijk')
+        self._get_survey_file_path.assert_called_once_with('SV_abcdefghijk')
 
         self.upload.assert_called_once_with('60db', self.file_path_and_name)
 
@@ -86,7 +86,7 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            save_survey_to_s3(self.api, 'SV_abcdefghijk')
+            save_survey_to_file(self.api, 'SV_abcdefghijk')
 
         self.logger.error.assert_called_once_with('Error encountered during serialisation of qualtrics survey to s3')
 
@@ -96,7 +96,7 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            save_survey_to_s3(self.api, 'SV_abcdefghijk')
+            save_survey_to_file(self.api, 'SV_abcdefghijk')
 
         self.logger.error.assert_called_once_with('Error encountered during serialisation of qualtrics survey to s3')
 
@@ -108,6 +108,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsAPIException):
-            save_survey_to_s3(self.api, 'SV_abcdefghijk')
+            save_survey_to_file(self.api, 'SV_abcdefghijk')
 
         self.logger.error.assert_called_once_with('Error encountered during API call get_survey')

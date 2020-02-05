@@ -3,13 +3,13 @@ from unittest.mock import MagicMock, patch, call
 
 from common.exceptions import QualtricsDataSerialisationException
 
-from qualtrics_api.operations.download import _await_response_file_creation
+from operations.download import _await_response_file_creation
 
 
 class AwaitResponseFileCreationTestCase(unittest.TestCase):
 
     def setUp(self):
-        _get_profile_patch = patch('qualtrics_api.operations.download._get_profile')
+        _get_profile_patch = patch('operations.download._get_profile')
         self._get_profile = _get_profile_patch.start()
         self.addCleanup(_get_profile_patch.stop)
 
@@ -18,7 +18,7 @@ class AwaitResponseFileCreationTestCase(unittest.TestCase):
         self.api = MagicMock()
         self.api.get_response_export_file.return_value = {'response': 'export'}
 
-        logger_patch = patch('qualtrics_api.operations.download.logger')
+        logger_patch = patch('operations.download.logger')
         self.logger = logger_patch.start()
         self.addCleanup(logger_patch.stop)
 

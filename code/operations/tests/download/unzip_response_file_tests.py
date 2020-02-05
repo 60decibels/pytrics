@@ -1,18 +1,15 @@
 import unittest
 from unittest.mock import MagicMock, mock_open, patch, call
 
-from common.exceptions import (
-    QualtricsDataSerialisationException,
-    S3PutException,
-)
+from common.exceptions import QualtricsDataSerialisationException
 
-from qualtrics_api.operations.download import _unzip_response_file
+from operations.download import _unzip_response_file
 
 
 class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-instance-attributes
 
     def setUp(self):
-        _get_s3_response_file_path_patch = patch('qualtrics_api.operations.download._get_s3_response_file_path')
+        _get_s3_response_file_path_patch = patch('operations.download._get_s3_response_file_path')
         self._get_s3_response_file_path = _get_s3_response_file_path_patch.start()
         self.addCleanup(_get_s3_response_file_path_patch.stop)
 
@@ -21,13 +18,13 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
             'testing/response/qualtrics/new/SV_abcdefghijk_responses.json',
         ]
 
-        download_patch = patch('qualtrics_api.operations.download.download')
+        download_patch = patch('operations.download.download')
         self.download = download_patch.start()
         self.addCleanup(download_patch.stop)
 
         self.download.return_value.__enter__.return_value = 'tmp_file_path'
 
-        self.mock_open = open_patch = patch('qualtrics_api.operations.download.ZipFile', new_callable=mock_open(), create=True)
+        self.mock_open = open_patch = patch('operations.download.ZipFile', new_callable=mock_open(), create=True)
         self.mock_open = open_patch.start()
         self.addCleanup(open_patch.stop)
 
@@ -37,21 +34,21 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self.info = MagicMock(filename='response_file_name_from_api.zip')
         self.zipped.infolist.return_value = [self.info]
 
-        logger_patch = patch('qualtrics_api.operations.download.logger')
+        logger_patch = patch('operations.download.logger')
         self.logger = logger_patch.start()
         self.addCleanup(logger_patch.stop)
 
-        os_patch = patch('qualtrics_api.operations.download.os')
+        os_patch = patch('operations.download.os')
         self.os = os_patch.start()
         self.addCleanup(os_patch.stop)
 
         self.os.getcwd.return_value = '/'
 
-        upload_file_to_s3_patch = patch('qualtrics_api.operations.download.upload_file_to_s3')
+        upload_file_to_s3_patch = patch('operations.download.upload_file_to_s3')
         self.upload_file_to_s3 = upload_file_to_s3_patch.start()
         self.addCleanup(upload_file_to_s3_patch.stop)
 
-        upload_patch = patch('qualtrics_api.operations.download.upload')
+        upload_patch = patch('operations.download.upload')
         self.upload = upload_patch.start()
         self.addCleanup(upload_patch.stop)
 
@@ -81,7 +78,7 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
             call('Extracted file %s uploaded to %s', '/tmp/SV_abcdefghijk_responses.json', 'testing/response/qualtrics/new/SV_abcdefghijk_responses.json'),
         ])
 
-    @patch('qualtrics_api.operations.download.open')
+    @patch('operations.download.open')
     def test_writes_empty_json_responses_file_to_s3_when_no_responses_recorded_against_survey(self, mock_plain_open):
         # we've patched the python system open just for this test, not the ZipFile open as we do in setup
         mock_plain_open.return_value = MagicMock()
@@ -110,7 +107,7 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
     def test_raises_exception_when_upload_file_to_s3_errors(self):
         # set exception as side_effect
         self.upload_file_to_s3.side_effect = [
-            S3PutException
+            QualtricsDataSerialisationException
         ]
 
         # assert exception raised
@@ -127,7 +124,7 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self.zipped.infolist.return_value = []
 
         self.upload.side_effect = [
-            S3PutException
+            QualtricsDataSerialisationException
         ]
 
         # assert exception raised

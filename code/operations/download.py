@@ -8,27 +8,16 @@ from zipfile import ZipFile
 from requests import HTTPError
 
 from common.constants import (
-    JSON_FILE_EXTENSION,
+    FILE_EXTENSION_JSON,
     QUALTRICS_API_EXPORT_RESPONSES_PROGRESS_TIMEOUT,
     QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT,
-    S3_DEFAULT_BUCKET,
-    S3_RESPONSE_QUALTRICS_NEW,
-    ZIP_FILE_EXTENSION,
+    FILE_EXTENSION_ZIP,
 )
 from common.exceptions import (
     QualtricsAPIException,
     QualtricsDataSerialisationException,
-    S3PutException,
 )
 from common.logging.configure import setup_logging
-from common.s3.contextmanagers import (
-    upload,
-    download,
-)
-from common.s3.operations import (
-    _get_profile,
-    upload_file_to_s3,
-)
 
 from qualtrics_api.client import QualtricsAPIClient
 from qualtrics_api.common import get_details_for_client
@@ -172,7 +161,7 @@ def _unzip_response_file(survey_id):
             try:
                 with open(unzipped_response_file_s3_path, mode='w') as empty_response_file:
                     json.dump(empty_responses_json, empty_response_file)
-            except S3PutException as ex:
+            except QualtricsDataSerialisationException as ex:
                 logger.error('Error writing empty responses json file to disk %s', unzipped_response_file_s3_path)
                 raise QualtricsDataSerialisationException(ex)
 
@@ -184,7 +173,7 @@ def _unzip_response_file(survey_id):
             zipped.extract(info.filename, path='/tmp')
 
             extracted_file_local_path = '{0}/{1}'.format('/tmp', info.filename)
-            renamed_response_file_local_path = '/tmp/{0}_responses.{1}'.format(survey_id, JSON_FILE_EXTENSION)
+            renamed_response_file_local_path = '/tmp/{0}_responses.{1}'.format(survey_id, FILE_EXTENSION_JSON)
 
             os.rename(extracted_file_local_path, renamed_response_file_local_path)
             logger.info('Response file renamed to %s', renamed_response_file_local_path)
@@ -211,19 +200,13 @@ def _await_response_file_creation(api, survey_id, progress_id):
 
 
 def _get_survey_file_path(survey_id):
-    file_name = '{}.{}'.format(survey_id, JSON_FILE_EXTENSION)
-    file_path = '{}/{}'.format(_get_profile(), S3_RESPONSE_QUALTRICS_NEW)
-
-    file_path_and_name = '{}/{}'.format(file_path, file_name)
+    file_path_and_name = os.path.join(os.path.abspath(os.path.dirname(__file__)), './json/', '{}.{}'.format(survey_id, FILE_EXTENSION_JSON))
 
     return file_path_and_name
 
 
 def _get_response_file_path(survey_id, zipped=True):
-    file_ext = ZIP_FILE_EXTENSION if zipped else JSON_FILE_EXTENSION
-    file_name = '{}_responses.{}'.format(survey_id, file_ext)
-    file_path = '{}/{}'.format(_get_profile(), S3_RESPONSE_QUALTRICS_NEW)
-
-    file_path_and_name = '{}/{}'.format(file_path, file_name)
+    file_ext = FILE_EXTENSION_ZIP if zipped else FILE_EXTENSION_JSON
+    file_path_and_name = os.path.join(os.path.abspath(os.path.dirname(__file__)), './json/', '{}_responses.{}'.format(survey_id, file_ext))
 
     return file_path_and_name

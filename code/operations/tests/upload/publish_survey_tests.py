@@ -7,23 +7,23 @@ from requests import HTTPError
 from common.constants import QUALTRICS_API_PUBLISHED_SURVEY_URL_PATTERN
 from common.exceptions import QualtricsAPIException
 
-from qualtrics_api.operations.upload import publish_survey
+from operations.upload import publish_survey
 
 
 class PublishSurveyTestCase(unittest.TestCase):
 
     def setUp(self):
-        logger_patch = patch('qualtrics_api.operations.upload.logger')
+        logger_patch = patch('operations.upload.logger')
         self.logger = logger_patch.start()
         self.addCleanup(logger_patch.stop)
 
-        get_details_for_client_patch = patch('qualtrics_api.operations.upload.get_details_for_client')
+        get_details_for_client_patch = patch('operations.upload.get_details_for_client')
         self.get_details_for_client = get_details_for_client_patch.start()
         self.addCleanup(get_details_for_client_patch.stop)
 
         self.get_details_for_client.return_value = ('URL', 'TOKEN')
 
-        QualtricsAPIClient_patch = patch('qualtrics_api.operations.upload.QualtricsAPIClient')
+        QualtricsAPIClient_patch = patch('operations.upload.QualtricsAPIClient')
         self.QualtricsAPIClient = QualtricsAPIClient_patch.start()
         self.addCleanup(QualtricsAPIClient_patch.stop)
 

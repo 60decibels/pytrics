@@ -28,7 +28,11 @@ You will need a Qualtrics account before you cna use this code, so [signup for o
 
 Once you have an account you will need to generate an API Key, [follow these instructions](generate-api-key-instructions-link).
 
-Copy your API authorisation token and set an environment variable named `ENV_VAR_QUALTRICS_API_AUTH_TOKEN` to the token value `export ENV_VAR_QUALTRICS_API_AUTH_TOKEN=<your_token_value>`
+Copy your API authorisation token and set an environment variable named `QUALTRICS_API_AUTH_TOKEN` to the token value;
+
+```bash
+export QUALTRICS_API_AUTH_TOKEN=<your_token_value>
+```
 
 ## Useful Tidbits
 

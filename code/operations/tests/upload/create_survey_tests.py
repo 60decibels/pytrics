@@ -1,32 +1,32 @@
 import unittest
 from unittest.mock import MagicMock, patch, call
 
-from common.constants import QUALTRICS_API_STANDARD_BLOCK_TYPE
+from common.constants import QUALTRICS_API_BLOCK_TYPE_STANDARD
 from common.exceptions import QualtricsAPIException
 
-from qualtrics_api.tests.operations.upload.reference_data import (
+from operations.tests.upload.reference_data import (
     get_test_blocks,
     get_test_question_params,
     get_test_question_payloads,
 )
 
-from qualtrics_api.operations.upload import create_survey
+from operations.upload import create_survey
 
 
 class CreateSurveyTestCase(unittest.TestCase):
 
     def setUp(self):
-        logger_patch = patch('qualtrics_api.operations.upload.logger')
+        logger_patch = patch('operations.upload.logger')
         self.logger = logger_patch.start()
         self.addCleanup(logger_patch.stop)
 
-        get_details_for_client_patch = patch('qualtrics_api.operations.upload.get_details_for_client')
+        get_details_for_client_patch = patch('operations.upload.get_details_for_client')
         self.get_details_for_client = get_details_for_client_patch.start()
         self.addCleanup(get_details_for_client_patch.stop)
 
         self.get_details_for_client.return_value = ('URL', 'TOKEN')
 
-        QualtricsAPIClient_patch = patch('qualtrics_api.operations.upload.QualtricsAPIClient')
+        QualtricsAPIClient_patch = patch('operations.upload.QualtricsAPIClient')
         self.QualtricsAPIClient = QualtricsAPIClient_patch.start()
         self.addCleanup(QualtricsAPIClient_patch.stop)
 
@@ -352,12 +352,12 @@ class CreateSurveyTestCase(unittest.TestCase):
         create_survey('My Survey Name', self.blocks, self.question_params)
 
         create_block_calls = [
-            call('SV_0123456789a', 'QOL Block', QUALTRICS_API_STANDARD_BLOCK_TYPE),
-            call('SV_0123456789a', 'PPI Block A', QUALTRICS_API_STANDARD_BLOCK_TYPE),
-            call('SV_0123456789a', 'PPI Block B', QUALTRICS_API_STANDARD_BLOCK_TYPE),
-            call('SV_0123456789a', 'PPI Block C', QUALTRICS_API_STANDARD_BLOCK_TYPE),
-            call('SV_0123456789a', 'PPI Block D', QUALTRICS_API_STANDARD_BLOCK_TYPE),
-            call('SV_0123456789a', 'PPI Block E', QUALTRICS_API_STANDARD_BLOCK_TYPE)
+            call('SV_0123456789a', 'QOL Block', QUALTRICS_API_BLOCK_TYPE_STANDARD),
+            call('SV_0123456789a', 'PPI Block A', QUALTRICS_API_BLOCK_TYPE_STANDARD),
+            call('SV_0123456789a', 'PPI Block B', QUALTRICS_API_BLOCK_TYPE_STANDARD),
+            call('SV_0123456789a', 'PPI Block C', QUALTRICS_API_BLOCK_TYPE_STANDARD),
+            call('SV_0123456789a', 'PPI Block D', QUALTRICS_API_BLOCK_TYPE_STANDARD),
+            call('SV_0123456789a', 'PPI Block E', QUALTRICS_API_BLOCK_TYPE_STANDARD)
         ]
 
         self.api.create_block.assert_has_calls(create_block_calls)
