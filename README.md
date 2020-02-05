@@ -14,9 +14,15 @@ This repository contains code to work with the Qualtrics API and to create surve
 
 ## Running the tests
 
+`nosetests -w code`
+
+`nosetests -w code --with-coverage --cover-erase --cover-package=. --cover-html --cover-min-percentage=75`
+
+`nosetests -w code --with-coverage --cover-erase --cover-package=. --cover-html --cover-min-percentage=75 -v --rednose`
+
 ## Linting the code
 
-`$ PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*`
+`PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*`
 
 ## Working with surveys
 
