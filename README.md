@@ -25,12 +25,12 @@ nosetests -w code
 - Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with colourful output;
 
 ```bash
-nosetests -w code --with-coverage --cover-erase --cover-package=code/. --cover-html --cover-min-percentage=75 -v --rednose
+nosetests -w code --with-coverage --cover-erase --cover-package=code/. --cover-html --cover-min-percentage=80 -v --rednose
 ```
 
 ## Linting the code
 
-```
+```bash
 PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*
 ```
 
@@ -52,6 +52,8 @@ export QUALTRICS_API_AUTH_TOKEN=<your_token_value>
 
 ## Useful Tidbits
 
-**Are cached files messing with your head, can you not see your latest changes when you run code/tests?**
+Are cached files messing with your head, can you not see your latest changes when you run code/tests? You can remove all the cached files with this command;
 
-    find . -name "*.pyc" -exec rm -f {} \;
+```bash
+find . -name "*.pyc" -exec rm -f {} \;
+```

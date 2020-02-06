@@ -43,10 +43,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         self.file_path_and_name = 'json/SV_abcdefghijk.json'
         self._get_survey_file_path.return_value = self.file_path_and_name
 
-        upload_patch = patch('operations.download.upload')
-        self.upload = upload_patch.start()
-        self.addCleanup(upload_patch.stop)
-
         self.mock_open = open_patch = patch('operations.download.open', new_callable=mock_open(), create=True)
         self.mock_open = open_patch.start()
         self.addCleanup(open_patch.stop)
@@ -71,24 +67,12 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         self._get_survey_file_path.assert_called_once_with('SV_abcdefghijk')
 
-        self.upload.assert_called_once_with('60db', self.file_path_and_name)
-
         self.json.dump.assert_called_once_with(self.survey_json, self.survey_file)
 
         self.logger.info.assert_has_calls([
             call('Getting survey %s from API', 'SV_abcdefghijk'),
             call('Saving survey to s3 with key %s', self.file_path_and_name),
         ])
-
-    def test_raises_exception_when_error_encountered_during_upload(self):
-        # tell our upload patch to raise an Exception
-        self.upload.return_value = Exception
-
-        # assert expected exception type raised
-        with self.assertRaises(QualtricsDataSerialisationException):
-            save_survey_to_file(self.api, 'SV_abcdefghijk')
-
-        self.logger.error.assert_called_once_with('Error encountered during serialisation of qualtrics survey to s3')
 
     def test_raises_exception_when_error_encountered_during_open(self):
         # tell our open patch to raise an Exception

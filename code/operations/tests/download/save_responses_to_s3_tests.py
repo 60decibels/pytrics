@@ -138,14 +138,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         self.logger.error.assert_has_calls(error_calls)
 
-    def test_raises_exception_when_error_encountered_during_upload(self):
-        # don't need to set a return value for _await_response_file_creation
-        # as we'll error out of the function before we need to use this
-
-        # assert expected exception type raised
-        with self.assertRaises(QualtricsDataSerialisationException):
-            save_responses_to_file(self.api, 'SV_abcdefghijk')
-
     def test_raises_exception_when_error_encountered_during_open(self):
         # again, don't need to set a return value for _await_response_file_creation
         # as we'll error out of the function before we need to use this

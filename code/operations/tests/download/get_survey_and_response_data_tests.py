@@ -18,13 +18,13 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
         self.get_details_for_client.return_value = ('URL', 'TOKEN')
 
-        save_survey_to_s3_patch = patch('operations.download.save_survey_to_s3')
-        self.save_survey_to_s3 = save_survey_to_s3_patch.start()
-        self.addCleanup(save_survey_to_s3_patch.stop)
+        save_survey_to_file_patch = patch('operations.download.save_survey_to_file')
+        self.save_survey_to_file = save_survey_to_file_patch.start()
+        self.addCleanup(save_survey_to_file_patch.stop)
 
-        save_responses_to_s3_patch = patch('operations.download.save_responses_to_s3')
-        self.save_responses_to_s3 = save_responses_to_s3_patch.start()
-        self.addCleanup(save_responses_to_s3_patch.stop)
+        save_responses_to_file_patch = patch('operations.download.save_responses_to_file')
+        self.save_responses_to_file = save_responses_to_file_patch.start()
+        self.addCleanup(save_responses_to_file_patch.stop)
 
         _unzip_response_file_patch = patch('operations.download._unzip_response_file')
         self._unzip_response_file = _unzip_response_file_patch.start()
@@ -48,24 +48,24 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
         # assert expected calls made by internal logic of function
         self.get_details_for_client.assert_called_once()
 
-        self.save_survey_to_s3.assert_called_once_with(self.api, 'SV_abcdefghijk')
+        self.save_survey_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk')
 
-        self.save_responses_to_s3.assert_called_once_with(self.api, 'SV_abcdefghijk')
+        self.save_responses_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk')
 
         self._unzip_response_file.assert_called_once_with('SV_abcdefghijk')
 
         logger_calls = [
             call('Qualtrics API client ready'),
-            call('Survey data for %s uploaded to s3', 'SV_abcdefghijk'),
-            call('Response data .zip for %s uploaded to s3', 'SV_abcdefghijk'),
-            call('Response data .json for %s uploaded to s3', 'SV_abcdefghijk'),
+            call('Survey data for %s saved to disk', 'SV_abcdefghijk'),
+            call('Response data .zip for %s saved to disk', 'SV_abcdefghijk'),
+            call('Response data .json for %s saved to disk', 'SV_abcdefghijk'),
         ]
 
         self.logger.info.assert_has_calls(logger_calls)
 
-    def test_raises_exception_when_save_survey_to_s3_raises_api_error(self):
+    def test_raises_exception_when_save_survey_to_file_raises_api_error(self):
         # tell our patch to raise an Exception
-        self.save_survey_to_s3.side_effect = [
+        self.save_survey_to_file.side_effect = [
             QualtricsAPIException,
         ]
 
@@ -73,9 +73,9 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
         with self.assertRaises(QualtricsAPIException):
             get_survey_and_response_data('SV_abcdefghijk')
 
-    def test_raises_exception_when_save_survey_to_s3_raises_serialisation_error(self):
+    def test_raises_exception_when_save_survey_to_file_raises_serialisation_error(self):
         # tell our patch to raise an Exception
-        self.save_survey_to_s3.side_effect = [
+        self.save_survey_to_file.side_effect = [
             QualtricsDataSerialisationException,
         ]
 
@@ -83,9 +83,9 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
         with self.assertRaises(QualtricsDataSerialisationException):
             get_survey_and_response_data('SV_abcdefghijk')
 
-    def test_raises_exception_when_save_responses_to_s3_raises_serialisation_error(self):
+    def test_raises_exception_when_save_responses_to_file_raises_serialisation_error(self):
         # tell our patch to raise an Exception
-        self.save_responses_to_s3.side_effect = [
+        self.save_responses_to_file.side_effect = [
             QualtricsDataSerialisationException,
         ]
 

@@ -200,13 +200,13 @@ def _await_response_file_creation(api, survey_id, progress_id):
 
 
 def _get_survey_file_path(survey_id):
-    file_path_and_name = os.path.join(os.path.abspath(os.path.dirname(__file__)), './json/', '{}.{}'.format(survey_id, FILE_EXTENSION_JSON))
+    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '/data/', '{}.{}'.format(survey_id, FILE_EXTENSION_JSON))
 
     return file_path_and_name
 
 
 def _get_response_file_path(survey_id, zipped=True):
     file_ext = FILE_EXTENSION_ZIP if zipped else FILE_EXTENSION_JSON
-    file_path_and_name = os.path.join(os.path.abspath(os.path.dirname(__file__)), './json/', '{}_responses.{}'.format(survey_id, file_ext))
+    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '/data/', '{}_responses.{}'.format(survey_id, file_ext))
 
     return file_path_and_name

@@ -9,12 +9,6 @@ from operations.download import _await_response_file_creation
 class AwaitResponseFileCreationTestCase(unittest.TestCase):
 
     def setUp(self):
-        _get_profile_patch = patch('operations.download._get_profile')
-        self._get_profile = _get_profile_patch.start()
-        self.addCleanup(_get_profile_patch.stop)
-
-        self._get_profile.return_value = 'testing'
-
         self.api = MagicMock()
         self.api.get_response_export_file.return_value = {'response': 'export'}
 
