@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
 from freezegun import freeze_time
 from requests import HTTPError
@@ -13,10 +13,6 @@ from operations.upload import publish_survey
 class PublishSurveyTestCase(unittest.TestCase):
 
     def setUp(self):
-        logger_patch = patch('operations.upload.logger')
-        self.logger = logger_patch.start()
-        self.addCleanup(logger_patch.stop)
-
         get_details_for_client_patch = patch('operations.upload.get_details_for_client')
         self.get_details_for_client = get_details_for_client_patch.start()
         self.addCleanup(get_details_for_client_patch.stop)
@@ -57,16 +53,15 @@ class PublishSurveyTestCase(unittest.TestCase):
         expected_description = 'name_2019-10-11_12.01.02PM'
         expected_url = QUALTRICS_API_PUBLISHED_SURVEY_URL_PATTERN.format('SV_1234567890a')
 
-        logger_calls = [
-            call('Publishing survey with survey_id: %s and description: %s', 'SV_1234567890a', expected_description),
-            call('Published survey: %s on: %s, with version_id: %s and version_number: %s Available at URL: %s', 'SV_1234567890a', '2019-10-11T12:01:02', 'version-id', 1, expected_url),
-        ]
+        actual_url, version_id, version_number, creation_date = publish_survey('SV_1234567890a', 'name')
 
-        actual_url = publish_survey('SV_1234567890a', 'name')
+        print(actual_url)
+        print(expected_url)
 
         self.assertEqual(expected_url, actual_url)
-
-        self.logger.info.assert_has_calls(logger_calls, any_order=True)
+        self.assertEqual(version_id, 'version-id')
+        self.assertEqual(version_number, 1)
+        self.assertEqual(creation_date, '2019-10-11T12:01:02')
 
         self.api.update_survey.assert_called_with('SV_1234567890a', True)
 

@@ -42,10 +42,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         self.response_file = MagicMock()
         self.mock_open.return_value.__enter__.return_value = self.response_file
 
-        logger_patch = patch('operations.download.logger')
-        self.logger = logger_patch.start()
-        self.addCleanup(logger_patch.stop)
-
     def test_calls_various_functions_as_expected(self):
         # _await_response_file_creation either:
         # 1. raises an exception as export not yet ready, or
@@ -65,13 +61,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         self._await_response_file_creation.assert_called_once_with(self.api, 'SV_abcdefghijk', 'ES_d4DVIiKEHQ9rBWZ')
 
         self.response_file.write.assert_called_once_with('b504b 0304 1400 0808 0800 1458 f74e 0000')
-
-        logger_calls = [
-            call('Starting response file export for survey %s', 'SV_abcdefghijk'),
-            call('Response data received on try #%s for survey %s, uploading to s3 key %s', 0, 'SV_abcdefghijk', self.file_path_and_name),
-        ]
-
-        self.logger.info.assert_has_calls(logger_calls)
 
     def test_recurses_when_export_not_immediately_ready_download(self):
         # _await_response_file_creation either:
@@ -100,17 +89,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         self.response_file.write.assert_called_once_with('b504b 0304 1400 0808 0800 1458 f74e 0000')
 
-        info_calls = [
-            call('Starting response file export for survey %s', 'SV_abcdefghijk'),
-            call('Calling myself to get new progress_id and try again, retry #%s', 1),
-            call('Retry #%s of response file export for survey %s', 1, 'SV_abcdefghijk'),
-            call('Response data received on try #%s for survey %s, uploading to s3 key %s', 1, 'SV_abcdefghijk', self.file_path_and_name),
-        ]
-
-        self.logger.info.assert_has_calls(info_calls)
-
-        self.logger.error.assert_called_once_with('_await_response_file_creation failed')
-
     def test_raises_exception_when_maximum_retries_reached(self):
         # _await_response_file_creation either:
         # 1. raises an exception as export not yet ready, or
@@ -128,15 +106,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
             save_responses_to_file(self.api, 'SV_abcdefghijk', progress_id='fake-progress-id', retries=QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT)
-
-        self.logger.info.assert_called_once_with('Retry #%s of response file export for survey %s', 5, 'SV_abcdefghijk')
-
-        error_calls = [
-            call('_await_response_file_creation failed'),
-            call('Failed after %s attempts to get responses for survey_id %s', 5, 'SV_abcdefghijk')
-        ]
-
-        self.logger.error.assert_has_calls(error_calls)
 
     def test_raises_exception_when_error_encountered_during_open(self):
         # again, don't need to set a return value for _await_response_file_creation

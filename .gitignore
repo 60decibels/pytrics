@@ -16,7 +16,7 @@ temp/
 *.orig
 *.lprof
 
-code/.coverage
-code/cover
-code/local
+pytrics/.coverage
+pytrics/cover
+pytrics/local
 esdata

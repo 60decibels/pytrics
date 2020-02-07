@@ -19,19 +19,19 @@ Tests are written using unittest and can be executed via [nose](https://nose.rea
 - Run all tests;
 
 ```bash
-nosetests -w code
+nosetests -w pytrics
 ```
 
 - Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with colourful output;
 
 ```bash
-nosetests -w code --with-coverage --cover-erase --cover-package=code/. --cover-html --cover-min-percentage=80 -v --rednose
+nosetests -w pytrics --with-coverage --cover-erase --cover-package=pytrics/. --cover-html --cover-min-percentage=80 -v --rednose
 ```
 
 ## Linting the code
 
 ```bash
-PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable code/*
+PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable pytrics/*
 ```
 
 ## Working with surveys

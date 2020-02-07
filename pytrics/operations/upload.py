@@ -1,5 +1,4 @@
 from datetime import datetime
-import logging
 
 from requests import HTTPError
 
@@ -9,15 +8,9 @@ from common.constants import (
     QUALTRICS_API_BLOCK_TYPE_STANDARD,
 )
 from common.exceptions import QualtricsAPIException
-from common.logging.configure import setup_logging
 
 from qualtrics_api.client import QualtricsAPIClient
 from qualtrics_api.common import get_details_for_client
-
-
-# Configure and create our logger
-setup_logging()
-logger = logging.getLogger()
 
 
 def create_survey(name, blocks, questions, language_code='EN'):
@@ -35,16 +28,11 @@ def create_survey(name, blocks, questions, language_code='EN'):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
-    logger.info('Qualtrics API client ready')
-
     survey_id = default_block_id = None
-
-    logger.info('Creating survey: %s', name)
 
     try:
         survey_id, default_block_id = api.create_survey(name, language_code)
     except (QualtricsAPIException, AssertionError, HTTPError) as ex:
-        logger.error('Error encountered during API call create_survey')
         raise QualtricsAPIException(ex)
 
     if not survey_id:
@@ -52,8 +40,6 @@ def create_survey(name, blocks, questions, language_code='EN'):
 
     if not default_block_id:
         raise QualtricsAPIException('API call create_survey failed to return default_block_id')
-
-    logger.info('Updating the default block, and creating new blocks as required')
 
     block_ids_dict = {
         1: default_block_id
@@ -64,7 +50,6 @@ def create_survey(name, blocks, questions, language_code='EN'):
             try:
                 api.update_block(survey_id, default_block_id, block['description'], QUALTRICS_API_BLOCK_TYPE_DEFAULT)
             except (AssertionError, HTTPError) as ex:
-                logger.error('Error encountered during API call update_block')
                 raise QualtricsAPIException(ex)
         else:
             try:
@@ -72,10 +57,7 @@ def create_survey(name, blocks, questions, language_code='EN'):
 
                 block_ids_dict[index + 1] = new_block_id
             except (AssertionError, HTTPError) as ex:
-                logger.error('Error encountered during API call create_block')
                 raise QualtricsAPIException(ex)
-
-    logger.info('Creating questions as required')
 
     for question in questions:
         question_payload = api.build_question_payload(question, survey_id, include_display_logic=True)
@@ -83,16 +65,12 @@ def create_survey(name, blocks, questions, language_code='EN'):
         try:
             block_id = block_ids_dict[question['block_number']]
         except KeyError:
-            logger.warning('Cannot identify block by key %s held on question %s, adding to default to block', question['block_number'], question['label'])
             block_id = block_ids_dict[1]
 
         try:
             api.create_question(survey_id, question_payload, block_id)
         except (AssertionError, HTTPError) as ex:
-            logger.error('Error encountered during API call create_question')
             raise QualtricsAPIException(ex)
-
-    logger.info('Survey creation complete, survey_id: %s', survey_id)
 
     return survey_id
 
@@ -109,8 +87,6 @@ def describe_survey(survey_id):
     '''
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
-
-    logger.info('Qualtrics API client ready')
 
     detailed_survey_dict = {
         'survey_id': survey_id,
@@ -166,17 +142,12 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
-    logger.info('Qualtrics API client ready')
-
     new_survey_id = default_block_id = None
-
-    logger.info('Creating survey: %s', new_survey_name)
 
     # 1.
     try:
         new_survey_id, default_block_id = api.create_survey(new_survey_name, language_code)
     except (QualtricsAPIException, AssertionError, HTTPError) as ex:
-        logger.error('Error encountered during API call create_survey')
         raise QualtricsAPIException(ex)
 
     if not new_survey_id:
@@ -184,8 +155,6 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
 
     if not default_block_id:
         raise QualtricsAPIException('API call create_survey failed to return default_block_id')
-
-    logger.info('Gathering template survey details')
 
     # 2.
     template_survey_json = api.get_survey(template_survey_id)
@@ -208,8 +177,6 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
     for key, _ in template_questions.items():
         template_questions[key] = api.get_question(template_survey_id, key)
 
-    logger.info('Copying blocks from template to new survey')
-
     # 3.
     index = 0
     block_id_mapping = {}
@@ -222,7 +189,6 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
                 api.update_block(new_survey_id, default_block_id, description, QUALTRICS_API_BLOCK_TYPE_DEFAULT)
                 new_block_id = default_block_id
             except (AssertionError, HTTPError) as ex:
-                logger.error('Error encountered during API call update_block')
                 raise QualtricsAPIException(ex)
 
         else:
@@ -230,7 +196,6 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
                 block_type = value['result']['Type']
                 _, new_block_id = api.create_block(new_survey_id, description, block_type)
             except (AssertionError, HTTPError) as ex:
-                logger.error('Error encountered during API call create_block')
                 raise QualtricsAPIException(ex)
 
         block_id_mapping[key] = new_block_id
@@ -240,8 +205,6 @@ def copy_survey(template_survey_id, new_survey_name, language_code='EN'): # pyli
             question_id_to_new_block_id_mapping[block_element['QuestionID']] = new_block_id
 
         index += 1
-
-    logger.info('Copying questions from template to new survey')
 
     # 4.
     for key, value in template_questions.items():
@@ -273,17 +236,13 @@ def publish_survey(survey_id, survey_name):
         datetime.now().strftime("%Y-%m-%d_%H.%M.%S%p")
     )
 
-    logger.info('Publishing survey with survey_id: %s and description: %s', survey_id, survey_description)
-
     try:
         api.update_survey(survey_id, True)
 
         version_id, version_number, creation_date = api.publish_survey(survey_id, survey_description)
     except (AssertionError, HTTPError) as ex:
-        logger.error('Error encountered during API call update_survey or publish_survey')
         raise QualtricsAPIException(ex)
 
     survey_url = QUALTRICS_API_PUBLISHED_SURVEY_URL_PATTERN.format(survey_id)
-    logger.info('Published survey: %s on: %s, with version_id: %s and version_number: %s Available at URL: %s', survey_id, creation_date, version_id, version_number, survey_url)
 
-    return survey_url
+    return survey_url, version_id, version_number, creation_date

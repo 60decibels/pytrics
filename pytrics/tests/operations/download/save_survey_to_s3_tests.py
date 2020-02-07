@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, mock_open, patch, call
+from unittest.mock import MagicMock, mock_open, patch
 
 from common.exceptions import (
     QualtricsAPIException,
@@ -54,10 +54,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         self.json = json_patch.start()
         self.addCleanup(json_patch.stop)
 
-        logger_patch = patch('operations.download.logger')
-        self.logger = logger_patch.start()
-        self.addCleanup(logger_patch.stop)
-
     def test_calls_various_functions_as_expected(self):
         # run the function
         save_survey_to_file(self.api, 'SV_abcdefghijk')
@@ -69,11 +65,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         self.json.dump.assert_called_once_with(self.survey_json, self.survey_file)
 
-        self.logger.info.assert_has_calls([
-            call('Getting survey %s from API', 'SV_abcdefghijk'),
-            call('Saving survey to s3 with key %s', self.file_path_and_name),
-        ])
-
     def test_raises_exception_when_error_encountered_during_open(self):
         # tell our open patch to raise an Exception
         self.mock_open.return_value = Exception
@@ -81,8 +72,6 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
             save_survey_to_file(self.api, 'SV_abcdefghijk')
-
-        self.logger.error.assert_called_once_with('Error encountered during serialisation of qualtrics survey to s3')
 
     def test_raises_exception_when_error_encountered_during_get_survey(self):
         # tell our upload patch to raise an Exception
@@ -93,5 +82,3 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         # assert expected exception type raised
         with self.assertRaises(QualtricsAPIException):
             save_survey_to_file(self.api, 'SV_abcdefghijk')
-
-        self.logger.error.assert_called_once_with('Error encountered during API call get_survey')

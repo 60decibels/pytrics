@@ -26,10 +26,6 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self.info = MagicMock(filename='response_file_name_from_api.zip')
         self.zipped.infolist.return_value = [self.info]
 
-        logger_patch = patch('operations.download.logger')
-        self.logger = logger_patch.start()
-        self.addCleanup(logger_patch.stop)
-
         os_patch = patch('operations.download.os')
         self.os = os_patch.start()
         self.addCleanup(os_patch.stop)
@@ -48,12 +44,6 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
 
         self.os.rename.assert_called_once_with('/tmp/response_file_name_from_api.zip', '/tmp/SV_abcdefghijk_responses.json')
 
-        self.logger.info.assert_has_calls([
-            call('File %s passed to ZipFile, contains info list %s', 'testing/response/qualtrics/new/SV_abcdefghijk_responses.zip', [self.info]),
-            call('Zipped response file contains file with name %s - extracting to /tmp', self.info.filename),
-            call('Response file renamed to %s', '/tmp/SV_abcdefghijk_responses.json'),
-        ])
-
     @patch('operations.download.open')
     def test_writes_empty_json_responses_file_to_disk_when_no_responses_recorded_against_survey(self, mock_plain_open):
         # we've patched the python system open just for this test, not the ZipFile open as we do in setup
@@ -68,9 +58,4 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self._get_response_file_path.assert_has_calls([
             call('SV_abcdefghijk', zipped=True),
             call('SV_abcdefghijk', zipped=False),
-        ])
-
-        self.logger.info.assert_has_calls([
-            call('File %s passed to ZipFile, contains info list %s', 'testing/response/qualtrics/new/SV_abcdefghijk_responses.zip', []),
-            call('No responses yet recorded, writing empty responses json file to disk'),
         ])

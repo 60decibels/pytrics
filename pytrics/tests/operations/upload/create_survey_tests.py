@@ -4,22 +4,17 @@ from unittest.mock import MagicMock, patch, call
 from common.constants import QUALTRICS_API_BLOCK_TYPE_STANDARD
 from common.exceptions import QualtricsAPIException
 
-from operations.tests.upload.reference_data import (
+from operations.upload import create_survey
+from .reference_data import (
     get_test_blocks,
     get_test_question_params,
     get_test_question_payloads,
 )
 
-from operations.upload import create_survey
-
 
 class CreateSurveyTestCase(unittest.TestCase):
 
     def setUp(self):
-        logger_patch = patch('operations.upload.logger')
-        self.logger = logger_patch.start()
-        self.addCleanup(logger_patch.stop)
-
         get_details_for_client_patch = patch('operations.upload.get_details_for_client')
         self.get_details_for_client = get_details_for_client_patch.start()
         self.addCleanup(get_details_for_client_patch.stop)
@@ -393,18 +388,3 @@ class CreateSurveyTestCase(unittest.TestCase):
         self.api.create_question.assert_has_calls(create_question_calls)
 
         self.api.update_question.assert_not_called()
-
-    def test_calls_logger_as_expected(self):
-        logger_calls = [
-            call('Qualtrics API client ready'),
-            call('Creating survey: %s', 'My Survey Name'),
-            call('Updating the default block, and creating new blocks as required'),
-            call('Creating questions as required'),
-            call('Survey creation complete, survey_id: %s', 'SV_0123456789a')
-        ]
-
-        question_params = get_test_question_params()
-
-        create_survey('My Survey Name', self.blocks, question_params)
-
-        self.logger.info.assert_has_calls(logger_calls)

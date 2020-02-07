@@ -1,9 +1,7 @@
 import json
-import logging
 import re
 import requests
 
-from common.logging.configure import setup_logging
 from common.constants import (
     QUALTRICS_API_BLOCK_VISIBILITY_EXPANDED,
     QUALTRICS_API_PATH_BLOCKS,
@@ -27,10 +25,6 @@ from common.constants import (
     QUALTRICS_API_SUPPORTED_QUESTION_TYPES,
 )
 from common.exceptions import QualtricsAPIException
-
-# Configure and create our logger
-setup_logging()
-logger = logging.getLogger()
 
 
 class QualtricsAPIClient():
@@ -134,8 +128,7 @@ class QualtricsAPIClient():
         except (KeyError, AssertionError, AttributeError):
             raise AssertionError('Please ensure the question_params dictionary argument is valid...')
 
-        logger.info('Constructing question payload dictionary')
-
+        # Constructing question payload dictionary
         payload = {
             'QuestionText': question_params['text'].strip(),
             'DataExportTag': 'Q{}'.format(question_params['tag_number']),
@@ -162,7 +155,7 @@ class QualtricsAPIClient():
             for key, value in question_params['additional_validation_settings'].items():
                 payload['Validation']['Settings'][key] = value
 
-        logger.info('Applying choices, order, recoding and variable naming to payload dictionary')
+        # Applying choices, order, recoding and variable naming to payload dictionary
 
         if 'choices' in question_params.keys():
             payload['Choices'] = question_params['choices']
@@ -176,16 +169,12 @@ class QualtricsAPIClient():
         if 'variable_naming' in question_params.keys():
             payload['VariableNaming'] = question_params['variable_naming']
 
+        # Processing question display_logic
         if include_display_logic:
-            logger.info('Processing question display_logic')
-
             if 'display_logic' in question_params.keys():
                 question_display_logic_dict = question_params['display_logic']
 
                 if question_display_logic_dict:
-                    logger.info(question_display_logic_dict)
-                    logger.info('Building display_logic for question %s', question_params['label'])
-
                     # unpack dict entries for use as params below
                     controlling_question_label = question_display_logic_dict['controlling_question_label']
                     choices = question_display_logic_dict['choices']
@@ -198,8 +187,6 @@ class QualtricsAPIClient():
 
                     # finally add a 'DisplayLogic' key with a value of the built display logic to this question payload
                     payload['DisplayLogic'] = self.build_question_display_logic(controlling_question_id, choices, operator, conjunction, locator)
-            else:
-                logger.info('No display_logic specfied for question %s', question_params['label'])
 
         return payload
 
@@ -236,10 +223,6 @@ class QualtricsAPIClient():
             data=body,
             headers=self._build_headers('POST')
         )
-
-        if response.status_code != 200:
-            logger.error(body)
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -282,10 +265,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('POST')
         )
 
-        if response.status_code != 200:
-            logger.error(body)
-            logger.error(response.json())
-
         response.raise_for_status()
 
         result = response.json()
@@ -318,9 +297,6 @@ class QualtricsAPIClient():
             data=body,
             headers=self._build_headers('POST')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -355,9 +331,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('POST')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
         result = response.json()
@@ -389,9 +362,6 @@ class QualtricsAPIClient():
             url,
             headers=self._build_headers('DELETE')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -428,9 +398,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('GET')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
         return response.json()
@@ -458,9 +425,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('GET')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
         return response.json()
@@ -486,9 +450,6 @@ class QualtricsAPIClient():
             url,
             headers=self._build_headers('GET')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -516,9 +477,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('GET')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
         result = response.json()
@@ -544,9 +502,6 @@ class QualtricsAPIClient():
             url,
             headers=self._build_headers('GET')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -576,9 +531,6 @@ class QualtricsAPIClient():
             data=body,
             headers=self._build_headers('POST')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -626,9 +578,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('PUT')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
     def update_question(self, survey_id, question_id, question_payload):
@@ -660,9 +609,6 @@ class QualtricsAPIClient():
             headers=self._build_headers('PUT')
         )
 
-        if response.status_code != 200:
-            logger.error(response.json())
-
         response.raise_for_status()
 
     def update_survey(self, survey_id, is_active):
@@ -689,9 +635,6 @@ class QualtricsAPIClient():
             data=body,
             headers=self._build_headers('PUT')
         )
-
-        if response.status_code != 200:
-            logger.error(response.json())
 
         response.raise_for_status()
 
@@ -732,7 +675,6 @@ class QualtricsAPIClient():
                 missing_keys.append(required_key)
 
         if missing_keys:
-            logger.error(question_payload)
             raise AssertionError('The question payload is invalid, keys missing: {}'.format(missing_keys))
 
         if 'Choices' in question_payload.keys():

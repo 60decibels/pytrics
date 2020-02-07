@@ -1,7 +1,5 @@
 import json
-import logging
 import os
-import getpass
 import time
 from zipfile import ZipFile
 
@@ -9,38 +7,27 @@ from requests import HTTPError
 
 from common.constants import (
     FILE_EXTENSION_JSON,
+    FILE_EXTENSION_ZIP,
     QUALTRICS_API_EXPORT_RESPONSES_PROGRESS_TIMEOUT,
     QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT,
-    FILE_EXTENSION_ZIP,
 )
 from common.exceptions import (
     QualtricsAPIException,
     QualtricsDataSerialisationException,
 )
-from common.logging.configure import setup_logging
 
 from qualtrics_api.client import QualtricsAPIClient
 from qualtrics_api.common import get_details_for_client
-
-
-# Configure and create our logger
-setup_logging()
-logger = logging.getLogger()
 
 
 def get_survey_data(survey_id):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
-    logger.info('Qualtrics API client ready')
-
     try:
         file_path_and_name = save_survey_to_file(api, survey_id)
-    except (QualtricsAPIException, QualtricsDataSerialisationException):
-        logger.error('Unable to retrieve and serialise survey with id %s', survey_id)
-        raise
-
-    logger.info('Survey data for %s saved to disk', survey_id)
+    except (QualtricsAPIException, QualtricsDataSerialisationException) as qex:
+        raise qex
 
     return file_path_and_name
 
@@ -49,50 +36,35 @@ def get_survey_and_response_data(survey_id):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
-    logger.info('Qualtrics API client ready')
-
     try:
         _ = save_survey_to_file(api, survey_id)
-    except (QualtricsAPIException, QualtricsDataSerialisationException):
-        logger.error('Unable to retrieve and serialise survey with id %s', survey_id)
-        raise
-
-    logger.info('Survey data for %s saved to disk', survey_id)
+    except (QualtricsAPIException, QualtricsDataSerialisationException) as qex:
+        raise qex
 
     try:
         save_responses_to_file(api, survey_id)
-    except QualtricsDataSerialisationException:
-        logger.error('Unable to retrieve and serialise responses for survey_id %s', survey_id)
-        raise
-
-    logger.info('Response data .zip for %s saved to disk', survey_id)
+    except QualtricsDataSerialisationException as qex:
+        raise qex
 
     try:
         _unzip_response_file(survey_id)
-    except QualtricsDataSerialisationException:
-        logger.error('Unable to unzip response file for survey_id %s', survey_id)
-        raise
-
-    logger.info('Response data .json for %s saved to disk', survey_id)
+    except QualtricsDataSerialisationException as qex:
+        raise qex
 
 
 def save_survey_to_file(api, survey_id):
     try:
-        logger.info('Getting survey %s from API', survey_id)
         survey_json = api.get_survey(survey_id)
     except (AssertionError, HTTPError) as ex:
-        logger.error('Error encountered during API call get_survey')
         raise QualtricsAPIException(ex)
 
     file_path_and_name = _get_survey_file_path(survey_id)
 
     try:
         with open(file_path_and_name, mode='w+', newline='', encoding='utf-8-sig') as survey_file:
-            logger.info('Saving survey to s3 with key %s', file_path_and_name)
             json.dump(survey_json, survey_file)
 
     except Exception as ex:
-        logger.error('Error encountered during serialisation of qualtrics survey to s3')
         raise QualtricsDataSerialisationException(ex)
 
     return file_path_and_name
@@ -103,36 +75,28 @@ def save_responses_to_file(api, survey_id, progress_id=None, retries=0):
     response_bytes = None
 
     if retries == 0:
-        logger.info('Starting response file export for survey %s', survey_id)
         _, progress_id = api.create_response_export(survey_id)
-    else:
-        logger.info('Retry #%s of response file export for survey %s', retries, survey_id)
 
     try:
         response_bytes = _await_response_file_creation(api, survey_id, progress_id)
     except (QualtricsDataSerialisationException, HTTPError, KeyError):
-        logger.error('_await_response_file_creation failed')
-
         if retries < QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT:
             retries += 1
-            logger.info('Calling myself to get new progress_id and try again, retry #%s', retries)
+            # Recurse to get new progress_id and try again
             save_responses_to_file(api, survey_id, progress_id, retries)
         else:
-            logger.error('Failed after %s attempts to get responses for survey_id %s', retries, survey_id)
+            # Retry limit reached
             raise QualtricsDataSerialisationException('Failed after {0} attempts to get responses for survey_id {1}'.format(
                 retries,
                 survey_id,
             ))
 
     if response_bytes:
-        logger.info('Response data received on try #%s for survey %s, uploading to s3 key %s', retries, survey_id, file_path_and_name)
-
         try:
             with open(file_path_and_name, mode='wb') as response_file:
                 response_file.write(response_bytes)
 
         except Exception as ex:
-            logger.error('Error encountered during serialisation of qualtrics survey to s3: %s', ex)
             raise QualtricsDataSerialisationException(ex)
 
 
@@ -151,32 +115,22 @@ def _unzip_response_file(survey_id):
     with ZipFile(response_file_s3_path, 'r') as zipped:
         infolist = zipped.infolist()
 
-        logger.info('File %s passed to ZipFile, contains info list %s', response_file_s3_path, infolist)
-
         if not infolist:
-            logger.info('No responses yet recorded, writing empty responses json file to disk')
-
             empty_responses_json = {"responses":[]}
 
             try:
                 with open(unzipped_response_file_s3_path, mode='w') as empty_response_file:
                     json.dump(empty_responses_json, empty_response_file)
             except QualtricsDataSerialisationException as ex:
-                logger.error('Error writing empty responses json file to disk %s', unzipped_response_file_s3_path)
                 raise QualtricsDataSerialisationException(ex)
 
         for info in infolist:
-            logger.info('Zipped response file contains file with name %s - extracting to /tmp', info.filename)
-
-            logger.debug("info.filename is: %s, Effective user is: %s, CWD is: %s", info.filename, getpass.getuser(), os.getcwd())
-
             zipped.extract(info.filename, path='/tmp')
 
             extracted_file_local_path = '{0}/{1}'.format('/tmp', info.filename)
             renamed_response_file_local_path = '/tmp/{0}_responses.{1}'.format(survey_id, FILE_EXTENSION_JSON)
 
             os.rename(extracted_file_local_path, renamed_response_file_local_path)
-            logger.info('Response file renamed to %s', renamed_response_file_local_path)
 
 
 def _await_response_file_creation(api, survey_id, progress_id):
@@ -187,15 +141,12 @@ def _await_response_file_creation(api, survey_id, progress_id):
         time.sleep(QUALTRICS_API_EXPORT_RESPONSES_PROGRESS_TIMEOUT)
 
         data, file_id = api.get_response_export_progress(survey_id, progress_id)
-        logger.info(data)
 
         status = data['result']['status']
 
     if status == 'failed' or not file_id:
-        logger.error('Error encountered during export for progress_id %s', progress_id)
         raise QualtricsDataSerialisationException('Failed to complete export for progress_id {}'.format(progress_id))
 
-    logger.info('Response file for survey %s complete, returning bytes', survey_id)
     return api.get_response_export_file(survey_id, file_id)
 
 
