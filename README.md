@@ -40,7 +40,7 @@ Pending
 
 ### Qualtrics
 
-You will need a Qualtrics account before you cna use this code, so [signup for one here](qualtrics-signup-link).
+You will need a Qualtrics account before you can use this code, so [signup for one here](qualtrics-signup-link).
 
 Once you have an account you will need to generate an API Key, [follow these instructions](generate-api-key-instructions-link).
 
@@ -48,6 +48,12 @@ Copy your API authorisation token and set an environment variable named `QUALTRI
 
 ```bash
 export QUALTRICS_API_AUTH_TOKEN=<your_token_value>
+```
+
+Next we need to do the same with the base API url. This varies depending on your Qualtrics account (and the data centre you are using), for more information [see the documentation here](qualtrics-api-base-url-docs-link). Once you figure out your APIs base url add it to an ebvironment variables as per below;
+
+```bash
+export QUALTRICS_API_BASE_URL=<your_base_api_url>
 ```
 
 ## Useful Tidbits
