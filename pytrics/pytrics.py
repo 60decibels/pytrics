@@ -1,32 +1,85 @@
 '''
-Intended to hold code that uses qualtrics_api to create surveys
-So we can encapsulate our use of the qualtrics_api module
-and keep that module clean for provision to Gates/OS
+The main entry point to this module, allows for the creation of surveys
+and the retrieval of responses.
 '''
 import os
 import json
 
 from common.exceptions import QualtricsAPIException
 
+from operations.download import get_survey_and_response_data
 from operations.upload import (
     copy_survey,
     create_survey,
     describe_survey,
     publish_survey,
 )
-from survey_definition.core_insights import (
+from survey_definition.agriculture import (
+    ET_en,
     IN_en,
-    IN_hi,
+    KE_en,
+    NG_en,
+    TZ_en,
 )
 
 
-language_to_definition = {
-    'en': IN_en,
-    'hi': IN_hi,
+country_to_definition = {
+    'et': ET_en,
+    'in': IN_en,
+    'ke': KE_en,
+    'ng': NG_en,
+    'tz': TZ_en,
 }
 
 
+def create_survey_from_definition(survey_name, country_iso_2):
+    '''
+    Create a survey from the specified pre-defined template.
+
+    The survey will appear in Qualtrics with the specified survey_name.
+
+    The PPI (Poverty Probability Index) questions will vary depending
+    on the country_iso_2 code provided.
+    '''
+    definition_class = country_to_definition[country_iso_2]
+
+    blocks = definition_class.get_blocks()
+    questions = definition_class.get_questions()
+
+    try:
+        survey_id = create_survey(survey_name, blocks, questions)
+        survey_url = publish_survey(survey_id, survey_name)
+    except QualtricsAPIException as qex:
+        raise qex
+
+    return survey_url
+
+
+def retrieve_survey_response_data(survey_id):
+    '''
+    Downloads both the survey definition and any recorded responses.
+
+    Saves both to local disk.
+
+    Both files are returned as you may wish/need to use the survey definition
+    to understand and process the content of the response data file.
+    '''
+    survey_file_name = response_file_name = None
+
+    try:
+        survey_file_name, response_file_name = get_survey_and_response_data(survey_id)
+    except QualtricsAPIException as qex:
+        raise qex
+
+    return survey_file_name, response_file_name
+
+
 def copy(template_survey_id, new_survey_name):
+    '''
+    Create a copy of an existing survey in your Qualtrics account.
+
+    Allows you to specify the new survey name.
+    '''
     try:
         assert template_survey_id.strip()
         assert new_survey_name.strip()
@@ -42,6 +95,11 @@ def copy(template_survey_id, new_survey_name):
 
 
 def describe(survey_id):
+    '''
+    Describe an existing survey.
+
+    Creates a JSON file on your local disk for review and analysis.
+    '''
     detailed_survey_json = describe_survey(survey_id)
     survey_name = detailed_survey_json['detail']['survey']['result']['name']
 
@@ -50,18 +108,3 @@ def describe(survey_id):
 
     with open(detailed_survey_json_file_path, 'w') as detailed_survey_json_file:
         json.dump(detailed_survey_json, detailed_survey_json_file, indent=4, sort_keys=True)
-
-
-def serialise_in_qualtrics_from_definition(survey_name, language_iso_2):
-    definition_class = language_to_definition[language_iso_2]
-
-    blocks = definition_class.get_blocks()
-    questions = definition_class.get_questions()
-
-    try:
-        survey_id = create_survey(survey_name, blocks, questions)
-        survey_url = publish_survey(survey_id, survey_name)
-    except QualtricsAPIException as qex:
-        raise qex
-
-    return survey_url

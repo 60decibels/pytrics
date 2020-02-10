@@ -78,7 +78,7 @@ def create_survey(name, blocks, questions, language_code='EN'):
 def describe_survey(survey_id):
     '''
     Describe an existing survey, outputs a json file containing detailed information
-    to assist when creating and forming your own surveys via create() below
+    to assist when creating and forming your own surveys
 
     1. get_survey
     2. for each block, get_block

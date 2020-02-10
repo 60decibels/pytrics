@@ -1,8 +1,9 @@
 '''
-These functions define the English (en) version of our Indian (IN) core insights survey
+These functions define the English (en) version of our Indian (IN) agriculture survey
 that can be used by the qualtrics_api module to create a survey in Qualtrics
 '''
 
+# TODO change this from core insights to the ag survey we just described into the /data folder at root of this repo :-)
 def get_blocks():
     return [
         {

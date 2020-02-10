@@ -1,8 +1,9 @@
 '''
-These functions define the Hindi (hi) version of our Indian (IN) core insights survey
+These functions define the English (en) version of our Indian (IN) agriculture survey
 that can be used by the qualtrics_api module to create a survey in Qualtrics
 '''
 
+# TODO change this from core insights to the ag survey we just described into the /data folder at root of this repo :-)
 def get_blocks():
     return [
         {
@@ -85,7 +86,7 @@ def get_questions():
                 },
                 '11': {
                     'Display': '10'
-                }
+                },
             },
             'choice_order': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             'recode_values': {
@@ -99,7 +100,7 @@ def get_questions():
                 '8': '7',
                 '9': '8',
                 '10': '9',
-                '11': '10'
+                '11': '10',
             },
             'is_mandatory': False,
             'translations': [],
@@ -177,7 +178,7 @@ def get_questions():
                     'Display': 'Got slightly worse'
                 },
                 '5': {
-                    'Display': 'Got much worse'
+                    'Display': 'Got much worse',
                 }
             },
             'choice_order': [1, 2, 3, 4, 5],
@@ -186,7 +187,7 @@ def get_questions():
                 '2': 'Slightly improved',
                 '3': 'No change',
                 '4': 'Got slightly worse',
-                '5': 'Got much worse'
+                '5': 'Got much worse',
             },
             'is_mandatory': False,
             'translations': [],
@@ -244,7 +245,7 @@ def get_questions():
             }
         },
         {
-            'text': 'आपके घर में आपके सहित कितने लोग रहते हैं?',
+            'text': 'Including yourself, how many people live in your home?',
             'label': 'ppi_in_s_hhsize',
             'type': 'TE',
             'tag_number': 9,
@@ -258,7 +259,7 @@ def get_questions():
             'block_number': 3
         },
         {
-            'text': 'क्या आपके घर में किसी ने पिछले 30 दिनों में किसी ने दूध या दूध से बनी चीज़ों का उपभोग किया है?',
+            'text': 'Did anyone in your household consume milk or milk products in the last 30 days?',
             'label': 'ppi_in_s_milk',
             'type': 'MC',
             'tag_number': 10,
@@ -266,10 +267,10 @@ def get_questions():
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'हाँ'
+                    'Display': 'Yes'
                 },
                 '2': {
-                    'Display': 'नहीं'
+                    'Display': 'No'
                 }
             },
             'choice_order': [1, 2],
@@ -282,7 +283,7 @@ def get_questions():
             'block_number': 4
         },
         {
-            'text': 'क्या आपके घर में कोई इलेक्ट्रिक पंखा है?',
+            'text': 'Does the household have an electric fan?',
             'label': 'ppi_in_s_fan',
             'type': 'MC',
             'tag_number': 11,
@@ -290,10 +291,10 @@ def get_questions():
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'हाँ'
+                    'Display': 'Yes'
                 },
                 '2': {
-                    'Display': 'नहीं'
+                    'Display': 'No'
                 }
             },
             'choice_order': [1, 2],
@@ -306,7 +307,7 @@ def get_questions():
             'block_number': 5
         },
         {
-            'text': 'क्या आपके घर में कोई स्टोव या गैस बर्नर है?',
+            'text': 'Does the household have a stove or gas burner?',
             'label': 'ppi_in_s_stove',
             'type': 'MC',
             'tag_number': 12,
@@ -314,10 +315,10 @@ def get_questions():
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'हाँ'
+                    'Display': 'Yes'
                 },
                 '2': {
-                    'Display': 'नहीं'
+                    'Display': 'No'
                 }
             },
             'choice_order': [1, 2],
@@ -330,7 +331,7 @@ def get_questions():
             'block_number': 6
         },
         {
-            'text': 'क्या आपके घर में कोई प्रेशर कुकर या प्रेशर पैन है?',
+            'text': 'Does the household have a pressure cooker or pressure pan?',
             'label': 'ppi_in_s_pressurecooker',
             'type': 'MC',
             'tag_number': 13,
@@ -338,10 +339,10 @@ def get_questions():
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'हाँ'
+                    'Display': 'Yes'
                 },
                 '2': {
-                    'Display': 'नहीं'
+                    'Display': 'No'
                 }
             },
             'choice_order': [1, 2],

@@ -37,12 +37,12 @@ def get_survey_and_response_data(survey_id):
     api = QualtricsAPIClient(base_url, auth_token)
 
     try:
-        _ = save_survey_to_file(api, survey_id)
+        survey_file_name = save_survey_to_file(api, survey_id)
     except (QualtricsAPIException, QualtricsDataSerialisationException) as qex:
         raise qex
 
     try:
-        save_responses_to_file(api, survey_id)
+        response_file_name = save_responses_to_file(api, survey_id)
     except QualtricsDataSerialisationException as qex:
         raise qex
 
@@ -50,6 +50,8 @@ def get_survey_and_response_data(survey_id):
         _unzip_response_file(survey_id)
     except QualtricsDataSerialisationException as qex:
         raise qex
+
+    return survey_file_name, response_file_name
 
 
 def save_survey_to_file(api, survey_id):
@@ -98,6 +100,8 @@ def save_responses_to_file(api, survey_id, progress_id=None, retries=0):
 
         except Exception as ex:
             raise QualtricsDataSerialisationException(ex)
+
+    return file_path_and_name
 
 
 def _unzip_response_file(survey_id):
