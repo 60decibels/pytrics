@@ -103,8 +103,7 @@ def describe(survey_id):
     detailed_survey_json = describe_survey(survey_id)
     survey_name = detailed_survey_json['detail']['survey']['result']['name']
 
-    detailed_survey_json_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../data/', '{}_{}.json'.format(survey_name, survey_id))
-    # os.path.join(os.path.abspath(os.getcwd()), '/data/')
+    detailed_survey_json_file_path = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_{}.json'.format(survey_name, survey_id))
 
     with open(detailed_survey_json_file_path, 'w') as detailed_survey_json_file:
         json.dump(detailed_survey_json, detailed_survey_json_file, indent=4, sort_keys=True)
