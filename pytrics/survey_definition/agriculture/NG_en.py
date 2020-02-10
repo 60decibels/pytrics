@@ -2,7 +2,6 @@
 These functions define the English (en) version of our Nigerian (NG) agriculture survey
 '''
 
-# TODO change this from core insights to the ag survey we just described into the /data folder at root of this repo :-)
 def get_blocks():
     return [
         {
@@ -241,8 +240,6 @@ def get_questions():
             'is_mandatory': False,
             'translations': [],
         },
-
-
         {
             'block_number': 3,
             'tag_number': 7,
@@ -263,8 +260,6 @@ def get_questions():
             'is_mandatory': True,
             'translations': [],
         },
-
-
         {
             'block_number': 4,
             'tag_number': 8,
@@ -486,8 +481,6 @@ def get_questions():
             'is_mandatory': True,
             'translations': []
         },
-
-
         {
             'block_number': 5,
             'tag_number': 17,
@@ -595,8 +588,6 @@ def get_questions():
                 'locator': None,
             }
         },
-
-
         {
             'block_number': 6,
             'tag_number': 21,
@@ -684,8 +675,6 @@ def get_questions():
                 'locator': 'SelectableChoice',
             }
         },
-
-
         {
             'block_number': 7,
             'tag_number': 25,
@@ -773,8 +762,6 @@ def get_questions():
                 'locator': 'SelectableChoice',
             }
         },
-
-
         {
             'block_number': 8,
             'tag_number': 29,
@@ -811,8 +798,6 @@ def get_questions():
             'is_mandatory': True,
             'translations': []
         },
-
-
         {
             'block_number': 9,
             'tag_number': 30,
@@ -888,8 +873,6 @@ def get_questions():
                 'locator': 'SelectableChoice',
             }
         },
-
-
         {
             'block_number': 10,
             'tag_number': 32,
@@ -1024,8 +1007,6 @@ def get_questions():
                 'locator': 'SelectableChoice',
             }
         },
-
-
         {
             'block_number': 11,
             'tag_number': 36,
@@ -1098,51 +1079,303 @@ def get_questions():
                 'locator': 'SelectableChoice',
             }
         },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         {
-            'text': 'Including yourself, how many people live in your home?',
-            'label': 'ppi_in_s_hhsize',
+            'block_number': 12,
+            'tag_number': 39,
+            'text': 'What can {Company} do to serve you better?',
+            'label': 'retention_improve_oe',
             'type': 'TE',
-            'tag_number': 9,
+            'answer_selector': 'ML',
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 12,
+            'tag_number': 40,
+            'text': 'Do you see yourself working with {Company} next year?',
+            'label': 'retention_1year_rating',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes, maybe'
+                },
+                '3': {
+                    'Display': 'Yes, definitely'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes, maybe',
+                '3': 'Yes, definitely',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 12,
+            'tag_number': 41,
+            'text': 'Do you see yourself working with {Company} 5 years from now?',
+            'label': 'retention_5year_rating',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes, maybe'
+                },
+                '3': {
+                    'Display': 'Yes, definitely'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes, maybe',
+                '3': 'Yes, definitely',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 13,
+            'tag_number': 42,
+            'text': 'Including yourself, how many people live in your home?',
+            'label': 'respondent_hhsize_num',
+            'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': False,
+            'is_mandatory': True,
+            'translations': [],
+            'additional_validation_settings': {
+                'ContentType': 'ValidNumber',
+                'Type': 'ContentType',
+                'ValidNumber': {
+                    'Max': '50',
+                    'Min': '1',
+                    'NumDecimals': '0'
+                }
+            }
+        },
+        {
+            'block_number': 14,
+            'tag_number': 43,
+            'text': 'How much total land did you use for farming in the last 12 months? Consider all crops planted. (acres)',
+            'label': 'ag_profile_land_farmedpastyear_num',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': True,
+            'translations': [],
             'additional_validation_settings': {
                 'ContentType': 'ValidNumber',
                 'Type': 'ContentType'
-            },
-            'translations': [],
-            'block_number': 3
+            }
         },
         {
-            'text': 'Did anyone in your household consume milk or milk products in the last 30 days?',
-            'label': 'ppi_in_s_milk',
+            'block_number': 14,
+            'tag_number': 44,
+            'text': 'How many of these [acres from total] did you farm with {Crop name} in last 12 months? (acres)',
+            'label': 'ag_profile_land_proportioncrop_num',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': True,
+            'translations': [],
+            'additional_validation_settings': {
+                'ContentType': 'ValidNumber',
+                'Type': 'ContentType'
+            }
+        },
+        {
+            'block_number': 15,
+            'tag_number': 45,
+            'text': 'In the last 12 months, what proportion (%) of your household\u2019s total income, came from {Crop name} crop using {Company}\u2019s information?',
+            'label': 'ag_profile_income_hhshare_company_num',
             'type': 'MC',
-            'tag_number': 10,
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Enter Percentage',
+                    'TextEntry': 'true'
+                },
+                '2': {
+                    'Display': 'Unable to give exact percentage'
+                },
+                '3': {
+                    'Display': 'Unable to answer'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'Enter Percentage',
+                '2': 'Unable to give exact percentage',
+                '3': 'Unable to answer',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 15,
+            'tag_number': 46,
+            'text': '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of your household\u2019s total income, came from {Crop name} crop using {Company}\u2019s information?',
+            'label': 'ag_profile_income_hhshare_company_mc',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'A little bit (1-25%)'
+                },
+                '2': {
+                    'Display': 'Less than half (25-50%)'
+                },
+                '3': {
+                    'Display': 'More than half (50-75%)'
+                },
+                '4': {
+                    'Display': 'Almost all (75-100%)'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'is_mandatory': True,
+            'translations': [],
+            'display_logic': {
+                'controlling_question_label': 'ag_profile_income_hhshare_company_num',
+                'choices': [2],
+                'operator': 'Selected',
+                'conjunction': None,
+                'locator': 'SelectableChoice',
+            }
+        },
+        {
+            'block_number': 16,
+            'tag_number': 47,
+            'text': 'In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?',
+            'label': 'ag_profile_income_hhshare_allfarming_num',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Enter Percentage',
+                    'TextEntry': 'true'
+                },
+                '2': {
+                    'Display': 'Unable to give exact percentage'
+                },
+                '3': {
+                    'Display': "Don't have land"
+                },
+                '4': {
+                    'Display': 'Unable to answer'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'variable_naming': {
+                '1': 'Enter Percentage',
+                '2': 'Unable to give exact percentage',
+                '3': "Don't have land",
+                '4': 'Unable to answer',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 16,
+            'tag_number': 48,
+            'text': '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?',
+            'label': 'ag_profile_income_hhshare_allfarming_mc',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'A little bit (1-25%)'
+                },
+                '2': {
+                    'Display': 'Less than half (25-50%)'
+                },
+                '3': {
+                    'Display': 'More than half (50-75%)'
+                },
+                '4': {
+                    'Display': 'Almost all (75-100%)'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'is_mandatory': True,
+            'translations': [],
+            'display_logic': {
+                'controlling_question_label': 'ag_profile_income_hhshare_allfarming_num',
+                'choices': [2],
+                'operator': 'Selected',
+                'conjunction': None,
+                'locator': 'SelectableChoice',
+            }
+        },
+        {
+            'block_number': 17,
+            'tag_number': 49,
+            'text': 'Which zone does the household reside in?',
+            'label': 'ppi_ng_s_zone',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'North Central'
+                },
+                '2': {
+                    'Display': 'North East'
+                },
+                '3': {
+                    'Display': 'South East'
+                },
+                '4': {
+                    'Display': 'North West'
+                },
+                '5': {
+                    'Display': 'South South'
+                },
+                '6': {
+                    'Display': 'South West'
+                }
+            },
+            'choice_order': [1, 2, 3, 4, 5, 6],
+            'variable_naming': {
+                '1': 'North Central',
+                '2': 'North East',
+                '3': 'South East',
+                '4': 'North West',
+                '5': 'South South',
+                '6': 'South West',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 50,
+            'text': 'Which state do you live in?',
+            'label': 'ppi_ng_s_state',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 51,
+            'text': 'Within the past 7 days, did the members of this household eat any rice or wheat within the household?',
+            'label': 'ppi_ng_s_rice',
+            'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
@@ -1151,22 +1384,26 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
+                },
+                '3': {
+                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3],
             'variable_naming': {
                 '1': 'Yes',
-                '2': 'No'
+                '2': 'No',
+                '3': 'Refused to answer',
             },
-            'is_mandatory': False,
-            'translations': [],
-            'block_number': 4
+            'is_mandatory': True,
+            'translations': []
         },
         {
-            'text': 'Does the household have an electric fan?',
-            'label': 'ppi_in_s_fan',
+            'block_number': 17,
+            'tag_number': 52,
+            'text': 'Within the past 7 days, did the members of this household eat any bread within the household?',
+            'label': 'ppi_ng_s_bread',
             'type': 'MC',
-            'tag_number': 11,
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
@@ -1175,22 +1412,26 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
+                },
+                '3': {
+                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3],
             'variable_naming': {
                 '1': 'Yes',
-                '2': 'No'
+                '2': 'No',
+                '3': 'Refused to answer',
             },
-            'is_mandatory': False,
-            'translations': [],
-            'block_number': 5
+            'is_mandatory': True,
+            'translations': []
         },
         {
-            'text': 'Does the household have a stove or gas burner?',
-            'label': 'ppi_in_s_stove',
+            'block_number': 17,
+            'tag_number': 53,
+            'text': 'Within the past 7 days, did the members of this household eat any beef within the household?',
+            'label': 'ppi_ng_s_beef',
             'type': 'MC',
-            'tag_number': 12,
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
@@ -1199,22 +1440,26 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
+                },
+                '3': {
+                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3],
             'variable_naming': {
                 '1': 'Yes',
-                '2': 'No'
+                '2': 'No',
+                '3': 'Refused to answer',
             },
-            'is_mandatory': False,
-            'translations': [],
-            'block_number': 6
+            'is_mandatory': True,
+            'translations': []
         },
         {
-            'text': 'Does the household have a pressure cooker or pressure pan?',
-            'label': 'ppi_in_s_pressurecooker',
+            'block_number': 17,
+            'tag_number': 54,
+            'text': 'Does the household own a fan?',
+            'label': 'ppi_ng_s_fan',
             'type': 'MC',
-            'tag_number': 13,
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
@@ -1223,15 +1468,207 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
+                },
+                '3': {
+                    'Display': 'Refused to answer'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'Yes',
+                '2': 'No',
+                '3': 'Refused to answer',
+            },
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 18,
+            'tag_number': 55,
+            'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
+            'label': 'gn_familydynamics_important_decisions_mc',
+            'type': 'MC',
+            'answer_selector': 'MAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Adult Female HH Member'
+                },
+                '2': {
+                    'Display': 'Adult Male HH Member'
+                },
+                '3': {
+                    'Display': 'Other Male',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                },
+                '4': {
+                    'Display': 'Other Female',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 18,
+            'tag_number': 56,
+            'text': 'Who in your family did most of the work related to {Crop name} crop?',
+            'label': 'gn_familydynamics_work_burden_oe',
+            'type': 'MC',
+            'answer_selector': 'MAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Adult Female HH Member'
+                },
+                '2': {
+                    'Display': 'Adult Male HH Member'
+                },
+                '3': {
+                    'Display': 'Other Male',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                },
+                '4': {
+                    'Display': 'Other Female',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 18,
+            'tag_number': 57,
+            'text': 'Who in your family handled the money that came from {Crop name} crops?',
+            'label': 'gn_familydynamics_money_from_sale_mc',
+            'type': 'MC',
+            'answer_selector': 'MAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Adult Female HH Member'
+                },
+                '2': {
+                    'Display': 'Adult Male HH Member'
+                },
+                '3': {
+                    'Display': 'Other Male',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                },
+                '4': {
+                    'Display': 'Other Female',
+                    'TextEntry': 'true',
+                    'TextEntryForceResponse': True
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 19,
+            'tag_number': 58,
+            'text': 'What is your age?',
+            'label': 'respondent_age_num',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': True,
+            'translations': [],
+            'additional_validation_settings': {
+                'ContentType': 'ValidNumber',
+                'Type': 'ContentType',
+                'ValidNumber': {
+                    'Max': '200',
+                    'Min': '0',
+                    'NumDecimals': '0'
+                },
+            }
+        },
+        {
+            'block_number': 20,
+            'tag_number': 59,
+            'text': 'Is there anything else you would like to share?',
+            'label': 'retention_anythingelse_oe',
+            'type': 'TE',
+            'answer_selector': 'ML',
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 20,
+            'tag_number': 60,
+            'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
+            'label': 'survey_anonymity_yn',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Yes, you may share'
+                },
+                '2': {
+                    'Display': 'No, please keep me anonymous'
                 }
             },
             'choice_order': [1, 2],
-            'variable_naming': {
-                '1': 'Yes',
-                '2': 'No'
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 20,
+            'tag_number': 61,
+            'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
+            'label': 'survey_marketingmaterials_yn',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Yes, you may use'
+                },
+                '2': {
+                    'Display': 'No, please do not use'
+                }
             },
-            'is_mandatory': False,
+            'choice_order': [1, 2],
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 20,
+            'tag_number': 62,
+            'text': 'Gender of Respondent',
+            'label': 'respondent_gender_mc',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Male'
+                },
+                '2': {
+                    'Display': 'Female'
+                }
+            },
+            'choice_order': [1, 2],
+            'is_mandatory': True,
+            'translations': []
+        },
+        {
+            'block_number': 20,
+            'tag_number': 63,
+            'text': 'Survey End Time (hh:mm)',
+            'label': 'survey_end_time',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': True,
             'translations': [],
-            'block_number': 7
         },
     ]
