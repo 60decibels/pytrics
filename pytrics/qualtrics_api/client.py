@@ -169,6 +169,9 @@ class QualtricsAPIClient():
         if 'variable_naming' in question_params.keys():
             payload['VariableNaming'] = question_params['variable_naming']
 
+        if 'column_labels' in question_params.keys():
+            payload['ColumnLabels'] = question_params['column_labels']
+
         # Processing question display_logic
         if include_display_logic:
             if 'display_logic' in question_params.keys():
