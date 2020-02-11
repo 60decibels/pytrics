@@ -20,3 +20,5 @@ pytrics/.coverage
 pytrics/cover
 pytrics/local
 esdata
+
+.deets
