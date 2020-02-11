@@ -108,4 +108,8 @@ The `pytrics/pytrics.py` module also contains two helper functions which were pa
 
 ## Improving this Code
 
-Feel free to fork or clone this repository and iterate on the functionality provided to suit your purposes. This code is not actively maintained but it is provided under [the MIT licence](https://opensource.org/licenses/MIT) and therefore free to copy, use and amend etc. Please refer to the `LICENSE` file contained in this repository for full terms of use.
+Feel free to fork or clone this repository and iterate on the functionality provided to suit your purposes, please ensure you include the `LICENSE` file in all copies or substantial portions of the Software.
+
+## License
+
+This code is not actively maintained but it is provided under [the MIT licence](https://opensource.org/licenses/MIT) and therefore free to copy, use and amend. Please refer to the `LICENSE` file contained in this repository for full terms of use and ensure you include the LICENSE file in all copies or substantial portions of the Software that you create.
