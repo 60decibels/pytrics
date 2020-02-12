@@ -2,8 +2,9 @@
 The main entry point to this module, allows for the creation of surveys
 and the retrieval of responses.
 '''
-import os
 import json
+import os
+import pprint
 
 from common.exceptions import QualtricsAPIException
 
@@ -67,11 +68,11 @@ def retrieve_survey_response_data(survey_id):
     survey_file_name = response_file_name = None
 
     try:
-        survey_file_name, response_file_name = get_survey_and_response_data(survey_id)
+        survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name = get_survey_and_response_data(survey_id)
     except QualtricsAPIException as qex:
         raise qex
 
-    return survey_file_name, response_file_name
+    return survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name
 
 
 def copy(template_survey_id, new_survey_name):
@@ -107,3 +108,25 @@ def describe(survey_id):
 
     with open(detailed_survey_json_file_path, 'w') as detailed_survey_json_file:
         json.dump(detailed_survey_json, detailed_survey_json_file, indent=4, sort_keys=True)
+
+
+def summarise_definition(country_iso_2):
+    definition_class = country_to_definition[country_iso_2]
+
+    blocks = definition_class.get_blocks()
+    questions = definition_class.get_questions()
+
+    pp = pprint.PrettyPrinter(indent=4)
+
+    summarised_blocks = [('Block Number', 'Block Name')]
+    summarised_questions = [('Block Number', 'Question Label', 'Question Text')]
+
+    for block in blocks:
+        summarised_blocks.append((block['position'], block['description'],))
+
+    for question in questions:
+        summarised_questions.append((question['block_number'], question['label'], question['text']))
+
+    pp.pprint(summarised_blocks)
+
+    pp.pprint(summarised_questions)

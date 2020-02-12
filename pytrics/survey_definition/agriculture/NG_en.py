@@ -154,6 +154,10 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'Yes',
+                '2': 'No',
+            },
             'is_mandatory': True,
             'translations': [],
         },
@@ -182,7 +186,13 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'variable_naming': {
+                '1': 'Myself',
+                '2': 'My spouse',
+                '3': 'Another family member',
+                '4': 'Other',
+            },
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -213,7 +223,13 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4, 5],
-            'is_mandatory': True,
+            'variable_naming': {
+                '1': 'Friends/Family',
+                '2': 'Demonstration on Field',
+                '3': 'Another family member',
+                '4': 'Other',
+            },
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -260,7 +276,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -289,7 +305,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4, 5],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -318,7 +334,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4, 5],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -347,7 +363,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4, 5],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_experience_training_useful_mc',
@@ -386,7 +402,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4, 5, 6],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -396,7 +412,7 @@ def get_questions():
             'label': 'ag_experience_training_apply_easiest_oe',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -406,7 +422,7 @@ def get_questions():
             'label': 'ag_experience_training_apply_hardest_oe',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
         },
         {
@@ -458,7 +474,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -481,7 +497,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -504,7 +520,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -560,7 +576,7 @@ def get_questions():
                     'IsLabelDefault': True
                 }
             ],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -570,7 +586,7 @@ def get_questions():
             'label': 'nps_company_promoter_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'nps_company_rating',
@@ -587,7 +603,7 @@ def get_questions():
             'label': 'nps_company_passive_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'nps_company_rating',
@@ -604,7 +620,7 @@ def get_questions():
             'label': 'nps_company_detractor_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'nps_company_rating',
@@ -647,7 +663,7 @@ def get_questions():
                 '4': 'Got slightly worse',
                 '5': 'Got much worse',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -657,7 +673,7 @@ def get_questions():
             'label': 'ag_impact_way_of_farming_improve_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_impact_way_of_farming_rating',
@@ -674,7 +690,7 @@ def get_questions():
             'label': 'ag_impact_way_of_farming_nochange_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_impact_way_of_farming_rating',
@@ -691,7 +707,7 @@ def get_questions():
             'label': 'ag_impact_way_of_farming_worse_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_impact_way_of_farming_rating',
@@ -734,7 +750,7 @@ def get_questions():
                 '4': 'Got slightly worse',
                 '5': 'Got much worse',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -744,8 +760,8 @@ def get_questions():
             'label': 'qol_improve_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
-            'translations': [],            
+            'is_mandatory': False,
+            'translations': [],
             'display_logic': {
                 'controlling_question_label': 'qol_rating',
                 'choices': [1, 2],
@@ -761,7 +777,7 @@ def get_questions():
             'label': 'qol_nochange_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'qol_rating',
@@ -778,7 +794,7 @@ def get_questions():
             'label': 'qol_worse_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'qol_rating',
@@ -821,7 +837,7 @@ def get_questions():
                 '4': 'Slightly improved',
                 '5': 'Very much improved',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -857,7 +873,7 @@ def get_questions():
                 '4': 'Slightly increased',
                 '5': 'Very much increased',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -889,7 +905,7 @@ def get_questions():
                 '3': 'Yes, completely',
                 '4': 'Cannot say',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'impact_moneyspend_rating',
@@ -924,7 +940,7 @@ def get_questions():
                 '2': 'Maybe',
                 '3': 'No',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -963,7 +979,7 @@ def get_questions():
                 '3': 'Yes, completely',
                 '4': 'Cannot say',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'alternatives_yn',
@@ -1006,7 +1022,7 @@ def get_questions():
                 '4': 'Better',
                 '5': 'Much better than the alternative',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'alternatives_yn',
@@ -1023,7 +1039,7 @@ def get_questions():
             'label': 'alternatives_comparison_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'alternatives_yn',
@@ -1054,7 +1070,7 @@ def get_questions():
                 '1': 'Yes',
                 '2': 'No',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1064,7 +1080,7 @@ def get_questions():
             'label': 'challenges_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'challenges_yn',
@@ -1095,7 +1111,7 @@ def get_questions():
                 '1': 'Yes',
                 '2': 'No',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'challenges_yn',
@@ -1112,7 +1128,7 @@ def get_questions():
             'label': 'retention_improve_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1140,7 +1156,7 @@ def get_questions():
                 '2': 'Yes, maybe',
                 '3': 'Yes, definitely',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1168,7 +1184,7 @@ def get_questions():
                 '2': 'Yes, maybe',
                 '3': 'Yes, definitely',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1178,7 +1194,7 @@ def get_questions():
             'label': 'respondent_hhsize_num',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'additional_validation_settings': {
                 'ContentType': 'ValidNumber',
@@ -1197,7 +1213,7 @@ def get_questions():
             'label': 'ag_profile_land_farmedpastyear_num',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'additional_validation_settings': {
                 'ContentType': 'ValidNumber',
@@ -1211,7 +1227,7 @@ def get_questions():
             'label': 'ag_profile_land_proportioncrop_num',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'additional_validation_settings': {
                 'ContentType': 'ValidNumber',
@@ -1244,7 +1260,7 @@ def get_questions():
                 '2': 'Unable to give exact percentage',
                 '3': 'Unable to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1270,7 +1286,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_profile_income_hhshare_company_num',
@@ -1310,7 +1326,7 @@ def get_questions():
                 '3': "Don't have land",
                 '4': 'Unable to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1336,7 +1352,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_profile_income_hhshare_allfarming_num',
@@ -1383,7 +1399,7 @@ def get_questions():
                 '5': 'South South',
                 '6': 'South West',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1411,7 +1427,7 @@ def get_questions():
                 '2': '5, 6 or 7',
                 '3': 'Greater than 7',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1439,7 +1455,7 @@ def get_questions():
                 '2': 'No',
                 '3': 'Refused to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1467,7 +1483,7 @@ def get_questions():
                 '2': 'No',
                 '3': 'Refused to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1495,7 +1511,7 @@ def get_questions():
                 '2': 'No',
                 '3': 'Refused to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1523,7 +1539,7 @@ def get_questions():
                 '2': 'No',
                 '3': 'Refused to answer',
             },
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1553,7 +1569,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1583,7 +1599,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1613,7 +1629,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2, 3, 4],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1623,7 +1639,7 @@ def get_questions():
             'label': 'respondent_age_num',
             'type': 'TE',
             'answer_selector': 'SL',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': [],
             'additional_validation_settings': {
                 'ContentType': 'ValidNumber',
@@ -1642,7 +1658,7 @@ def get_questions():
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
             'answer_selector': 'ML',
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {
@@ -1702,7 +1718,7 @@ def get_questions():
                 }
             },
             'choice_order': [1, 2],
-            'is_mandatory': True,
+            'is_mandatory': False,
             'translations': []
         },
         {

@@ -32,7 +32,7 @@ def get_survey_data(survey_id):
     return file_path_and_name
 
 
-def get_survey_and_response_data(survey_id):
+def get_survey_and_response_data(survey_id, process_responses=False):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
@@ -47,11 +47,18 @@ def get_survey_and_response_data(survey_id):
         raise qex
 
     try:
-        _unzip_response_file(survey_id)
+        unzipped_response_file_name = _unzip_response_file(survey_id)
     except QualtricsDataSerialisationException as qex:
         raise qex
 
-    return survey_file_name, response_file_name
+    processed_response_file_name = None
+    if process_responses:
+        try:
+            processed_response_file_name = _process_response_data(survey_id)
+        except QualtricsDataSerialisationException as qex:
+            raise qex
+
+    return survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name
 
 
 def save_survey_to_file(api, survey_id):
@@ -104,39 +111,6 @@ def save_responses_to_file(api, survey_id, progress_id=None, retries=0):
     return file_path_and_name
 
 
-def _unzip_response_file(survey_id):
-    '''
-    Response files are zips containing single .json file named after survey in qualtrics
-
-    So extract to .json & rename to associate with the survey .json
-
-    If no responses are yet recorded against a survey the zip is empty. In this case we
-    write an empty responses json file to disk to explicitly indicate processing completed
-    '''
-    response_file_s3_path = _get_response_file_path(survey_id, zipped=True)
-    unzipped_response_file_s3_path = _get_response_file_path(survey_id, zipped=False)
-
-    with ZipFile(response_file_s3_path, 'r') as zipped:
-        infolist = zipped.infolist()
-
-        if not infolist:
-            empty_responses_json = {"responses":[]}
-
-            try:
-                with open(unzipped_response_file_s3_path, mode='w') as empty_response_file:
-                    json.dump(empty_responses_json, empty_response_file)
-            except QualtricsDataSerialisationException as ex:
-                raise QualtricsDataSerialisationException(ex)
-
-        for info in infolist:
-            zipped.extract(info.filename, path='/tmp')
-
-            extracted_file_local_path = '{0}/{1}'.format('/tmp', info.filename)
-            renamed_response_file_local_path = '/tmp/{0}_responses.{1}'.format(survey_id, FILE_EXTENSION_JSON)
-
-            os.rename(extracted_file_local_path, renamed_response_file_local_path)
-
-
 def _await_response_file_creation(api, survey_id, progress_id):
     status = 'inProgress'
     file_id = None
@@ -165,3 +139,139 @@ def _get_response_file_path(survey_id, zipped=True):
     file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_responses.{}'.format(survey_id, file_ext))
 
     return file_path_and_name
+
+
+def _get_processed_response_file_path(survey_id):
+    file_ext = FILE_EXTENSION_JSON
+    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_responses_processed.{}'.format(survey_id, file_ext))
+
+    return file_path_and_name
+
+
+def _unzip_response_file(survey_id):
+    '''
+    Response files are zips containing single .json file named after survey in qualtrics
+
+    So extract to .json & rename to associate with the survey .json
+
+    If no responses are yet recorded against a survey the zip is empty. In this case we
+    write an empty responses json file to disk to explicitly indicate processing completed
+    '''
+    response_file_path = _get_response_file_path(survey_id, zipped=True)
+    unzipped_response_file_path = _get_response_file_path(survey_id, zipped=False)
+
+    with ZipFile(response_file_path, 'r') as zipped:
+        infolist = zipped.infolist()
+
+        if not infolist:
+            empty_responses_json = {"responses":[]}
+
+            try:
+                with open(unzipped_response_file_path, mode='w') as empty_response_file:
+                    json.dump(empty_responses_json, empty_response_file)
+            except QualtricsDataSerialisationException as ex:
+                raise QualtricsDataSerialisationException(ex)
+
+        for info in infolist:
+            extract_path = os.path.join(os.path.abspath(os.getcwd()), '../data')
+
+            zipped.extract(info.filename, path=extract_path)
+
+            extracted_file_local_path = '{0}/{1}'.format(extract_path, info.filename)
+
+            os.rename(extracted_file_local_path, unzipped_response_file_path)
+
+        return unzipped_response_file_path
+
+
+def _process_response_data(survey_id):
+    survey_questions = _get_survey_questions_dict_from_file(survey_id)
+    cleaned_responses = _get_cleaned_responses_dict_from_file(survey_id)
+
+    # now process the response data - experimental code hence use of broad except
+    try: # pylint: disable=too-many-nested-blocks
+        processed_responses = []
+        for response in cleaned_responses:
+            processed = {
+                'raw': response,
+                'processed': {}
+            }
+            for k, v in response.items():
+                question_id = k.split("_")[0]
+                rest_of_identifier = k.replace(question_id, '')
+
+                label = survey_questions[question_id]['questionLabel']
+
+                if len(k.split("_")) == 1:
+                    qtype = survey_questions[question_id]['questionType']['type']
+
+                    if qtype == 'MC':
+                        choices = survey_questions[question_id]['choices']
+                        values = None
+
+                        if isinstance(v, list):
+                            for val in v:
+                                values = []
+                                value = choices[val]['choiceText']
+                                values.append(value)
+                        else:
+                            values = choices[str(v)]['choiceText']
+
+                        processed['processed'][label] = values
+
+                    else:
+                        processed['processed'][question_id] = v
+
+                elif len(k.split("_")) == 3:
+                    try:
+                        sub_id = int(k.split("_")[1])
+                        sub_label = survey_questions[question_id]['choices'][str(sub_id)]['choiceText'].replace(' ', '_').lower()
+                        combined_label = '{}_{}'.format(label, sub_label)
+                        processed['processed'][combined_label] = v
+                    except ValueError:
+                        new_key = '{}{}'.format(label, rest_of_identifier)
+                        processed['processed'][new_key] = v
+
+                else:
+                    new_key = '{}{}'.format(label, rest_of_identifier)
+                    processed['processed'][new_key] = v
+
+            processed_responses.append(processed)
+
+        # now write processed_responses to a new json file in same location on disk
+        processed_responses_file_path = _get_processed_response_file_path(survey_id)
+
+        # write to json file
+        with open(processed_responses_file_path, 'w') as processed_responses_file:
+            json.dump(processed_responses, processed_responses_file)
+
+        return processed_responses_file_path
+    except Exception as ex:
+        raise QualtricsDataSerialisationException(ex)
+
+    return None
+
+
+def _get_survey_questions_dict_from_file(survey_id):
+    survey_file_path = _get_survey_file_path(survey_id)
+
+    with open(survey_file_path) as survey_json_file:
+        survey_dict = json.load(survey_json_file)
+
+        return survey_dict['result']['questions']
+
+
+def _get_cleaned_responses_dict_from_file(survey_id):
+    unzipped_response_file_path = _get_response_file_path(survey_id, zipped=False)
+
+    with open(unzipped_response_file_path) as response_json_file:
+        response_dict = json.load(response_json_file)
+
+        # clean up the responses (remove meta data and extraneous information)
+        cleaned_responses = []
+        for response in response_dict['responses']:
+            raw_values = response['values']
+            cleaned_values = {k:raw_values[k] for k in raw_values if k.startswith('QID')}
+            cleaned_responses.append(cleaned_values)
+
+        return cleaned_responses
