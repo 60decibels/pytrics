@@ -12,8 +12,8 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self.addCleanup(_get_response_file_path_patch.stop)
 
         self._get_response_file_path.side_effect = [
-            'testing/response/qualtrics/new/SV_abcdefghijk_responses.zip',
-            'testing/response/qualtrics/new/SV_abcdefghijk_responses.json',
+            'testing/SV_abcdefghijk_responses.zip',
+            'testing/SV_abcdefghijk_responses.json',
         ]
 
         self.mock_open = open_patch = patch('operations.download.ZipFile', new_callable=mock_open(), create=True)
@@ -31,6 +31,7 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         self.addCleanup(os_patch.stop)
 
         self.os.getcwd.return_value = '/'
+        self.os.path.join.return_value = 'testing'
 
     def test_calls_various_functions_as_expected(self):
         # run the function
@@ -42,7 +43,7 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
             call('SV_abcdefghijk', zipped=False),
         ])
 
-        self.os.rename.assert_called_once_with('/tmp/response_file_name_from_api.zip', '/tmp/SV_abcdefghijk_responses.json')
+        self.os.rename.assert_called_once_with('testing/response_file_name_from_api.zip', 'testing/SV_abcdefghijk_responses.json')
 
     @patch('operations.download.open')
     def test_writes_empty_json_responses_file_to_disk_when_no_responses_recorded_against_survey(self, mock_plain_open):
