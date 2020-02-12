@@ -56,7 +56,7 @@ def create_survey_from_definition(survey_name, country_iso_2):
     return survey_url
 
 
-def retrieve_survey_response_data(survey_id):
+def retrieve_survey_response_data(survey_id, process_responses=False):
     '''
     Downloads both the survey definition and any recorded responses.
 
@@ -68,7 +68,7 @@ def retrieve_survey_response_data(survey_id):
     survey_file_name = response_file_name = None
 
     try:
-        survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name = get_survey_and_response_data(survey_id)
+        survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name = get_survey_and_response_data(survey_id, process_responses)
     except QualtricsAPIException as qex:
         raise qex
 

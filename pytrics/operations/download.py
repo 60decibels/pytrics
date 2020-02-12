@@ -255,7 +255,7 @@ def _process_response_data(survey_id):
 def _get_survey_questions_dict_from_file(survey_id):
     survey_file_path = _get_survey_file_path(survey_id)
 
-    with open(survey_file_path) as survey_json_file:
+    with open(survey_file_path, mode='r', encoding='utf-8-sig') as survey_json_file:
         survey_dict = json.load(survey_json_file)
 
         return survey_dict['result']['questions']
@@ -264,7 +264,7 @@ def _get_survey_questions_dict_from_file(survey_id):
 def _get_cleaned_responses_dict_from_file(survey_id):
     unzipped_response_file_path = _get_response_file_path(survey_id, zipped=False)
 
-    with open(unzipped_response_file_path) as response_json_file:
+    with open(unzipped_response_file_path, mode='r', encoding='utf-8-sig') as response_json_file:
         response_dict = json.load(response_json_file)
 
         # clean up the responses (remove meta data and extraneous information)
