@@ -394,9 +394,9 @@ def get_questions():
             'translations': [],
             'display_logic': {
                 'controlling_question_label': 'ag_experience_training_useful_mc',
-                'choices': [2, 3, 4, 5],
-                'operator': 'Selected',
-                'conjunction': 'Or',
+                'choices': [1],
+                'operator': 'NotSelected',
+                'conjunction': None,
                 'locator': 'SelectableChoice',
             }
         },
@@ -430,7 +430,14 @@ def get_questions():
             },
             'choice_order': [1, 2, 3, 4, 5, 6],
             'is_mandatory': False,
-            'translations': []
+            'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['NotSelected', 'NotSelected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,
@@ -441,6 +448,13 @@ def get_questions():
             'answer_selector': 'SL',
             'is_mandatory': False,
             'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['NotSelected', 'NotSelected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,
@@ -451,6 +465,13 @@ def get_questions():
             'answer_selector': 'SL',
             'is_mandatory': False,
             'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['NotSelected', 'NotSelected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,
@@ -483,6 +504,13 @@ def get_questions():
             'choice_order': [1, 2, 3, 4, 5],
             'is_mandatory': False,
             'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['Selected', 'Selected'],
+                'conjunctions': [None, 'Or'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,
@@ -502,7 +530,14 @@ def get_questions():
             },
             'choice_order': [1, 2],
             'is_mandatory': False,
-            'translations': []
+            'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['NotSelected', 'Selected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,
@@ -525,7 +560,14 @@ def get_questions():
             },
             'choice_order': [1, 2, 3],
             'is_mandatory': False,
-            'translations': []
+            'translations': [],
+            'complex_display_logic': {
+                'controlling_question_labels': ['ag_experience_training_useful_mc', 'ag_experience_training_apply_mc'],
+                'choices': [1, 1],
+                'operators': ['NotSelected', 'Selected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
+            }
         },
         {
             'block_number': 4,

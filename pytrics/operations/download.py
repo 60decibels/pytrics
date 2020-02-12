@@ -192,10 +192,12 @@ def _process_response_data(survey_id):
     try: # pylint: disable=too-many-nested-blocks
         processed_responses = []
         for response in cleaned_responses:
+            responseIdAsKey = response.pop('responseId')
+
             processed = {
-                'raw': response,
-                'processed': {}
+                responseIdAsKey: {}
             }
+
             for k, v in response.items():
                 question_id = k.split("_")[0]
                 rest_of_identifier = k.replace(question_id, '')
@@ -217,24 +219,24 @@ def _process_response_data(survey_id):
                         else:
                             values = choices[str(v)]['choiceText']
 
-                        processed['processed'][label] = values
+                        processed[responseIdAsKey][label] = values
 
                     else:
-                        processed['processed'][question_id] = v
+                        processed[responseIdAsKey][question_id] = v
 
                 elif len(k.split("_")) == 3:
                     try:
                         sub_id = int(k.split("_")[1])
                         sub_label = survey_questions[question_id]['choices'][str(sub_id)]['choiceText'].replace(' ', '_').lower()
                         combined_label = '{}_{}'.format(label, sub_label)
-                        processed['processed'][combined_label] = v
+                        processed[responseIdAsKey][combined_label] = v
                     except ValueError:
                         new_key = '{}{}'.format(label, rest_of_identifier)
-                        processed['processed'][new_key] = v
+                        processed[responseIdAsKey][new_key] = v
 
                 else:
                     new_key = '{}{}'.format(label, rest_of_identifier)
-                    processed['processed'][new_key] = v
+                    processed[responseIdAsKey][new_key] = v
 
             processed_responses.append(processed)
 
@@ -247,6 +249,7 @@ def _process_response_data(survey_id):
 
         return processed_responses_file_path
     except Exception as ex:
+        print(ex)
         raise QualtricsDataSerialisationException(ex)
 
     return None
@@ -272,6 +275,9 @@ def _get_cleaned_responses_dict_from_file(survey_id):
         for response in response_dict['responses']:
             raw_values = response['values']
             cleaned_values = {k:raw_values[k] for k in raw_values if k.startswith('QID')}
+            cleaned_values['responseId'] = response['responseId']
             cleaned_responses.append(cleaned_values)
+
+        print(cleaned_responses)
 
         return cleaned_responses

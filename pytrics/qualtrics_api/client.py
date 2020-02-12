@@ -275,14 +275,10 @@ class QualtricsAPIClient():
                     locators = question_complex_display_logic_dict['locators']
 
                     # the QIDn of this question could vary, so get this from the survey by the question label
-                    print(controlling_question_labels)
-
                     controlling_question_ids = []
                     for controlling_question_label in controlling_question_labels:
                         controlling_question_id, _ = self.find_question_in_survey_by_label(survey_id, controlling_question_label)
                         controlling_question_ids.append(controlling_question_id)
-
-                    print(controlling_question_ids)
 
                     # finally add a 'DisplayLogic' key with a value of the built display logic to this question payload
                     payload['DisplayLogic'] = self.build_complex_question_display_logic(controlling_question_ids, choices, operators, conjunctions, locators)

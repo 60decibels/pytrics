@@ -55,9 +55,6 @@ class PublishSurveyTestCase(unittest.TestCase):
 
         actual_url, version_id, version_number, creation_date = publish_survey('SV_1234567890a', 'name')
 
-        print(actual_url)
-        print(expected_url)
-
         self.assertEqual(expected_url, actual_url)
         self.assertEqual(version_id, 'version-id')
         self.assertEqual(version_number, 1)
