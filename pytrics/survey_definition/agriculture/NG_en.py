@@ -2,8 +2,6 @@
 '''
 These functions define the English (en) version of our Nigerian (NG) agriculture survey
 '''
-import pprint
-
 
 def get_blocks():
     return [
@@ -1444,16 +1442,12 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
-                },
-                '3': {
-                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2],
             'variable_naming': {
                 '1': 'Yes',
                 '2': 'No',
-                '3': 'Refused to answer',
             },
             'is_mandatory': False,
             'translations': []
@@ -1472,16 +1466,12 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
-                },
-                '3': {
-                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2],
             'variable_naming': {
                 '1': 'Yes',
                 '2': 'No',
-                '3': 'Refused to answer',
             },
             'is_mandatory': False,
             'translations': []
@@ -1500,16 +1490,12 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
-                },
-                '3': {
-                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2],
             'variable_naming': {
                 '1': 'Yes',
                 '2': 'No',
-                '3': 'Refused to answer',
             },
             'is_mandatory': False,
             'translations': []
@@ -1528,16 +1514,12 @@ def get_questions():
                 },
                 '2': {
                     'Display': 'No'
-                },
-                '3': {
-                    'Display': 'Refused to answer'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2],
             'variable_naming': {
                 '1': 'Yes',
                 '2': 'No',
-                '3': 'Refused to answer',
             },
             'is_mandatory': False,
             'translations': []
@@ -1732,19 +1714,3 @@ def get_questions():
             'translations': [],
         },
     ]
-
-def summarise():
-    pp = pprint.PrettyPrinter(indent=4)
-
-    blocks = []
-    questions = []
-
-    for block in get_blocks():
-        blocks.append((block['position'], block['description'],))
-
-    for question in get_questions():
-        questions.append((question['block_number'], question['label'], question['text']))
-
-    pp.pprint(blocks)
-
-    pp.pprint(questions)

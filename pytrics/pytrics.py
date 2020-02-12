@@ -21,6 +21,7 @@ from survey_definition.agriculture import (
     KE_en,
     NG_en,
     TZ_en,
+    XX_en,
 )
 
 
@@ -30,6 +31,7 @@ country_to_definition = {
     'ke': KE_en,
     'ng': NG_en,
     'tz': TZ_en,
+    'xx': XX_en,
 }
 
 

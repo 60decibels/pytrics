@@ -108,7 +108,79 @@ class QualtricsAPIClient():
 
         return display_logic
 
-    def build_question_payload(self, question_params=None, survey_id=None, include_display_logic=True): # pylint: disable=too-many-branches
+    def build_complex_question_display_logic(self, controlling_question_ids, choices, operators, conjunctions, locators): # pylint: disable=too-many-arguments
+        try:
+            assert controlling_question_ids
+            assert choices
+            for operator in operators:
+                assert operator.strip() in QUALTRICS_API_SUPPORTED_DISPLAY_LOGIC_OPERATORS
+            for conjunction in conjunctions:
+                assert conjunction in QUALTRICS_API_SUPPORTED_DISPLAY_LOGIC_CONJUNCTIONS
+            for locator in locators:
+                assert locator in QUALTRICS_API_SUPPORTED_DISPLAY_LOGIC_CHOICE_LOCATORS
+        except (AssertionError, AttributeError):
+            raise AssertionError('You must provide a non-empty list of controlling_question_ids, a non-empty list of choices and lists of supported values for operators, conjunctions and locators')
+
+        for controlling_question_id in controlling_question_ids:
+            self._validate_question_id(controlling_question_id)
+
+        display_logic = {
+            '0': {},
+            'Type': 'BooleanExpression',
+            'inPage': False
+        }
+
+        for index, controlling_question_id in enumerate(controlling_question_ids):
+            locator = locators[index]
+            choice = choices[index]
+            operator = operators[index]
+            conjunction = conjunctions[index]
+
+            if locator:
+                locator_string = 'q://{controlling_question_id}/{locator}/{choice}'.format(
+                    controlling_question_id=controlling_question_id,
+                    locator=locator,
+                    choice=choice
+                )
+                conditional = 'is Selected'
+            else:
+                locator_string = 'q://{controlling_question_id}/{choice}'.format(
+                    controlling_question_id=controlling_question_id,
+                    choice=choice
+                )
+                conditional = 'is True'
+
+            description = 'If {controlling_question_id} {choice} {conditional}'.format(
+                controlling_question_id=controlling_question_id,
+                choice=choice,
+                conditional=conditional
+            )
+
+            condition = {
+                'ChoiceLocator': locator_string,
+                'Description': description,
+                'LeftOperand': locator_string,
+                'LogicType': 'Question',
+                'Operator': operator,
+                'QuestionID': controlling_question_id,
+                "QuestionIDFromLocator": controlling_question_id,
+                "QuestionIsInLoop": "no",
+                'Type': 'Expression'
+            }
+
+            if operator == 'EqualTo':
+                condition['RightOperand'] = '1'
+
+            if index > 0:
+                condition['Conjuction'] = conjunction
+
+            display_logic['0'][str(index)] = condition
+
+        display_logic['0']['Type'] = 'If'
+
+        return display_logic
+
+    def build_question_payload(self, question_params=None, survey_id=None, include_display_logic=True): # pylint: disable=too-many-branches, too-many-statements
         try:
             assert question_params
 
@@ -190,6 +262,30 @@ class QualtricsAPIClient():
 
                     # finally add a 'DisplayLogic' key with a value of the built display logic to this question payload
                     payload['DisplayLogic'] = self.build_question_display_logic(controlling_question_id, choices, operator, conjunction, locator)
+
+            elif 'complex_display_logic' in question_params.keys():
+                question_complex_display_logic_dict = question_params['complex_display_logic']
+
+                if question_complex_display_logic_dict:
+                    # unpack dict entries for use as params below
+                    controlling_question_labels = question_complex_display_logic_dict['controlling_question_labels']
+                    choices = question_complex_display_logic_dict['choices']
+                    operators = question_complex_display_logic_dict['operators']
+                    conjunctions = question_complex_display_logic_dict['conjunctions']
+                    locators = question_complex_display_logic_dict['locators']
+
+                    # the QIDn of this question could vary, so get this from the survey by the question label
+                    print(controlling_question_labels)
+
+                    controlling_question_ids = []
+                    for controlling_question_label in controlling_question_labels:
+                        controlling_question_id, _ = self.find_question_in_survey_by_label(survey_id, controlling_question_label)
+                        controlling_question_ids.append(controlling_question_id)
+
+                    print(controlling_question_ids)
+
+                    # finally add a 'DisplayLogic' key with a value of the built display logic to this question payload
+                    payload['DisplayLogic'] = self.build_complex_question_display_logic(controlling_question_ids, choices, operators, conjunctions, locators)
 
         return payload
 
