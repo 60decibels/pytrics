@@ -134,6 +134,35 @@ def get_questions():
             'answer_selector': 'SL',
             'is_mandatory': True,
             'translations': [],
+            'additional_validation_settings': {
+                'Type': 'CustomValidation',
+                'CustomValidation': {
+                    'Logic': {
+                        '0': {
+                            '0': {
+                                'ChoiceLocator': 'q://QID2/ChoiceTextEntryValue',
+                                'Description': 'Matches Regex for hh:mm',
+                                'LeftOperand': 'q://QID2/ChoiceTextEntryValue',
+                                'LogicType': 'Question',
+                                'Operator': 'MatchesRegex',
+                                'QuestionID': 'QID2',
+                                'QuestionIDFromLocator': 'QID2',
+                                'QuestionIsInLoop': 'no',
+                                'RightOperand': '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
+                                'Type': 'Expression'
+                            },
+                            'Type': 'If'
+                        },
+                        'Type': 'BooleanExpression'
+                    },
+                    'Message': {
+                        'description': 'Validation Failed',
+                        'libraryID': None,
+                        'messageID': None,
+                        'subMessageID': 'VE_VALIDATION_FAILED'
+                    }
+                },
+            }
         },
         {
             'block_number': 1,
@@ -1712,5 +1741,34 @@ def get_questions():
             'answer_selector': 'SL',
             'is_mandatory': True,
             'translations': [],
+            'additional_validation_settings': {
+                'Type': 'CustomValidation',
+                'CustomValidation': {
+                    'Logic': {
+                        '0': {
+                            '0': {
+                                'ChoiceLocator': 'q://QID64/ChoiceTextEntryValue',
+                                'Description': 'Matches Regex for hh:mm',
+                                'LeftOperand': 'q://QID64/ChoiceTextEntryValue',
+                                'LogicType': 'Question',
+                                'Operator': 'MatchesRegex',
+                                'QuestionID': 'QID64',
+                                'QuestionIDFromLocator': 'QID64',
+                                'QuestionIsInLoop': 'no',
+                                'RightOperand': '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
+                                'Type': 'Expression'
+                            },
+                            'Type': 'If'
+                        },
+                        'Type': 'BooleanExpression'
+                    },
+                    'Message': {
+                        'description': 'Validation Failed',
+                        'libraryID': None,
+                        'messageID': None,
+                        'subMessageID': 'VE_VALIDATION_FAILED'
+                    }
+                },
+            }
         },
     ]

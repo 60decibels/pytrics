@@ -22,6 +22,7 @@ from survey_definition.agriculture import (
     NG_en,
     TZ_en,
     XX_en,
+    YY_en,
 )
 
 
@@ -32,6 +33,7 @@ country_to_definition = {
     'ng': NG_en,
     'tz': TZ_en,
     'xx': XX_en,
+    'yy': YY_en,
 }
 
 
