@@ -1,6 +1,6 @@
 '''
 The main entry point to this module, allows for the creation of surveys
-and the retrieval of responses.
+and the retrieval of responses. Also provides some helper functions.
 '''
 import json
 import os
@@ -41,6 +41,11 @@ def create_survey_from_definition(survey_name, country_iso_2):
 
     The PPI (Poverty Probability Index) questions will vary depending
     on the country_iso_2 code provided.
+
+    Expects a name and lower case two character iso country code from one of the
+    countries we have provided survey definitions for.
+
+    Example usage: create_survey_from_definition('My New Survey Name', 'et')
     '''
     definition_class = country_to_definition[country_iso_2]
 
@@ -64,6 +69,13 @@ def retrieve_survey_response_data(survey_id, process_responses=True):
 
     Both files are returned as you may wish/need to use the survey definition
     to understand and process the content of the response data file.
+
+    Expects the the Qualtrics survey identifier.
+
+    Optional 2nd argument can be passed as False to NOT process the responses into
+    a more readable/usable form. Default is True for this parameter.
+
+    Example usage: retrieve_survey_response_data('SV_123456abcdef')
     '''
     survey_file_name = response_file_name = None
 
@@ -79,7 +91,9 @@ def copy(template_survey_id, new_survey_name):
     '''
     Create a copy of an existing survey in your Qualtrics account.
 
-    Allows you to specify the new survey name.
+    Expects the the Qualtrics survey identifier, allows you to specify the new survey name.
+
+    Example usage: copy('SV_123456abcdef', 'My New Survey Name')
     '''
     try:
         assert template_survey_id.strip()
@@ -97,9 +111,11 @@ def copy(template_survey_id, new_survey_name):
 
 def describe(survey_id):
     '''
-    Describe an existing survey.
+    Describe an existing survey, expects the Qualtrics survey identifier.
 
     Creates a JSON file on your local disk for review and analysis.
+
+    Example usage: describe('SV_123456abcdef')
     '''
     detailed_survey_json = describe_survey(survey_id)
     survey_name = detailed_survey_json['detail']['survey']['result']['name']
@@ -111,6 +127,13 @@ def describe(survey_id):
 
 
 def summarise_definition(country_iso_2):
+    '''
+    Given a lower case two character iso country code from those supported this
+    function will print out a formatted summary of the blocks and questions of the
+    relevant survey definition:
+
+    Example usage: summarise_definition('et')
+    '''
     definition_class = country_to_definition[country_iso_2]
 
     blocks = definition_class.get_blocks()

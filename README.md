@@ -115,6 +115,8 @@ The `pytrics/pytrics.py` module also contains three helper functions which were 
 
 As you may expect these allow you to copy an existing survey to a new name within your Qualtrics account, to describe an existing survey to file on your local disk so you can review the blocks, questions and flow of any survey within your Qualtrics account. And finally summarise the definition of each survey so you can easily see the questions that the survey contains and their order.
 
+For example usages of these helper functions please refer to their docstrings in `pytrics/pytrics.py`.
+
 ## Improving this Code
 
 Feel free to fork or clone this repository and iterate on the functionality provided to suit your purposes, please ensure you include the `LICENSE` file in all copies or substantial portions of the Software.
