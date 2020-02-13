@@ -73,15 +73,21 @@ This repository provides country specific templates for [60 Decibels](www.60deci
 >>>
 ```
 
-The above code shows the result of creating a new survey using the Ethiopian template. This survey is published and ready to accept responses on the returned URL.
+The above code shows the result of creating a new survey using the Ethiopian template (as denoted by the 2nd parameter of 'et'). This survey is published and ready to accept responses on the returned URL.
 
-We have provided survey definitions for each of the following countries;
+#### Supported Countries
 
-1. Ethiopia
-2. India
-3. Kenya
-4. Nigeria
-5. Tanzania
+We have provided survey definitions for each of the following countries (their two character iso code is provided in brackets for reference);
+
+1. Ethiopia (et)
+2. India (in)
+3. Kenya (ke)
+4. Nigeria (ng)
+5. Tanzania (tz)
+
+#### Supported Languages
+
+At present we have only provided survey definitions in English.
 
 #### Extending this code
 
@@ -100,7 +106,7 @@ To gather response data from a specific survey you can use the code below.
 >>>
 ```
 
-The function `retrieve_survey_response_data` queries the Qualtrics API and saves data to disk in four JSON files and returns the paths to these. 
+The function `retrieve_survey_response_data` queries the Qualtrics API and saves data to disk in four JSON files and returns the paths to these.
 
 1. The first file contains the survey defintion
 2. The second file contains any recorded responses to this survey in zip form as provided by Qualtrics.
@@ -113,9 +119,29 @@ All files are returned as you may wish/need to use the survey definition to unde
 
 The `pytrics/pytrics.py` module also contains three helper functions which were particularly useful when implementing the various functionality contained in this repository. These are `copy`, `describe` and `summarise_definition`.
 
-As you may expect these allow you to copy an existing survey to a new name within your Qualtrics account, to describe an existing survey to file on your local disk so you can review the blocks, questions and flow of any survey within your Qualtrics account. And finally summarise the definition of each survey so you can easily see the questions that the survey contains and their order.
+```python
+from pytrics import copy, describe, summarise_definition
+```
 
-For example usages of these helper functions please refer to their docstrings in `pytrics/pytrics.py`.
+- `copy` allows you to copy an existing survey to a new name within your Qualtrics account. It expects two parameters, the Qualtrics survey identifier and a new name for the copy it will create. Example usage below:
+
+```python
+>>> copy('SV_123456abcdef', 'My New Survey Name')
+```
+
+- `describe` allows you to describe an existing survey in your Qualtrics account to a file on your local disk so you can review the blocks, questions and flow of this survey. It expects one parameter, the Qualtrics survey identifier. Example usage below:
+
+```python
+>>> describe('SV_123456abcdef')
+```
+
+- `summarise_definition` produces a summary of the specified survey definition so you can easily see the questions that the survey contains and their order. It expects one paramater, a lower case two character iso country code from those supported. Example usage below:
+
+```python
+>>> summarise_definition('et')
+```
+
+More details of these helper functions can be found in the code at `pytrics/pytrics.py`.
 
 ## Improving this Code
 
