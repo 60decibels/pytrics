@@ -2,7 +2,7 @@
 
 Python based Qualtrics survey integration.
 
-This repository contains code to work with the Qualtrics API and to create surveys from template definitions and download responses to these for anaylsis and processing.
+This repository contains code to work with the Qualtrics API and to create surveys from the provided template definitions and download responses to these surveys for anaylsis and processing.
 
 ## Getting started
 
