@@ -86,7 +86,7 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'PPI - Ethiopia',
+            'description': 'Poverty Probability Index - Ethiopia',
             'type': 'Standard',
             'position': 17
         },

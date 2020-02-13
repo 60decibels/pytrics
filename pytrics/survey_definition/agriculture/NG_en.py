@@ -86,7 +86,7 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'PPI - Nigeria',
+            'description': 'Poverty Probability Index - Nigeria',
             'type': 'Standard',
             'position': 17
         },

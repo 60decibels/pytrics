@@ -86,7 +86,7 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'PPI - Tanzania',
+            'description': 'Poverty Probability Index - Tanzania',
             'type': 'Standard',
             'position': 17
         },

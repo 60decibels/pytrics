@@ -21,8 +21,6 @@ from survey_definition.agriculture import (
     KE_en,
     NG_en,
     TZ_en,
-    XX_en,
-    YY_en,
 )
 
 
@@ -32,8 +30,6 @@ country_to_definition = {
     'ke': KE_en,
     'ng': NG_en,
     'tz': TZ_en,
-    'xx': XX_en,
-    'yy': YY_en,
 }
 
 
@@ -60,7 +56,7 @@ def create_survey_from_definition(survey_name, country_iso_2):
     return survey_url
 
 
-def retrieve_survey_response_data(survey_id, process_responses=False):
+def retrieve_survey_response_data(survey_id, process_responses=True):
     '''
     Downloads both the survey definition and any recorded responses.
 
@@ -120,7 +116,7 @@ def summarise_definition(country_iso_2):
     blocks = definition_class.get_blocks()
     questions = definition_class.get_questions()
 
-    pp = pprint.PrettyPrinter(indent=4)
+    pp = pprint.PrettyPrinter(indent=4, width=300)
 
     summarised_blocks = [('Block Number', 'Block Name')]
     summarised_questions = [('Block Number', 'Question Label', 'Question Text')]

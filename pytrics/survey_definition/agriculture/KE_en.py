@@ -86,7 +86,7 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'PPI - Kenya',
+            'description': 'Poverty Probability Index - Kenya',
             'type': 'Standard',
             'position': 17
         },

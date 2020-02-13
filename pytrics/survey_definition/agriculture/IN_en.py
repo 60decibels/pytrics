@@ -86,7 +86,7 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'PPI - India',
+            'description': 'Poverty Probability Index - India',
             'type': 'Standard',
             'position': 17
         },
