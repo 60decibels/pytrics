@@ -76,7 +76,7 @@ export QUALTRICS_API_BASE_URL=your_base_api_url
 
 ### Creating a Survey
 
-This repository provides country specific templates for [60 Decibels](www.60decibels.com) Standard Agriculture Survey, which can be created in Qualtrics using the code below.
+This repository provides country specific templates for [60 Decibels](https://www.60decibels.com) Standard Agriculture Survey, which can be created in Qualtrics using the code below.
 
 ```python
 >>> from pytrics.tools import Tools
