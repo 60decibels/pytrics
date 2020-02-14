@@ -42,7 +42,7 @@ nosetests --with-coverage --cover-erase --cover-package=pytrics/. --cover-html -
 PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable pytrics/*
 ```
 
-#### Lint the tests if you like too
+#### Lint the tests if you like
 
 ```bash
 PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable tests/*
@@ -79,8 +79,9 @@ export QUALTRICS_API_BASE_URL=your_base_api_url
 This repository provides country specific templates for [60 Decibels](www.60decibels.com) Standard Agriculture Survey, which can be created in Qualtrics using the code below.
 
 ```python
->>> from pytrics import create_survey_from_definition
->>> create_survey_from_definition('My new agriculture survey', 'et')
+>>> from pytrics.tools import Tools
+>>> tools = Tools()
+>>> tools.create_survey_from_definition('My new agriculture survey', 'et')
 >>> ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 >>>
 ```
@@ -112,8 +113,9 @@ The `create_survey_from_definition` function in `pytrics/pytrics.py` could be ea
 To gather response data from a specific survey you can use the code below.
 
 ```python
->>> from pytrics import retrieve_survey_response_data
->>> retrieve_survey_response_data('SV_123456abcdef')
+>>> from pytrics.tools import Tools
+>>> tools = Tools()
+>>> tools.retrieve_survey_response_data('SV_123456abcdef')
 >>> ('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
 >>>
 ```
@@ -132,25 +134,26 @@ All files are returned as you may wish/need to use the survey definition to unde
 The `pytrics/pytrics.py` module also contains three helper functions which were particularly useful when implementing the various functionality contained in this repository. These are `copy`, `describe` and `summarise_definition`.
 
 ```python
-from pytrics import copy, describe, summarise_definition
+>>> from pytrics.tools import Tools
+>>> tools = Tools()
 ```
 
 - `copy` allows you to copy an existing survey to a new name within your Qualtrics account. It expects two parameters, the Qualtrics survey identifier and a new name for the copy it will create. Example usage below:
 
 ```python
->>> copy('SV_123456abcdef', 'My New Survey Name')
+>>> tools.copy('SV_123456abcdef', 'My New Survey Name')
 ```
 
 - `describe` allows you to describe an existing survey in your Qualtrics account to a file on your local disk so you can review the blocks, questions and flow of this survey. It expects one parameter, the Qualtrics survey identifier. Example usage below:
 
 ```python
->>> describe('SV_123456abcdef')
+>>> tools.describe('SV_123456abcdef')
 ```
 
 - `summarise_definition` produces a summary of the specified survey definition so you can easily see the questions that the survey contains and their order. It expects one paramater, a lower case two character iso country code from those supported. Example usage below:
 
 ```python
->>> summarise_definition('et')
+>>> tools.summarise_definition('et')
 ```
 
 More details of these helper functions can be found in the code at `pytrics/pytrics.py`.
