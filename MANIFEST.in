@@ -1,0 +1,5 @@
+include data/*
+include .gitignore
+include .pylintrc
+include LICENSE.txt
+include README.md
