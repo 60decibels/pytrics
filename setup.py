@@ -8,7 +8,7 @@ with open('HISTORY.md') as history_file:
 
 setup_args = dict(
     name='pytrics',
-    version='0.0.5',
+    version='0.0.6',
     description='Python based Qualtrics survey integration',
     long_description_content_type="text/markdown",
     long_description=README + '\n\n' + HISTORY,

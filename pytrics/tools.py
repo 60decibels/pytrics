@@ -69,8 +69,7 @@ class Tools:
 
         return survey_url
 
-    @staticmethod
-    def retrieve_survey_response_data(survey_id, process_responses=True):
+    def retrieve_survey_response_data(self, survey_id, process_responses=True):
         '''
         Downloads both the survey definition and any recorded responses.
 
@@ -89,7 +88,7 @@ class Tools:
         survey_file_name = response_file_name = None
 
         try:
-            survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name = get_survey_and_response_data(survey_id, self.abs_path_to_data_dir, process_responses)
+            survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name = get_survey_and_response_data(survey_id, self.abs_path_to_data, process_responses)
         except QualtricsAPIException as qex:
             raise qex
 
