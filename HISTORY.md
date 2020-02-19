@@ -9,3 +9,6 @@
 
 ### v0.0.4
     * Moved path to data files into environment variable
+
+### v0.0.5
+    * Bug fix
