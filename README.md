@@ -4,49 +4,42 @@ Python based Qualtrics survey integration.
 
 This repository contains code to work with the Qualtrics API and to create surveys from the provided template definitions and download responses to these surveys for anaylsis and processing.
 
-## Getting started
-
-This code is wirtten using Python 3, please ensure you have v3 installed before proceeding.
-
-### Setup
-
-- run `python3 -m venv env` to create a virtual environement named env
-- run `source env/bin/activate` to activate the virtualenv
-- run `pip3 install -r dev-requirements.txt` to install required packages into your virtual environments, (including those required for development and testing)
-
-### Running the tests
-
-Tests are written using unittest and can be executed via [nose](https://nose.readthedocs.io/en/latest/index.html). Some example commands are below, refer to [the docs](https://nose.readthedocs.io/en/latest/usage.html) for more options and information.
-
-- Run all tests;
+## Usage
 
 ```bash
-nosetests
+pip install pytrics
+
+export QUALTRICS_API_AUTH_TOKEN=your_api_token
+
+export QUALTRICS_API_BASE_URL=your_base_api_url
+
+export ABSOLUTE_PATH_TO_DATA_DIR=/absolute/path/on/disk/to/store/output
+
 ```
 
-- Run specific tests;
+```python
+from pytrics.tools import Tools
+tools = Tools()
 
-```bash
-nosetests tests/qualtrics_api/client/question/build_question_display_logic_tests.py
+
+tools.create_survey_from_definition('My new agriculture survey', 'et')
+>>> ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
+
+
+tools.retrieve_survey_response_data('SV_123456abcdef')
+>>> ('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
+
+
+tools.copy('SV_123456abcdef', 'My New Survey Name')
+
+
+tools.describe('SV_123456abcdef')
+
+
+tools.summarise_definition('et')
 ```
 
-- Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with verbose and colourful output;
-
-```bash
-nosetests --with-coverage --cover-erase --cover-package=pytrics/. --cover-html --cover-min-percentage=70 -v --rednose
-```
-
-### Linting the code
-
-```bash
-PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable pytrics/*
-```
-
-#### Lint the tests if you like
-
-```bash
-PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable tests/*
-```
+Read on for more information about working with surveys using Qualtrics and this package.
 
 ## Working with surveys
 
@@ -68,10 +61,18 @@ Copy your API authorisation token and set an environment variable named `QUALTRI
 export QUALTRICS_API_AUTH_TOKEN=your_api_token
 ```
 
-Next we need to do the same with the base API url. This varies depending on your Qualtrics account (and the data centre you are using), for more information [see the documentation here](https://www.qualtrics.com/support/integrations/api-integration/finding-qualtrics-ids/#LocatingtheDatacenterID). Once you figure out your APIs base url add it to an environment variable as per below;
+Next we need to create an environment variable for your base API url called `QUALTRICS_API_BASE_URL`. 
+
+This varies depending on your Qualtrics account (and the data centre you are using), for more information [see the documentation here](https://www.qualtrics.com/support/integrations/api-integration/finding-qualtrics-ids/#LocatingtheDatacenterID). Once you figure out your APIs base url add it to an environment variable as per below;
 
 ```bash
 export QUALTRICS_API_BASE_URL=your_base_api_url
+```
+
+Finally we need to set an environment variable called `ABSOLUTE_PATH_TO_DATA_DIR` to tell this package where on disk it should store output data files:
+
+```bash
+export ABSOLUTE_PATH_TO_DATA_DIR=/absolute/path/on/disk/to/store/output
 ```
 
 ### Creating a Survey
@@ -81,6 +82,7 @@ This repository provides country specific templates for [60 Decibels](https://ww
 ```python
 >>> from pytrics.tools import Tools
 >>> tools = Tools()
+>>> 
 >>> tools.create_survey_from_definition('My new agriculture survey', 'et')
 >>> ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 >>>
@@ -115,6 +117,7 @@ To gather response data from a specific survey you can use the code below.
 ```python
 >>> from pytrics.tools import Tools
 >>> tools = Tools()
+>>> 
 >>> tools.retrieve_survey_response_data('SV_123456abcdef')
 >>> ('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
 >>>
@@ -158,13 +161,57 @@ The `pytrics/pytrics.py` module also contains three helper functions which were 
 
 More details of these helper functions can be found in the code at `pytrics/pytrics.py`.
 
-## Improving this Code
+## Extending and improving this Code
 
-Feel free to fork or clone this repository and iterate on the functionality provided to suit your purposes, please ensure you include the `LICENSE` file in all copies or substantial portions of the Software.
+Feel free to fork or clone this repository and iterate on the functionality provided to suit your purposes, please ensure you include the `LICENSE.txt` file in all copies or substantial portions of the Software.
+
+### Getting started
+
+This code is written using Python 3, please ensure you have v3 installed before proceeding.
+
+#### Setup
+
+- run `python3 -m venv env` to create a virtual environement named env
+- run `source env/bin/activate` to activate the virtualenv
+- run `pip3 install -r dev-requirements.txt` to install required packages into your virtual environment, (including those required for development and testing)
+
+#### Running the tests
+
+Tests are written using unittest and can be executed via [nose](https://nose.readthedocs.io/en/latest/index.html). Some example commands are below, refer to [the docs](https://nose.readthedocs.io/en/latest/usage.html) for more options and information.
+
+- Run all tests;
+
+```bash
+nosetests
+```
+
+- Run specific tests;
+
+```bash
+nosetests tests/qualtrics_api/client/question/build_question_display_logic_tests.py
+```
+
+- Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with verbose and colourful output;
+
+```bash
+nosetests --with-coverage --cover-erase --cover-package=pytrics/. --cover-html --cover-min-percentage=70 -v --rednose
+```
+
+#### Linting the code
+
+```bash
+PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable pytrics/*
+```
+
+#### Lint the tests if you like
+
+```bash
+PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable tests/*
+```
 
 ## License
 
-This code is not actively maintained but it is provided under [the MIT licence](https://opensource.org/licenses/MIT) and therefore free to copy, use and amend. Please refer to the `LICENSE` file contained in this repository for full terms of use and ensure you include the LICENSE file in all copies or substantial portions of the Software that you create.
+This code is not actively maintained but it is provided under [the MIT licence](https://opensource.org/licenses/MIT) and therefore free to copy, use and amend. Please refer to the `LICENSE.txt` file contained in this repository for full terms of use and ensure you include the LICENSE.txt file in all copies or substantial portions of the Software that you create.
 
 ## Further Context
 

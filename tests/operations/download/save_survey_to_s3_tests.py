@@ -56,12 +56,12 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
     def test_calls_various_functions_as_expected(self):
         # run the function
-        save_survey_to_file(self.api, 'SV_abcdefghijk')
+        save_survey_to_file(self.api, 'SV_abcdefghijk', '/testing')
 
         # assert it calls the things we expect it to, with expected args
         self.api.get_survey.assert_called_once_with('SV_abcdefghijk')
 
-        self._get_survey_file_path.assert_called_once_with('SV_abcdefghijk')
+        self._get_survey_file_path.assert_called_once_with('SV_abcdefghijk', '/testing')
 
         self.json.dump.assert_called_once_with(self.survey_json, self.survey_file)
 
@@ -71,7 +71,7 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            save_survey_to_file(self.api, 'SV_abcdefghijk')
+            save_survey_to_file(self.api, 'SV_abcdefghijk', '/testing')
 
     def test_raises_exception_when_error_encountered_during_get_survey(self):
         # tell our upload patch to raise an Exception
@@ -81,4 +81,4 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsAPIException):
-            save_survey_to_file(self.api, 'SV_abcdefghijk')
+            save_survey_to_file(self.api, 'SV_abcdefghijk', '/testing')

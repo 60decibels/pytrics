@@ -1111,7 +1111,7 @@ def get_questions():
             'is_mandatory': False,
             'translations': [],
             'display_logic': {
-                'controlling_question_labels': ['alternatives_yn'], 
+                'controlling_question_labels': ['alternatives_yn'],
                 'choices': [3],
                 'operators': ['Selected'],
                 'conjunctions': [None],

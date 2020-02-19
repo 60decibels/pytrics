@@ -3,7 +3,113 @@
 These functions define the English (en) version of our Indian (IN) agriculture survey
 '''
 
+
 def get_blocks():
+    return [
+        {
+            'description': 'Start Survey',
+            'type': 'Standard',
+            'position': 1
+        },
+        {
+            'description': 'Profile & Acquisition',
+            'type': 'Standard',
+            'position': 2
+        },
+        {
+            'description': 'First Access',
+            'type': 'Standard',
+            'position': 3
+        },
+        {
+            'description': 'Information',
+            'type': 'Standard',
+            'position': 4
+        },
+        {
+            'description': 'NPS',
+            'type': 'Standard',
+            'position': 5
+        },
+        {
+            'description': 'Way of Farming',
+            'type': 'Standard',
+            'position': 6
+        },
+        {
+            'description': 'Quality of Life',
+            'type': 'Standard',
+            'position': 7
+        },
+        {
+            'description': 'Change in Confidence',
+            'type': 'Standard',
+            'position': 8
+        },
+        {
+            'description': 'Money Spent',
+            'type': 'Standard',
+            'position': 9
+        },
+        {
+            'description': 'Alternatives',
+            'type': 'Standard',
+            'position': 10
+        },
+        {
+            'description': 'Challenges',
+            'type': 'Standard',
+            'position': 11
+        },
+        {
+            'description': 'Retention',
+            'type': 'Standard',
+            'position': 12
+        },
+        {
+            'description': 'HH Size',
+            'type': 'Standard',
+            'position': 13
+        },
+        {
+            'description': 'Farmed Land & Ownership',
+            'type': 'Standard',
+            'position': 14
+        },
+        {
+            'description': 'Share of HH Income - Company',
+            'type': 'Standard',
+            'position': 15
+        },
+        {
+            'description': 'Share of HH Income - All Farming',
+            'type': 'Standard',
+            'position': 16
+        },
+        {
+            'description': 'Poverty Probability Index - Ethiopia',
+            'type': 'Standard',
+            'position': 17
+        },
+        {
+            'description': 'Gender',
+            'type': 'Standard',
+            'position': 18
+        },
+        {
+            'description': 'Age',
+            'type': 'Standard',
+            'position': 19
+        },
+        {
+            'description': 'End Survey',
+            'type': 'Standard',
+            'position': 20
+        }
+    ]
+
+
+def get_questions():
     return [
         {
             'block_number': 1,
@@ -1006,7 +1112,7 @@ def get_blocks():
             'is_mandatory': False,
             'translations': [],
             'display_logic': {
-                'controlling_question_labels': ['alternatives_yn'], 
+                'controlling_question_labels': ['alternatives_yn'],
                 'choices': [3],
                 'operators': ['Selected'],
                 'conjunctions': [None],

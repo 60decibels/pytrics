@@ -51,12 +51,12 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         self._await_response_file_creation.return_value = 'b504b 0304 1400 0808 0800 1458 f74e 0000'
 
         # run the function
-        save_responses_to_file(self.api, 'SV_abcdefghijk')
+        save_responses_to_file(self.api, 'SV_abcdefghijk', '/testing')
 
         # assert it calls the things we expect it to, with expected args
-        self.api.create_response_export.assert_called_once_with('SV_abcdefghijk')
+        self._get_response_file_path.assert_called_once_with('SV_abcdefghijk', '/testing')
 
-        self._get_response_file_path.assert_called_once_with('SV_abcdefghijk')
+        self.api.create_response_export.assert_called_once_with('SV_abcdefghijk')
 
         self._await_response_file_creation.assert_called_once_with(self.api, 'SV_abcdefghijk', 'ES_d4DVIiKEHQ9rBWZ')
 
@@ -74,7 +74,7 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
         ]
 
         # run the function
-        save_responses_to_file(self.api, 'SV_abcdefghijk')
+        save_responses_to_file(self.api, 'SV_abcdefghijk', '/testing')
 
         # now assert via logging (and other functions) that we ran the function twice,
         # this proves it called itself and recursed as expected
@@ -105,7 +105,7 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            save_responses_to_file(self.api, 'SV_abcdefghijk', progress_id='fake-progress-id', retries=QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT)
+            save_responses_to_file(self.api, 'SV_abcdefghijk', '/testing', progress_id='fake-progress-id', retries=QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT)
 
     def test_raises_exception_when_error_encountered_during_open(self):
         # again, don't need to set a return value for _await_response_file_creation
@@ -116,4 +116,4 @@ class SaveSurveyToS3TestCase(unittest.TestCase): # pylint: disable=too-many-inst
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            save_responses_to_file(self.api, 'SV_abcdefghijk')
+            save_responses_to_file(self.api, 'SV_abcdefghijk', '/testing')

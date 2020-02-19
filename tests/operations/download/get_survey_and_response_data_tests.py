@@ -39,16 +39,16 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
     def test_calls_expected_functions_when_successful(self):
         # run the function
-        get_survey_and_response_data('SV_abcdefghijk')
+        get_survey_and_response_data('SV_abcdefghijk', '/testing')
 
         # assert expected calls made by internal logic of function
         self.get_details_for_client.assert_called_once()
 
-        self.save_survey_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk')
+        self.save_survey_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk', '/testing')
 
-        self.save_responses_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk')
+        self.save_responses_to_file.assert_called_once_with(self.api, 'SV_abcdefghijk', '/testing')
 
-        self._unzip_response_file.assert_called_once_with('SV_abcdefghijk')
+        self._unzip_response_file.assert_called_once_with('SV_abcdefghijk', '/testing')
 
     def test_raises_exception_when_save_survey_to_file_raises_api_error(self):
         # tell our patch to raise an Exception
@@ -58,7 +58,7 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsAPIException):
-            get_survey_and_response_data('SV_abcdefghijk')
+            get_survey_and_response_data('SV_abcdefghijk', '/testing')
 
     def test_raises_exception_when_save_survey_to_file_raises_serialisation_error(self):
         # tell our patch to raise an Exception
@@ -68,7 +68,7 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            get_survey_and_response_data('SV_abcdefghijk')
+            get_survey_and_response_data('SV_abcdefghijk', '/testing')
 
     def test_raises_exception_when_save_responses_to_file_raises_serialisation_error(self):
         # tell our patch to raise an Exception
@@ -78,7 +78,7 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            get_survey_and_response_data('SV_abcdefghijk')
+            get_survey_and_response_data('SV_abcdefghijk', '/testing')
 
     def test_raises_exception_when__unzip_response_file_raises_serialisation_error(self):
         # tell our patch to raise an Exception
@@ -88,4 +88,4 @@ class GetSurveyAndResponseDataTestCase(unittest.TestCase):
 
         # assert expected exception type raised
         with self.assertRaises(QualtricsDataSerialisationException):
-            get_survey_and_response_data('SV_abcdefghijk')
+            get_survey_and_response_data('SV_abcdefghijk', '/testing')

@@ -6,7 +6,11 @@ import json
 import os
 import pprint
 
-from pytrics.common.exceptions import QualtricsAPIException
+from pytrics.common.constants import ENV_VAR_ABSOLUTE_PATH_TO_DATA_DIR
+from pytrics.common.exceptions import (
+    QualtricsAPIException,
+    QualtricsDataSerialisationException,
+)
 
 from pytrics.operations.download import get_survey_and_response_data
 from pytrics.operations.upload import (
@@ -34,6 +38,9 @@ class Tools:
             'ng': NG_en,
             'tz': TZ_en,
         }
+        self.abs_path_to_data = os.environ.get(ENV_VAR_ABSOLUTE_PATH_TO_DATA_DIR, '')
+        if not self.abs_path_to_data:
+            raise QualtricsDataSerialisationException('Unable to find absolute path to data directory in ENV')
 
     def create_survey_from_definition(self, survey_name, country_iso_2):
         '''
@@ -110,8 +117,7 @@ class Tools:
 
         return new_survey_id
 
-    @staticmethod
-    def describe(survey_id):
+    def describe(self, survey_id):
         '''
         Describe an existing survey, expects the Qualtrics survey identifier.
 
@@ -122,7 +128,7 @@ class Tools:
         detailed_survey_json = describe_survey(survey_id)
         survey_name = detailed_survey_json['detail']['survey']['result']['name']
 
-        detailed_survey_json_file_path = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_{}.json'.format(survey_name, survey_id))
+        detailed_survey_json_file_path = '{}/{}_{}.json'.format(self.abs_path_to_data, survey_name, survey_id)
 
         with open(detailed_survey_json_file_path, 'w') as detailed_survey_json_file:
             json.dump(detailed_survey_json, detailed_survey_json_file, indent=4, sort_keys=True)

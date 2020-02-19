@@ -35,12 +35,12 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
 
     def test_calls_various_functions_as_expected(self):
         # run the function
-        _unzip_response_file('SV_abcdefghijk')
+        _unzip_response_file('SV_abcdefghijk', '/testing')
 
         # assert it calls the things we expect it to, with expected args
         self._get_response_file_path.assert_has_calls([
-            call('SV_abcdefghijk', zipped=True),
-            call('SV_abcdefghijk', zipped=False),
+            call('SV_abcdefghijk', '/testing', zipped=True),
+            call('SV_abcdefghijk', '/testing', zipped=False),
         ])
 
         self.os.rename.assert_called_once_with('testing/response_file_name_from_api.zip', 'testing/SV_abcdefghijk_responses.json')
@@ -53,10 +53,10 @@ class UnzipResponseFileTestCase(unittest.TestCase): # pylint: disable=too-many-i
         # set return value from zipfile to an empty list, represents an empty archive/zip from the call to qualtrics
         self.zipped.infolist.return_value = []
 
-        _unzip_response_file('SV_abcdefghijk')
+        _unzip_response_file('SV_abcdefghijk', '/testing')
 
         # assert it calls the things we expect it to, with expected args
         self._get_response_file_path.assert_has_calls([
-            call('SV_abcdefghijk', zipped=True),
-            call('SV_abcdefghijk', zipped=False),
+            call('SV_abcdefghijk', '/testing', zipped=True),
+            call('SV_abcdefghijk', '/testing', zipped=False),
         ])

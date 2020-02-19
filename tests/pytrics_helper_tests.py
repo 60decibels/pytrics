@@ -13,6 +13,12 @@ class CopyTestCase(unittest.TestCase):
         self.copy_survey = copy_survey_patch.start()
         self.addCleanup(copy_survey_patch.stop)
 
+        os_patch = patch('pytrics.tools.os')
+        self.os = os_patch.start()
+        self.addCleanup(os_patch.stop)
+
+        self.os.environ.get.return_value = '/data'
+
         self.tools = Tools()
 
     def test_asserts_template_survey_id_param(self):

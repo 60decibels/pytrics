@@ -20,54 +20,54 @@ from pytrics.qualtrics_api.client import QualtricsAPIClient
 from pytrics.qualtrics_api.common import get_details_for_client
 
 
-def get_survey_data(survey_id):
+def get_survey_data(survey_id, abs_path_to_data_dir):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     try:
-        file_path_and_name = save_survey_to_file(api, survey_id)
+        file_path_and_name = save_survey_to_file(api, survey_id, abs_path_to_data_dir)
     except (QualtricsAPIException, QualtricsDataSerialisationException) as qex:
         raise qex
 
     return file_path_and_name
 
 
-def get_survey_and_response_data(survey_id, process_responses=False):
+def get_survey_and_response_data(survey_id, abs_path_to_data_dir, process_responses=False):
     base_url, auth_token = get_details_for_client()
     api = QualtricsAPIClient(base_url, auth_token)
 
     try:
-        survey_file_name = save_survey_to_file(api, survey_id)
+        survey_file_name = save_survey_to_file(api, survey_id, abs_path_to_data_dir)
     except (QualtricsAPIException, QualtricsDataSerialisationException) as qex:
         raise qex
 
     try:
-        response_file_name = save_responses_to_file(api, survey_id)
+        response_file_name = save_responses_to_file(api, survey_id, abs_path_to_data_dir)
     except QualtricsDataSerialisationException as qex:
         raise qex
 
     try:
-        unzipped_response_file_name = _unzip_response_file(survey_id)
+        unzipped_response_file_name = _unzip_response_file(survey_id, abs_path_to_data_dir)
     except QualtricsDataSerialisationException as qex:
         raise qex
 
     processed_response_file_name = None
     if process_responses:
         try:
-            processed_response_file_name = _process_response_data(survey_id)
+            processed_response_file_name = _process_response_data(survey_id, abs_path_to_data_dir)
         except QualtricsDataSerialisationException as qex:
             raise qex
 
     return survey_file_name, response_file_name, unzipped_response_file_name, processed_response_file_name
 
 
-def save_survey_to_file(api, survey_id):
+def save_survey_to_file(api, survey_id, abs_path_to_data_dir):
     try:
         survey_json = api.get_survey(survey_id)
     except (AssertionError, HTTPError) as ex:
         raise QualtricsAPIException(ex)
 
-    file_path_and_name = _get_survey_file_path(survey_id)
+    file_path_and_name = _get_survey_file_path(survey_id, abs_path_to_data_dir)
 
     try:
         with open(file_path_and_name, mode='w+', newline='', encoding='utf-8-sig') as survey_file:
@@ -79,8 +79,8 @@ def save_survey_to_file(api, survey_id):
     return file_path_and_name
 
 
-def save_responses_to_file(api, survey_id, progress_id=None, retries=0):
-    file_path_and_name = _get_response_file_path(survey_id)
+def save_responses_to_file(api, survey_id, abs_path_to_data_dir, progress_id=None, retries=0):
+    file_path_and_name = _get_response_file_path(survey_id, abs_path_to_data_dir)
     response_bytes = None
 
     if retries == 0:
@@ -92,7 +92,7 @@ def save_responses_to_file(api, survey_id, progress_id=None, retries=0):
         if retries < QUALTRICS_API_EXPORT_RESPONSES_RETRY_LIMIT:
             retries += 1
             # Recurse to get new progress_id and try again
-            save_responses_to_file(api, survey_id, progress_id, retries)
+            save_responses_to_file(api, survey_id, abs_path_to_data_dir, progress_id, retries)
         else:
             # Retry limit reached
             raise QualtricsDataSerialisationException('Failed after {0} attempts to get responses for survey_id {1}'.format(
@@ -128,27 +128,27 @@ def _await_response_file_creation(api, survey_id, progress_id):
     return api.get_response_export_file(survey_id, file_id)
 
 
-def _get_survey_file_path(survey_id):
-    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}.{}'.format(survey_id, FILE_EXTENSION_JSON))
+def _get_survey_file_path(survey_id, abs_path_to_data_dir):
+    file_path_and_name = '{}/{}.{}'.format(abs_path_to_data_dir, survey_id, FILE_EXTENSION_JSON)
 
     return file_path_and_name
 
 
-def _get_response_file_path(survey_id, zipped=True):
+def _get_response_file_path(survey_id, abs_path_to_data_dir, zipped=True):
     file_ext = FILE_EXTENSION_ZIP if zipped else FILE_EXTENSION_JSON
-    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_responses.{}'.format(survey_id, file_ext))
+    file_path_and_name = '{}/{}_responses.{}'.format(abs_path_to_data_dir, survey_id, file_ext)
 
     return file_path_and_name
 
 
-def _get_processed_response_file_path(survey_id):
+def _get_processed_response_file_path(survey_id, abs_path_to_data_dir):
     file_ext = FILE_EXTENSION_JSON
-    file_path_and_name = os.path.join(os.path.abspath(os.getcwd()), '../data/', '{}_responses_processed.{}'.format(survey_id, file_ext))
+    file_path_and_name = '{}/{}_responses_processed.{}'.format(abs_path_to_data_dir, survey_id, file_ext)
 
     return file_path_and_name
 
 
-def _unzip_response_file(survey_id):
+def _unzip_response_file(survey_id, abs_path_to_data_dir):
     '''
     Response files are zips containing single .json file named after survey in qualtrics
 
@@ -157,8 +157,8 @@ def _unzip_response_file(survey_id):
     If no responses are yet recorded against a survey the zip is empty. In this case we
     write an empty responses json file to disk to explicitly indicate processing completed
     '''
-    response_file_path = _get_response_file_path(survey_id, zipped=True)
-    unzipped_response_file_path = _get_response_file_path(survey_id, zipped=False)
+    response_file_path = _get_response_file_path(survey_id, abs_path_to_data_dir, zipped=True)
+    unzipped_response_file_path = _get_response_file_path(survey_id, abs_path_to_data_dir, zipped=False)
 
     with ZipFile(response_file_path, 'r') as zipped:
         infolist = zipped.infolist()
@@ -184,9 +184,9 @@ def _unzip_response_file(survey_id):
         return unzipped_response_file_path
 
 
-def _process_response_data(survey_id):
-    survey_questions = _get_survey_questions_dict_from_file(survey_id)
-    cleaned_responses = _get_cleaned_responses_dict_from_file(survey_id)
+def _process_response_data(survey_id, abs_path_to_data_dir):
+    survey_questions = _get_survey_questions_dict_from_file(survey_id, abs_path_to_data_dir)
+    cleaned_responses = _get_cleaned_responses_dict_from_file(survey_id, abs_path_to_data_dir)
 
     # now process the response data - experimental code hence use of broad except
     try: # pylint: disable=too-many-nested-blocks
@@ -241,7 +241,7 @@ def _process_response_data(survey_id):
             processed_responses.append(processed)
 
         # now write processed_responses to a new json file in same location on disk
-        processed_responses_file_path = _get_processed_response_file_path(survey_id)
+        processed_responses_file_path = _get_processed_response_file_path(survey_id, abs_path_to_data_dir)
 
         # write to json file
         with open(processed_responses_file_path, 'w') as processed_responses_file:
@@ -255,8 +255,8 @@ def _process_response_data(survey_id):
     return None
 
 
-def _get_survey_questions_dict_from_file(survey_id):
-    survey_file_path = _get_survey_file_path(survey_id)
+def _get_survey_questions_dict_from_file(survey_id, abs_path_to_data_dir):
+    survey_file_path = _get_survey_file_path(survey_id, abs_path_to_data_dir)
 
     with open(survey_file_path, mode='r', encoding='utf-8-sig') as survey_json_file:
         survey_dict = json.load(survey_json_file)
@@ -264,8 +264,8 @@ def _get_survey_questions_dict_from_file(survey_id):
         return survey_dict['result']['questions']
 
 
-def _get_cleaned_responses_dict_from_file(survey_id):
-    unzipped_response_file_path = _get_response_file_path(survey_id, zipped=False)
+def _get_cleaned_responses_dict_from_file(survey_id, abs_path_to_data_dir):
+    unzipped_response_file_path = _get_response_file_path(survey_id, abs_path_to_data_dir, zipped=False)
 
     with open(unzipped_response_file_path, mode='r', encoding='utf-8-sig') as response_json_file:
         response_dict = json.load(response_json_file)
