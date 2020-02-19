@@ -8,7 +8,7 @@ with open('HISTORY.md') as history_file:
 
 setup_args = dict(
     name='pytrics',
-    version='0.0.3',
+    version='0.0.5',
     description='Python based Qualtrics survey integration',
     long_description_content_type="text/markdown",
     long_description=README + '\n\n' + HISTORY,
@@ -18,8 +18,7 @@ setup_args = dict(
     author_email='tech@60decibels.com',
     keywords=['Qualtrics', 'Survey', 'Tool'],
     url='https://github.com/60decibels/pytrics',
-    download_url='https://pypi.org/project/pytrics/',
-    include_package_data=True
+    download_url='https://pypi.org/project/pytrics/'
 )
 
 install_requires = [
