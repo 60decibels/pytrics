@@ -215,7 +215,7 @@ This code is not actively maintained but it is provided under [the MIT licence](
 
 ## Further Context
 
-The following information provides more information which may be of use to you when working with Qualtrics and surveys.
+The following section provides more information which may be of use to you when working with Qualtrics and surveys.
 
 ### Blocks
 

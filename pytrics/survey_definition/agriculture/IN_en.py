@@ -129,7 +129,7 @@ def get_questions():
         {
             'block_number': 1,
             'tag_number': 2,
-            'text': 'Survey Start Time (hh:mm)',
+            'text': 'Survey Start Time (hh:mm) please enter in 24hr format',
             'label': 'survey_start_time',
             'type': 'TE',
             'answer_selector': 'SL',
@@ -168,6 +168,16 @@ def get_questions():
         {
             'block_number': 1,
             'tag_number': 3,
+            'text': 'Researcher name',
+            'label': 'researcher_name',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': False,
+            'translations': [],
+        },
+        {
+            'block_number': 1,
+            'tag_number': 4,
             'text': 'Can I continue with the survey?',
             'label': 'survey_consent_yn',
             'type': 'MC',
@@ -190,12 +200,22 @@ def get_questions():
             'translations': [],
         },
         {
+            'block_number': 1,
+            'tag_number': 5,
+            'text': 'Can you please tell me your name?',
+            'label': 'respondent_name',
+            'type': 'TE',
+            'answer_selector': 'SL',
+            'is_mandatory': False,
+            'translations': [],
+        },
+        {
             'block_number': 2,
-            'tag_number': 4,
+            'tag_number': 6,
             'text': 'In your household, who is the main person who manages the {Crop name} crop?',
             'label': 'ag_profile_usage_mainperson_mc',
             'type': 'MC',
-            'answer_selector': 'MAVR',
+            'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
@@ -225,7 +245,7 @@ def get_questions():
         },
         {
             'block_number': 2,
-            'tag_number': 5,
+            'tag_number': 7,
             'text': 'How did you first hear about {Company} information?',
             'label': 'acquisition_howhear_mc',
             'type': 'MC',
@@ -262,7 +282,7 @@ def get_questions():
         },
         {
             'block_number': 2,
-            'tag_number': 6,
+            'tag_number': 8,
             'text': 'How many months back did you start interacting with {Company}?',
             'label': 'respondent_tenure',
             'type': 'MC',
@@ -289,7 +309,7 @@ def get_questions():
         },
         {
             'block_number': 3,
-            'tag_number': 7,
+            'tag_number': 9,
             'text': 'Before you started interacting with {Company}, did you have access to information like that which {Company} provides?',
             'label': 'prioraccess_yn',
             'type': 'MC',
@@ -309,7 +329,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 8,
+            'tag_number': 10,
             'text': 'How much of this information was easy to understand?',
             'label': 'ag_experience_training_understand_mc',
             'type': 'MC',
@@ -338,7 +358,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 9,
+            'tag_number': 11,
             'text': 'How much of this information is useful (to your work)?',
             'label': 'ag_experience_training_useful_mc',
             'type': 'MC',
@@ -367,7 +387,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 10,
+            'tag_number': 12,
             'text': 'How much of this information did you apply to your {Crop name} crop?',
             'label': 'ag_experience_training_apply_mc',
             'type': 'MC',
@@ -403,7 +423,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 11,
+            'tag_number': 13,
             'text': 'How soon after receiving the information did you apply the lessons (for the first time)?',
             'label': 'ag_experience_training_apply_time_mc',
             'type': 'MC',
@@ -442,7 +462,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 12,
+            'tag_number': 14,
             'text': 'Can you please explain what you found easiest to apply?',
             'label': 'ag_experience_training_apply_easiest_oe',
             'type': 'TE',
@@ -459,7 +479,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 13,
+            'tag_number': 15,
             'text': 'Can you please explain what you found hardest to apply?',
             'label': 'ag_experience_training_apply_hardest_oe',
             'type': 'TE',
@@ -476,7 +496,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 14,
+            'tag_number': 16,
             'text': 'Would you mind sharing with me what prevented you from applying the information?',
             'label': 'ag_experience_training_apply_barriers_mc',
             'type': 'MC',
@@ -515,7 +535,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 15,
+            'tag_number': 17,
             'text': 'Did you consider (think about) applying the information?',
             'label': 'ag_experience_training_apply_consider_yn',
             'type': 'MC',
@@ -542,7 +562,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 16,
+            'tag_number': 18,
             'text': 'Do you intend to apply the information next year?',
             'label': 'ag_experience_training_apply_intention_mc',
             'type': 'MC',
@@ -572,7 +592,7 @@ def get_questions():
         },
         {
             'block_number': 4,
-            'tag_number': 17,
+            'tag_number': 19,
             'text': 'Do you think other farmers would pay for the {Company} information?',
             'label': 'ag_experience_training_wtp_mc',
             'type': 'MC',
@@ -595,7 +615,7 @@ def get_questions():
         },
         {
             'block_number': 5,
-            'tag_number': 18,
+            'tag_number': 20,
             'text': 'On a scale of 0-10, how likely is it that you would recommend the {Company} information to a friend, where 0 is not at all likely and 10 is extremely likely?',
             'label': 'nps_company_rating',
             'type': 'MC',
@@ -651,7 +671,7 @@ def get_questions():
         },
         {
             'block_number': 5,
-            'tag_number': 19,
+            'tag_number': 21,
             'text': 'What specifically about {Company} would cause you to recommend it to a friend?',
             'label': 'nps_company_promoter_oe',
             'type': 'TE',
@@ -668,7 +688,7 @@ def get_questions():
         },
         {
             'block_number': 5,
-            'tag_number': 20,
+            'tag_number': 22,
             'text': 'What specifically about {Company} caused you to give it the score that you did?',
             'label': 'nps_company_passive_oe',
             'type': 'TE',
@@ -685,7 +705,7 @@ def get_questions():
         },
         {
             'block_number': 5,
-            'tag_number': 21,
+            'tag_number': 23,
             'text': 'What actions could {Company} take to make you more likely to recommend it to a friend?',
             'label': 'nps_company_detractor_oe',
             'type': 'TE',
@@ -702,7 +722,7 @@ def get_questions():
         },
         {
             'block_number': 6,
-            'tag_number': 22,
+            'tag_number': 24,
             'text': 'Has your way of farming changed because of {Company} information?',
             'label': 'ag_impact_way_of_farming_rating',
             'type': 'MC',
@@ -738,7 +758,7 @@ def get_questions():
         },
         {
             'block_number': 6,
-            'tag_number': 23,
+            'tag_number': 25,
             'text': 'How has it improved?',
             'label': 'ag_impact_way_of_farming_improve_oe',
             'type': 'TE',
@@ -755,7 +775,7 @@ def get_questions():
         },
         {
             'block_number': 6,
-            'tag_number': 24,
+            'tag_number': 26,
             'text': 'Why has it not changed?',
             'label': 'ag_impact_way_of_farming_nochange_oe',
             'type': 'TE',
@@ -772,7 +792,7 @@ def get_questions():
         },
         {
             'block_number': 6,
-            'tag_number': 25,
+            'tag_number': 27,
             'text': 'How has it become worse?',
             'label': 'ag_impact_way_of_farming_worse_oe',
             'type': 'TE',
@@ -789,7 +809,7 @@ def get_questions():
         },
         {
             'block_number': 7,
-            'tag_number': 26,
+            'tag_number': 28,
             'text': 'Has your quality of life changed because of {Company} information?',
             'label': 'qol_rating',
             'type': 'MC',
@@ -825,7 +845,7 @@ def get_questions():
         },
         {
             'block_number': 7,
-            'tag_number': 27,
+            'tag_number': 29,
             'text': 'How has it improved?',
             'label': 'qol_improve_oe',
             'type': 'TE',
@@ -842,7 +862,7 @@ def get_questions():
         },
         {
             'block_number': 7,
-            'tag_number': 28,
+            'tag_number': 30,
             'text': 'Why has it not changed?',
             'label': 'qol_nochange_oe',
             'type': 'TE',
@@ -859,7 +879,7 @@ def get_questions():
         },
         {
             'block_number': 7,
-            'tag_number': 29,
+            'tag_number': 31,
             'text': 'How has it become worse?',
             'label': 'qol_worse_oe',
             'type': 'TE',
@@ -876,7 +896,7 @@ def get_questions():
         },
         {
             'block_number': 8,
-            'tag_number': 30,
+            'tag_number': 32,
             'text': 'Has your confidence that you will be able to grow and sell a healthy {Crop name} crop changed because of {Company} information?',
             'label': 'ag_impact_confidence_rating',
             'type': 'MC',
@@ -912,7 +932,7 @@ def get_questions():
         },
         {
             'block_number': 9,
-            'tag_number': 31,
+            'tag_number': 33,
             'text': 'Has the money you spend on {Crop name} crop changed because you started working with {Company} information?',
             'label': 'impact_moneyspend_rating',
             'type': 'MC',
@@ -948,7 +968,7 @@ def get_questions():
         },
         {
             'block_number': 9,
-            'tag_number': 32,
+            'tag_number': 34,
             'text': 'Are you comfortable with this increase?',
             'label': 'impact_moneyspend_comfort_rating',
             'type': 'MC',
@@ -987,7 +1007,7 @@ def get_questions():
         },
         {
             'block_number': 10,
-            'tag_number': 33,
+            'tag_number': 35,
             'text': 'Could you easily find a good alternative to {Company} information?',
             'label': 'alternatives_yn',
             'type': 'MC',
@@ -1015,7 +1035,7 @@ def get_questions():
         },
         {
             'block_number': 10,
-            'tag_number': 34,
+            'tag_number': 36,
             'text': 'Would you be comfortable sharing who these alternatives are?',
             'label': 'alternatives_mc',
             'type': 'MC',
@@ -1061,7 +1081,7 @@ def get_questions():
         },
         {
             'block_number': 10,
-            'tag_number': 35,
+            'tag_number': 37,
             'text': 'Compared to the alternative, do you think {Company} is...',
             'label': 'alternatives_comparison_rating',
             'type': 'MC',
@@ -1104,7 +1124,7 @@ def get_questions():
         },
         {
             'block_number': 10,
-            'tag_number': 36,
+            'tag_number': 38,
             'text': 'Please explain how {Company} is better/worse?',
             'label': 'alternatives_comparison_oe',
             'type': 'TE',
@@ -1112,16 +1132,16 @@ def get_questions():
             'is_mandatory': False,
             'translations': [],
             'display_logic': {
-                'controlling_question_labels': ['alternatives_yn'],
-                'choices': [3],
-                'operators': ['Selected'],
-                'conjunctions': [None],
-                'locators': ['SelectableChoice'],
+                'controlling_question_labels': ['alternatives_comparison_rating', 'alternatives_yn'],
+                'choices': [3, 3],
+                'operators': ['NotSelected', 'NotSelected'],
+                'conjunctions': [None, 'And'],
+                'locators': ['SelectableChoice', 'SelectableChoice'],
             }
         },
         {
             'block_number': 11,
-            'tag_number': 37,
+            'tag_number': 39,
             'text': 'Have you experienced any challenges with {Company}?',
             'label': 'challenges_yn',
             'type': 'MC',
@@ -1145,7 +1165,7 @@ def get_questions():
         },
         {
             'block_number': 11,
-            'tag_number': 38,
+            'tag_number': 40,
             'text': 'Please explain the challenge you have had with {Product/Service}',
             'label': 'challenges_oe',
             'type': 'TE',
@@ -1162,7 +1182,7 @@ def get_questions():
         },
         {
             'block_number': 11,
-            'tag_number': 39,
+            'tag_number': 41,
             'text': 'Has your challenge been resolved?',
             'label': 'challenges_resolve_yn',
             'type': 'MC',
@@ -1193,7 +1213,7 @@ def get_questions():
         },
         {
             'block_number': 12,
-            'tag_number': 40,
+            'tag_number': 42,
             'text': 'What can {Company} do to serve you better?',
             'label': 'retention_improve_oe',
             'type': 'TE',
@@ -1203,7 +1223,7 @@ def get_questions():
         },
         {
             'block_number': 12,
-            'tag_number': 41,
+            'tag_number': 43,
             'text': 'Do you see yourself working with {Company} next year?',
             'label': 'retention_1year_rating',
             'type': 'MC',
@@ -1231,7 +1251,7 @@ def get_questions():
         },
         {
             'block_number': 12,
-            'tag_number': 42,
+            'tag_number': 44,
             'text': 'Do you see yourself working with {Company} 5 years from now?',
             'label': 'retention_5year_rating',
             'type': 'MC',
@@ -1259,7 +1279,7 @@ def get_questions():
         },
         {
             'block_number': 13,
-            'tag_number': 43,
+            'tag_number': 45,
             'text': 'Including yourself, how many people live in your home?',
             'label': 'respondent_hhsize_num',
             'type': 'TE',
@@ -1278,7 +1298,7 @@ def get_questions():
         },
         {
             'block_number': 14,
-            'tag_number': 44,
+            'tag_number': 46,
             'text': 'How much total land did you use for farming in the last 12 months? Consider all crops planted. (acres)',
             'label': 'ag_profile_land_farmedpastyear_num',
             'type': 'TE',
@@ -1292,7 +1312,7 @@ def get_questions():
         },
         {
             'block_number': 14,
-            'tag_number': 45,
+            'tag_number': 47,
             'text': 'How many of these [acres from total] did you farm with {Crop name} in last 12 months? (acres)',
             'label': 'ag_profile_land_proportioncrop_num',
             'type': 'TE',
@@ -1306,7 +1326,7 @@ def get_questions():
         },
         {
             'block_number': 15,
-            'tag_number': 46,
+            'tag_number': 48,
             'text': 'In the last 12 months, what proportion (%) of your household\u2019s total income, came from {Crop name} crop using {Company}\u2019s information?',
             'label': 'ag_profile_income_hhshare_company_num',
             'type': 'MC',
@@ -1335,7 +1355,7 @@ def get_questions():
         },
         {
             'block_number': 15,
-            'tag_number': 47,
+            'tag_number': 49,
             'text': '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of your household\u2019s total income, came from {Crop name} crop using {Company}\u2019s information?',
             'label': 'ag_profile_income_hhshare_company_mc',
             'type': 'MC',
@@ -1368,7 +1388,7 @@ def get_questions():
         },
         {
             'block_number': 16,
-            'tag_number': 48,
+            'tag_number': 50,
             'text': 'In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?',
             'label': 'ag_profile_income_hhshare_allfarming_num',
             'type': 'MC',
@@ -1401,7 +1421,7 @@ def get_questions():
         },
         {
             'block_number': 16,
-            'tag_number': 49,
+            'tag_number': 51,
             'text': '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?',
             'label': 'ag_profile_income_hhshare_allfarming_mc',
             'type': 'MC',
@@ -1434,7 +1454,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 50,
+            'tag_number': 52,
             'text': 'Which state does the household reside in?',
             'label': 'ppi_in_s_state',
             'type': 'MC',
@@ -1590,7 +1610,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 51,
+            'tag_number': 53,
             'text': 'How many members does the household have?',
             'label': 'ppi_in_s_hhsize',
             'type': 'MC',
@@ -1618,7 +1638,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 52,
+            'tag_number': 54,
             'text': 'Did the household consume any milk and milk products during the last 30 days?',
             'label': 'ppi_in_s_milk',
             'type': 'MC',
@@ -1642,7 +1662,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 53,
+            'tag_number': 55,
             'text': 'Does the household possess an electric fan?',
             'label': 'ppi_in_s_fan',
             'type': 'MC',
@@ -1666,7 +1686,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 54,
+            'tag_number': 56,
             'text': 'Does your household possess a stove/gas burner?',
             'label': 'ppi_in_stove',
             'type': 'MC',
@@ -1690,7 +1710,7 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 55,
+            'tag_number': 57,
             'text': 'Does the household possess a pressure cooker/pressure pan?',
             'label': 'ppi_in_s_pressurecooker',
             'type': 'MC',
@@ -1714,11 +1734,11 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 56,
+            'tag_number': 58,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
             'type': 'MC',
-            'answer_selector': 'MAVR',
+            'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
@@ -1744,11 +1764,11 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 57,
+            'tag_number': 59,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
             'type': 'MC',
-            'answer_selector': 'MAVR',
+            'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
@@ -1774,11 +1794,11 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 58,
+            'tag_number': 60,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
             'type': 'MC',
-            'answer_selector': 'MAVR',
+            'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
@@ -1804,7 +1824,7 @@ def get_questions():
         },
         {
             'block_number': 19,
-            'tag_number': 59,
+            'tag_number': 61,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
             'type': 'TE',
@@ -1823,7 +1843,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 60,
+            'tag_number': 62,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
@@ -1833,7 +1853,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 61,
+            'tag_number': 63,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
             'type': 'MC',
@@ -1853,7 +1873,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 62,
+            'tag_number': 64,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
             'type': 'MC',
@@ -1873,7 +1893,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 63,
+            'tag_number': 65,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
             'type': 'MC',
@@ -1893,8 +1913,8 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 64,
-            'text': 'Survey End Time (hh:mm)',
+            'tag_number': 66,
+            'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',
             'type': 'TE',
             'answer_selector': 'SL',
@@ -1906,13 +1926,13 @@ def get_questions():
                     'Logic': {
                         '0': {
                             '0': {
-                                'ChoiceLocator': 'q://QID64/ChoiceTextEntryValue',
+                                'ChoiceLocator': 'q://QID66/ChoiceTextEntryValue',
                                 'Description': 'Matches Regex for hh:mm',
-                                'LeftOperand': 'q://QID64/ChoiceTextEntryValue',
+                                'LeftOperand': 'q://QID66/ChoiceTextEntryValue',
                                 'LogicType': 'Question',
                                 'Operator': 'MatchesRegex',
-                                'QuestionID': 'QID64',
-                                'QuestionIDFromLocator': 'QID64',
+                                'QuestionID': 'QID66',
+                                'QuestionIDFromLocator': 'QID66',
                                 'QuestionIsInLoop': 'no',
                                 'RightOperand': '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
                                 'Type': 'Expression'
