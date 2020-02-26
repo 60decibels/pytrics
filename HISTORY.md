@@ -15,3 +15,6 @@
 
 ### v0.0.6
     * Bug fix
+
+### v0.0.7
+    * Updated survey definitions with requested amends
