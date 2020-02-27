@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from requests import HTTPError
+from progress.bar import Bar
 
 from pytrics.common.constants import (
     QUALTRICS_API_BLOCK_TYPE_DEFAULT,
@@ -45,7 +46,11 @@ def create_survey(name, blocks, questions, language_code='EN'):
         1: default_block_id
     }
 
+    blockBar = Bar('Creating Blocks', max=len(blocks))
+
     for index, block in enumerate(blocks):
+        blockBar.next()
+
         if index == 0:
             try:
                 api.update_block(survey_id, default_block_id, block['description'], QUALTRICS_API_BLOCK_TYPE_DEFAULT)
@@ -59,7 +64,13 @@ def create_survey(name, blocks, questions, language_code='EN'):
             except (AssertionError, HTTPError) as ex:
                 raise QualtricsAPIException(ex)
 
+    blockBar.finish()
+
+    questionBar = Bar('Creating Questions', max=len(questions))
+
     for question in questions:
+        questionBar.next()
+
         question_payload = api.build_question_payload(question, survey_id, include_display_logic=True)
 
         try:
@@ -71,6 +82,8 @@ def create_survey(name, blocks, questions, language_code='EN'):
             api.create_question(survey_id, question_payload, block_id)
         except (AssertionError, HTTPError) as ex:
             raise QualtricsAPIException(ex)
+
+    questionBar.finish()
 
     return survey_id
 

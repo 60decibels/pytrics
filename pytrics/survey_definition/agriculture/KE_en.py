@@ -3,6 +3,10 @@
 These functions define the English (en) version of our Kenyan (KE) agriculture survey
 '''
 
+def get_name():
+    return '60dB Standard Agriculture Survey - Kenya'
+
+
 def get_blocks():
     return [
         {

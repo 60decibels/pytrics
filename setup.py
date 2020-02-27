@@ -8,7 +8,7 @@ with open('HISTORY.md') as history_file:
 
 setup_args = dict(
     name='pytrics',
-    version='0.0.7',
+    version='1.0.0',
     description='Python based Qualtrics survey integration',
     long_description_content_type="text/markdown",
     long_description=README + '\n\n' + HISTORY,
@@ -22,7 +22,8 @@ setup_args = dict(
 )
 
 install_requires = [
-    'requests>=2.21.0'
+    'requests>=2.21.0',
+    'progress>=1.5'
 ]
 
 if __name__ == '__main__':

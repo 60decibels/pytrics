@@ -23,11 +23,13 @@ tools = Tools()
 
 
 tools.create_survey_from_definition('My new agriculture survey', 'et')
->>> ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
+Creating Blocks |################################| 20/20
+Creating Questions |################################| 66/66
+('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 
 
 tools.retrieve_survey_response_data('SV_123456abcdef')
->>> ('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
+('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
 
 
 tools.copy('SV_123456abcdef', 'My New Survey Name')
@@ -84,7 +86,9 @@ This repository provides country specific templates for [60 Decibels](https://ww
 >>> tools = Tools()
 >>> 
 >>> tools.create_survey_from_definition('My new agriculture survey', 'et')
->>> ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
+Creating Blocks |################################| 20/20
+Creating Questions |################################| 66/66
+('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 >>>
 ```
 

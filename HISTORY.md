@@ -18,3 +18,6 @@
 
 ### v0.0.7
     * Updated survey definitions with requested amends
+
+### v1.0.0
+    * v1 ready :-)

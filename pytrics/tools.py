@@ -4,9 +4,11 @@ and the retrieval of responses. Also provides some helper functions.
 '''
 import json
 import os
-import pprint
 
-from pytrics.common.constants import ENV_VAR_ABSOLUTE_PATH_TO_DATA_DIR
+from pytrics.common.constants import (
+    ENV_VAR_ABSOLUTE_PATH_TO_DATA_DIR,
+    FILE_EXTENSION_JSON,
+)
 from pytrics.common.exceptions import (
     QualtricsAPIException,
     QualtricsDataSerialisationException,
@@ -135,27 +137,43 @@ class Tools:
     def summarise_definition(self, country_iso_2):
         '''
         Given a lower case two character iso country code from those supported this
-        function will print out a formatted summary of the blocks and questions of the
-        relevant survey definition:
+        function writes a summary of the relevant survey definition to disk in a json file.
+
+        This could be used as a call script for researchers, or to help visualise the
+        shape and size of the survey and the order of it's questions.
 
         Example usage: summarise_definition('et')
         '''
         definition_class = self.country_to_definition[country_iso_2]
 
+        name = definition_class.get_name()
         blocks = definition_class.get_blocks()
         questions = definition_class.get_questions()
 
-        pp = pprint.PrettyPrinter(indent=4, width=300)
-
-        summarised_blocks = [('Block Number', 'Block Name')]
-        summarised_questions = [('Block Number', 'Question Label', 'Question Text')]
+        summarised_blocks = {}
+        summarised_questions = {}
 
         for block in blocks:
-            summarised_blocks.append((block['position'], block['description'],))
+            key = block['position']
+            value = block['description']
+            summarised_blocks[key] = value
 
         for question in questions:
-            summarised_questions.append((question['block_number'], question['label'], question['text']))
+            key = question['tag_number']
+            value = {
+                'block': question['block_number'],
+                'label': question['label'],
+                'text': question['text']
+            }
+            summarised_questions[key] = value
 
-        pp.pprint(summarised_blocks)
+        summary = {
+            'survey': name,
+            'blocks': summarised_blocks,
+            'questions': summarised_questions
+        }
 
-        pp.pprint(summarised_questions)
+        summary_file_path_and_name = '{}/{}_definition_summary.{}'.format(self.abs_path_to_data, country_iso_2, FILE_EXTENSION_JSON)
+
+        with open(summary_file_path_and_name, 'w') as summary_json_file:
+            json.dump(summary, summary_json_file, indent=4, sort_keys=False)
