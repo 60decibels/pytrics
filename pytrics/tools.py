@@ -177,3 +177,5 @@ class Tools:
 
         with open(summary_file_path_and_name, 'w') as summary_json_file:
             json.dump(summary, summary_json_file, indent=4, sort_keys=False)
+
+        return summary_file_path_and_name
