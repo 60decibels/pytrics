@@ -21,3 +21,6 @@
 
 ### v1.0.0
     * v1 ready :-)
+
+### v1.0.1
+    * Simplified tools.py and README, updated to use standard 10 question sets of PPI questions where available

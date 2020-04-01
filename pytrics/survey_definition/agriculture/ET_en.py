@@ -90,24 +90,19 @@ def get_blocks():
             'position': 16
         },
         {
-            'description': 'Poverty Probability Index - Ethiopia',
+            'description': 'Gender',
             'type': 'Standard',
             'position': 17
         },
         {
-            'description': 'Gender',
+            'description': 'Age',
             'type': 'Standard',
             'position': 18
         },
         {
-            'description': 'Age',
-            'type': 'Standard',
-            'position': 19
-        },
-        {
             'description': 'End Survey',
             'type': 'Standard',
-            'position': 20
+            'position': 19
         }
     ]
 
@@ -1457,190 +1452,6 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 52,
-            'text': 'Which zone does the household reside in?',
-            'label': 'ppi_et_s_zone',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Tigray'
-                },
-                '2': {
-                    'Display': 'Afar'
-                },
-                '3': {
-                    'Display': 'Amhara'
-                },
-                '4': {
-                    'Display': 'Oromia'
-                },
-                '5': {
-                    'Display': 'Somalie'
-                },
-                '6': {
-                    'Display': 'Benshagul Gumuz'
-                },
-                '7': {
-                    'Display': 'SNNP'
-                },
-                '8': {
-                    'Display': 'Gambella'
-                },
-                '9': {
-                    'Display': 'Harari'
-                },
-                '10': {
-                    'Display': 'Addis Ababa'
-                },
-                '11': {
-                    'Display': 'Diredawa'
-                }
-            },
-            'choice_order': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-            'variable_naming': {
-                '1': 'Tigray',
-                '2': 'Afar',
-                '3': 'Amhara',
-                '4': 'Oromia',
-                '5': 'Somalie',
-                '6': 'Benshagul Gumuz',
-                '7': 'SNNP',
-                '8': 'Gambella',
-                '9': 'Harari',
-                '10': 'Addis Ababa',
-                '11': 'Diredawa',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 53,
-            'text': 'The roof of the main dwelling is predominantly made of what material?',
-            'label': 'ppi_et_s_roof',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Corrugated Iron, Sheet, Concrete/Cement, Asbestos, Bricks'
-                },
-                '2': {
-                    'Display': 'Thatch, Wood and Mud, Bamboo/Reed, Plastic Canvas, Others'
-                }
-            },
-            'choice_order': [1, 2],
-            'variable_naming': {
-                '1': 'Corrugated Iron, Sheet, Concrete/Cement, Asbestos, Bricks',
-                '2': 'Thatch, Wood and Mud, Bamboo/Reed, Plastic Canvas, Others',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 54,
-            'text': 'The floor of the main dwelling predominantly made of what material?',
-            'label': 'ppi_et_s_floor',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Bamboo/reed, wood planks, parquet or polished wood, cement screed, plastic tiles, cement tiles, brick tiles, ceramic/marble tiles, others'
-                },
-                '2': {
-                    'Display': 'Mud/Dung'
-                }
-            },
-            'choice_order': [1, 2],
-            'variable_naming': {
-                '1': 'Bamboo/reed, wood planks, parquet or polished wood, cement screed, plastic tiles, cement tiles, brick tiles, ceramic/marble tiles, others',
-                '2': 'Mud/Dung',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 55,
-            'text': 'How many members are there in the household?',
-            'label': 'ppi_et_s_hhsize',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Less than 3'
-                },
-                '2': {
-                    'Display': '3 to 5'
-                },
-                '3': {
-                    'Display': '6 or more'
-                }
-            },
-            'choice_order': [1, 2, 3],
-            'variable_naming': {
-                '1': 'Less than 3',
-                '2': '3 to 5',
-                '3': '6 or more',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 56,
-            'text': 'Does the household own a radio/tape recorder?',
-            'label': 'ppi_et_s_radio',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Yes'
-                },
-                '2': {
-                    'Display': 'No'
-                }
-            },
-            'choice_order': [1, 2],
-            'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 57,
-            'text': 'Does the household own a television?',
-            'label': 'ppi_et_s_tv',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'Yes'
-                },
-                '2': {
-                    'Display': 'No'
-                }
-            },
-            'choice_order': [1, 2],
-            'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 18,
             'tag_number': 58,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
@@ -1670,7 +1481,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 18,
+            'block_number': 17,
             'tag_number': 59,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
@@ -1700,7 +1511,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 18,
+            'block_number': 17,
             'tag_number': 60,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
@@ -1730,7 +1541,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 19,
+            'block_number': 18,
             'tag_number': 61,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
@@ -1749,7 +1560,7 @@ def get_questions():
             }
         },
         {
-            'block_number': 20,
+            'block_number': 19,
             'tag_number': 62,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
@@ -1759,7 +1570,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 20,
+            'block_number': 19,
             'tag_number': 63,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
@@ -1779,7 +1590,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 20,
+            'block_number': 19,
             'tag_number': 64,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
@@ -1799,7 +1610,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 20,
+            'block_number': 19,
             'tag_number': 65,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
@@ -1819,7 +1630,7 @@ def get_questions():
             'translations': []
         },
         {
-            'block_number': 20,
+            'block_number': 19,
             'tag_number': 66,
             'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',

@@ -7,7 +7,13 @@ This repository contains code to work with the Qualtrics API and to create surve
 ## Usage
 
 ```bash
-pip install pytrics
+python3 -m venv env
+
+source env/bin/activate
+
+pip3 install -r dev-requirements.txt
+
+pip3 install pytrics
 
 export QUALTRICS_API_AUTH_TOKEN=your_api_token
 
@@ -32,13 +38,8 @@ tools.retrieve_survey_response_data('SV_123456abcdef')
 ('data/SV_123456abcdef.json', 'data/SV_123456abcdef_responses.zip', 'data/SV_123456abcdef_responses.json', 'data/SV_123456abcdef_responses_processed.json')
 
 
-tools.copy('SV_123456abcdef', 'My New Survey Name')
-
-
-tools.describe('SV_123456abcdef')
-
-
 tools.summarise_definition('et')
+'data/et_definition_summary.json'
 ```
 
 Read on for more information about working with surveys using Qualtrics and this package.
@@ -136,34 +137,19 @@ The function `retrieve_survey_response_data` queries the Qualtrics API and saves
 
 All files are returned as you may wish/need to use the survey definition to understand and process the content of the response data file. The processed responses file is provided to help ease the consumption and usage of this data.
 
-### Helper Functions
+### Summarising a Survey Definition
 
-The `pytrics/pytrics.py` module also contains three helper functions which were particularly useful when implementing the various functionality contained in this repository. These are `copy`, `describe` and `summarise_definition`.
-
-```python
->>> from pytrics.tools import Tools
->>> tools = Tools()
-```
-
-- `copy` allows you to copy an existing survey to a new name within your Qualtrics account. It expects two parameters, the Qualtrics survey identifier and a new name for the copy it will create. Example usage below:
-
-```python
->>> tools.copy('SV_123456abcdef', 'My New Survey Name')
-```
-
-- `describe` allows you to describe an existing survey in your Qualtrics account to a file on your local disk so you can review the blocks, questions and flow of this survey. It expects one parameter, the Qualtrics survey identifier. Example usage below:
-
-```python
->>> tools.describe('SV_123456abcdef')
-```
-
-- `summarise_definition` produces a summary of the specified survey definition so you can easily see the questions that the survey contains and their order. It expects one paramater, a lower case two character iso country code from those supported. Example usage below:
+The `summarise_definition` function produces a summary of the specified survey definition so you can easily see the questions that the survey contains and their order. This can be used to generate a call script for researchers to use when delivering the survey via telephone. It expects one paramater, a lower case two character iso country code from those supported. Example usage below:
 
 ```python
 >>> tools.summarise_definition('et')
 ```
 
-More details of these helper functions can be found in the code at `pytrics/pytrics.py`.
+## PPI (Poverty Probability Index)
+
+Part of our standard surveys is a series of questions designed to allow you to measure the likelihood that a given household is living below the poverty line. The questions we use have been sourced from [The Poverty Index](https://www.povertyindex.org).
+
+Tools to calculate the PPI (on a per country basis) based on the answers to the questions in our surveys are available to download for free from [The Poverty Index](https://www.povertyindex.org/ppi-country) (requires registration of free account).
 
 ## Extending and improving this Code
 
@@ -215,7 +201,7 @@ PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable tests/*
 
 ## License
 
-This code is not actively maintained but it is provided under [the MIT licence](https://opensource.org/licenses/MIT) and therefore free to copy, use and amend. Please refer to the `LICENSE.txt` file contained in this repository for full terms of use and ensure you include the LICENSE.txt file in all copies or substantial portions of the Software that you create.
+This code is not actively maintained but it is provided under [the GPLv2 licence](https://opensource.org/licenses/GPL-2.0). Please refer to the `LICENSE.txt` file contained in this repository for full terms of use and ensure you include the LICENSE.txt file in all copies or substantial portions of the Software that you create.
 
 ## Further Context
 
@@ -223,7 +209,7 @@ The following section provides more information which may be of use to you when 
 
 ### Blocks
 
-Questions within Qualtrics surveys can be organised into sections, or Blocks as they are called. 
+Questions within Qualtrics surveys can be organised into sections, or Blocks as they are called.
 
 [Qualtrics documentation](https://www.qualtrics.com/support/survey-platform/survey-module/block-options/block-options-overview/) describes blocks as _“…sets of questions within your survey. Typically, questions are separated into blocks for the purpose of conditionally displaying an entire block of questions, or for randomly presenting entire blocks of questions… Blocks can also be used to organize longer surveys…“_.
 
@@ -231,104 +217,9 @@ We have made use of blocks to organise the survey definitions as they contain ma
 
 ### Mandatory and Non-Mandatory Questions
 
-We have made some of the questions mandatory, where they relate to metadata around the survey and response, however, the questions asked of respondents are non-mandatory. This is intentional to improve overall response rates. This can be amended in the survey definitions if so desired but we have found that forcing respondents to answer questions reduces response rates and therefore the amount of data captured.
+We have made some of the questions mandatory, where they relate to metadata around the survey and response, however, the questions asked of respondents are non-mandatory. This is intentional to improve overall response rates.
 
-### Summary of Survey Definition
-
-The code in the repository provides a number of helper functions beyond the ability to create a survey and download its responses.
-
-The `summarise_definition` function provides the ability to summarise the survey definition into a more easily readable form, an example of the summarised definition of the Nigerian survey is shown below:
-
-```python
-[   ('Block Number', 'Block Name'),
-    (1, 'Start Survey'),
-    (2, 'Profile & Acquisition'),
-    (3, 'First Access'),
-    (4, 'Information'),
-    (5, 'NPS'),
-    (6, 'Way of Farming'),
-    (7, 'Quality of Life'),
-    (8, 'Change in Confidence'),
-    (9, 'Money Spent'),
-    (10, 'Alternatives'),
-    (11, 'Challenges'),
-    (12, 'Retention'),
-    (13, 'HH Size'),
-    (14, 'Farmed Land & Ownership'),
-    (15, 'Share of HH Income - Company'),
-    (16, 'Share of HH Income - All Farming'),
-    (17, 'Poverty Probability Index - Nigeria'),
-    (18, 'Gender'),
-    (19, 'Age'),
-    (20, 'End Survey')]
-[   ('Block Number', 'Question Label', 'Question Text'),
-    (1, 'survey_date', 'Date of Interview (yyyy-mm-dd)'),
-    (1, 'survey_start_time', 'Survey Start Time (hh:mm)'),
-    (1, 'survey_consent_yn', 'Can I continue with the survey?'),
-    (2, 'ag_profile_usage_mainperson_mc', 'In your household, who is the main person who manages the {Crop name} crop?'),
-    (2, 'acquisition_howhear_mc', 'How did you first hear about {Company} information?'),
-    (2, 'respondent_tenure', 'How many months back did you start interacting with {Company}?'),
-    (3, 'prioraccess_yn', 'Before you started interacting with {Company}, did you have access to information like that which {Company} provides?'),
-    (4, 'ag_experience_training_understand_mc', 'How much of this information was easy to understand?'),
-    (4, 'ag_experience_training_useful_mc', 'How much of this information is useful (to your work)?'),
-    (4, 'ag_experience_training_apply_mc', 'How much of this information did you apply to your {Crop name} crop?'),
-    (4, 'ag_experience_training_apply_time_mc', 'How soon after receiving the information did you apply the lessons (for the first time)?'),
-    (4, 'ag_experience_training_apply_easiest_oe', 'Can you please explain what you found easiest to apply?'),
-    (4, 'ag_experience_training_apply_hardest_oe', 'Can you please explain what you found hardest to apply?'),
-    (4, 'ag_experience_training_apply_barriers_mc', 'Would you mind sharing with me what prevented you from applying the information?'),
-    (4, 'ag_experience_training_apply_consider_yn', 'Did you consider (think about) applying the information?'),
-    (4, 'ag_experience_training_apply_intention_mc', 'Do you intend to apply the information next year?'),
-    (4, 'ag_experience_training_wtp_mc', 'Do you think other farmers would pay for the {Company} information?'),
-    (5, 'nps_company_rating', 'On a scale of 0-10, how likely is it that you would recommend the {Company} information to a friend, where 0 is not at all likely and 10 is extremely likely?'),
-    (5, 'nps_company_promoter_oe', 'What specifically about {Company} would cause you to recommend it to a friend?'),
-    (5, 'nps_company_passive_oe', 'What specifically about {Company} caused you to give it the score that you did?'),
-    (5, 'nps_company_detractor_oe', 'What actions could {Company} take to make you more likely to recommend it to a friend?'),
-    (6, 'ag_impact_way_of_farming_rating', 'Has your way of farming changed because of {Company} information?'),
-    (6, 'ag_impact_way_of_farming_improve_oe', 'How has it improved?'),
-    (6, 'ag_impact_way_of_farming_nochange_oe', 'Why has it not changed?'),
-    (6, 'ag_impact_way_of_farming_worse_oe', 'How has it become worse?'),
-    (7, 'qol_rating', 'Has your quality of life changed because of {Company} information?'),
-    (7, 'qol_improve_oe', 'How has it improved?'),
-    (7, 'qol_nochange_oe', 'Why has it not changed?'),
-    (7, 'qol_worse_oe', 'How has it become worse?'),
-    (8, 'ag_impact_confidence_rating', 'Has your confidence that you will be able to grow and sell a healthy {Crop name} crop changed because of {Company} information?'),
-    (9, 'impact_moneyspend_rating', 'Has the money you spend on {Crop name} crop changed because you started working with {Company} information?'),
-    (9, 'impact_moneyspend_comfort_rating', 'Are you comfortable with this increase?'),
-    (10, 'alternatives_yn', 'Could you easily find a good alternative to {Company} information?'),
-    (10, 'alternatives_mc', 'Would you be comfortable sharing who these alternatives are?'),
-    (10, 'alternatives_comparison_rating', 'Compared to the alternative, do you think {Company} is...'),
-    (10, 'alternatives_comparison_oe', 'Please explain how {Company} is better/worse?'),
-    (11, 'challenges_yn', 'Have you experienced any challenges with {Company}?'),
-    (11, 'challenges_oe', 'Please explain the challenge you have had with {Product/Service}'),
-    (11, 'challenges_resolve_yn', 'Has your challenge been resolved?'),
-    (12, 'retention_improve_oe', 'What can {Company} do to serve you better?'),
-    (12, 'retention_1year_rating', 'Do you see yourself working with {Company} next year?'),
-    (12, 'retention_5year_rating', 'Do you see yourself working with {Company} 5 years from now?'),
-    (13, 'respondent_hhsize_num', 'Including yourself, how many people live in your home?'),
-    (14, 'ag_profile_land_farmedpastyear_num', 'How much total land did you use for farming in the last 12 months? Consider all crops planted. (acres)'),
-    (14, 'ag_profile_land_proportioncrop_num', 'How many of these [acres from total] did you farm with {Crop name} in last 12 months? (acres)'),
-    (15, 'ag_profile_income_hhshare_company_num', 'In the last 12 months, what proportion (%) of your household’s total income, came from {Crop name} crop using {Company}’s information?'),
-    (15, 'ag_profile_income_hhshare_company_mc', '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of your household’s total income, came from {Crop name} crop using {Company}’s information?'),
-    (16, 'ag_profile_income_hhshare_allfarming_num', 'In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?'),
-    (16, 'ag_profile_income_hhshare_allfarming_mc', '(If unable to give an exact percentage, share these options) In the last 12 months, what proportion (%) of the total harvest from all your land did you sell?'),
-    (17, 'ppi_ng_s_zone', 'Which zone does the household reside in?'),
-    (17, 'ppi_ng_s_hhsize', 'How many members does the household have?'),
-    (17, 'ppi_ng_s_rice', 'Within the past 7 days, did the members of this household eat any rice or wheat within the household?'),
-    (17, 'ppi_ng_s_bread', 'Within the past 7 days, did the members of this household eat any bread within the household?'),
-    (17, 'ppi_ng_s_beef', 'Within the past 7 days, did the members of this household eat any beef within the household?'),
-    (17, 'ppi_ng_s_fan', 'Does the household own a fan?'),
-    (18, 'gn_familydynamics_important_decisions_mc', 'Who in your family made most of the important decisions related to {Crop name} crop?'),
-    (18, 'gn_familydynamics_work_burden_oe', 'Who in your family did most of the work related to {Crop name} crop?'),
-    (18, 'gn_familydynamics_money_from_sale_mc', 'Who in your family handled the money that came from {Crop name} crops?'),
-    (19, 'respondent_age_num', 'What is your age?'),
-    (20, 'retention_anythingelse_oe', 'Is there anything else you would like to share?'),
-    (20, 'survey_anonymity_yn', 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?'),
-    (20, 'survey_marketingmaterials_yn', 'Do you mind if some of your answers and your name are used when making marketing materials?'),
-    (20, 'respondent_gender_mc', 'Gender of Respondent'),
-    (20, 'survey_end_time', 'Survey End Time (hh:mm)')]
-```
-
-Each survey is essentially the same, except for the Poverty Probability Index questions in block 17, these vary per country as the measure of poverty is relative depending on geographic location.
+This can be amended in the survey definitions if so desired but we have found that forcing respondents to answer questions reduces response rates and therefore the amount of data captured.
 
 ### Example of Processed Response Data
 
