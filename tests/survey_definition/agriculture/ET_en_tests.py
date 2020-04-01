@@ -17,7 +17,7 @@ class ETenSurveyDefinitionTestCase(unittest.TestCase):
 
         self.assertTrue(isinstance(blocks, list))
 
-        self.assertEqual(len(blocks), 20)
+        self.assertEqual(len(blocks), 19)
 
     def test_get_questions_returns_list_of_questions(self):
         questions = ET_en.get_questions()
@@ -26,4 +26,4 @@ class ETenSurveyDefinitionTestCase(unittest.TestCase):
 
         self.assertTrue(isinstance(questions, list))
 
-        self.assertEqual(len(questions), 66)
+        self.assertEqual(len(questions), 60)

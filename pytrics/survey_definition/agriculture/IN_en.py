@@ -1458,155 +1458,47 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 52,
-            'text': 'Which state does the household reside in?',
-            'label': 'ppi_in_s_state',
+            'text': 'How many household members are there?',
+            'label': 'ppi_in_ipa_hh_size',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Jammu & Kashmir'
+                    'Display': 'Eight or more'
                 },
                 '2': {
-                    'Display': 'Himachal Pradesh'
+                    'Display': 'Seven'
                 },
                 '3': {
-                    'Display': 'Punjab'
+                    'Display': 'Six'
                 },
                 '4': {
-                    'Display': 'Chandigarh'
+                    'Display': 'Five'
                 },
                 '5': {
-                    'Display': 'Uttaranchal'
+                    'Display': 'Four'
                 },
                 '6': {
-                    'Display': 'Haryana'
+                    'Display': 'Three'
                 },
                 '7': {
-                    'Display': 'Delhi'
+                    'Display': 'Two'
                 },
                 '8': {
-                    'Display': 'Rajasthan'
-                },
-                '9': {
-                    'Display': 'Uttar Pradesh'
-                },
-                '10': {
-                    'Display': 'Bihar'
-                },
-                '11': {
-                    'Display': 'Sikkim'
-                },
-                '12': {
-                    'Display': 'Arunachal Pradesh'
-                },
-                '13': {
-                    'Display': 'Nagaland'
-                },
-                '14': {
-                    'Display': 'Manipur'
-                },
-                '15': {
-                    'Display': 'Mizoram'
-                },
-                '16': {
-                    'Display': 'Tripura'
-                },
-                '17': {
-                    'Display': 'Meghalaya'
-                },
-                '18': {
-                    'Display': 'Assam'
-                },
-                '19': {
-                    'Display': 'West Bengal'
-                },
-                '20': {
-                    'Display': 'Jharkhand'
-                },
-                '21': {
-                    'Display': 'Orissa'
-                },
-                '22': {
-                    'Display': 'Chattisgarh'
-                },
-                '23': {
-                    'Display': 'Madhya Pradesh'
-                },
-                '24': {
-                    'Display': 'Gujarat'
-                },
-                '25': {
-                    'Display': 'Daman & Diu'
-                },
-                '26': {
-                    'Display': 'Dadra & Nagar Haveli'
-                },
-                '27': {
-                    'Display': 'Maharastra'
-                },
-                '28': {
-                    'Display': 'Andhra Pradesh'
-                },
-                '29': {
-                    'Display': 'Karnataka'
-                },
-                '30': {
-                    'Display': 'Goa'
-                },
-                '31': {
-                    'Display': 'Lakshadweep'
-                },
-                '32': {
-                    'Display': 'Kerala'
-                },
-                '33': {
-                    'Display': 'Tamil Nadu'
-                },
-                '34': {
-                    'Display': 'Pondicherry'
-                },
-                '35': {
-                    'Display': 'Andaman & Nicobar Islands'
+                    'Display': 'One'
                 }
             },
-            'choice_order': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+            'choice_order': [1, 2, 3, 4, 5, 6, 7, 8],
             'variable_naming': {
-                '1': 'Jammu & Kashmir',
-                '2': 'Himachal Pradesh',
-                '3': 'Punjab',
-                '4': 'Chandigarh',
-                '5': 'Uttaranchal',
-                '6': 'Haryana',
-                '7': 'Delhi',
-                '8': 'Rajasthan',
-                '9': 'Uttar Pradesh',
-                '10': 'Bihar',
-                '11': 'Sikkim',
-                '12': 'Arunachal Pradesh',
-                '13': 'Nagaland',
-                '14': 'Manipur',
-                '15': 'Mizoram',
-                '16': 'Tripura',
-                '17': 'Meghalaya',
-                '18': 'Assam',
-                '19': 'West Bengal',
-                '20': 'Jharkhand',
-                '21': 'Orissa',
-                '22': 'Chattisgarh',
-                '23': 'Madhya Pradesh',
-                '24': 'Gujarat',
-                '25': 'Daman & Diu',
-                '26': 'Dadra & Nagar Haveli',
-                '27': 'Maharastra',
-                '28': 'Andhra Pradesh',
-                '29': 'Karnataka',
-                '30': 'Goa',
-                '31': 'Lakshadweep',
-                '32': 'Kerala',
-                '33': 'Tamil Nadu',
-                '34': 'Pondicherry',
-                '35': 'Andaman & Nicobar Islands',
+                '1': 'Eight or more',
+                '2': 'Seven',
+                '3': 'Six',
+                '4': 'Five',
+                '5': 'Four',
+                '6': 'Three',
+                '7': 'Two',
+                '8': 'One'
             },
             'is_mandatory': False,
             'translations': []
@@ -1614,27 +1506,31 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 53,
-            'text': 'How many members does the household have?',
-            'label': 'ppi_in_s_hhsize',
+            'text': 'What is the general education level of the female head/spouse?',
+            'label': 'ppi_in_ipa_education_level_female_head_spouse',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': '1 to 3'
+                    'Display': 'Primary or below, or not literate'
                 },
                 '2': {
-                    'Display': '4 to 5'
+                    'Display': 'Middle'
                 },
                 '3': {
-                    'Display': '6 or more'
+                    'Display': 'Secondary or higher'
+                },
+                '4': {
+                    'Display': 'No female head/spouse'
                 }
             },
             'choice_order': [1, 2, 3],
             'variable_naming': {
-                '1': '1 to 3',
-                '2': '4 to 5',
-                '3': '6 or more',
+                '1': 'Primary or below, or not literate',
+                '2': 'Middle',
+                '3': 'Secondary or higher',
+                '4': 'No female head/spouse',
             },
             'is_mandatory': False,
             'translations': []
@@ -1642,23 +1538,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 54,
-            'text': 'Did the household consume any milk and milk products during the last 30 days?',
-            'label': 'ppi_in_s_milk',
+            'text': 'Does the household possess a refrigerator?',
+            'label': 'ppi_in_ipa_refrigerator',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
             },
             'is_mandatory': False,
             'translations': []
@@ -1666,23 +1562,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 55,
-            'text': 'Does the household possess an electric fan?',
-            'label': 'ppi_in_s_fan',
+            'text': 'Does your household possess a stove/gas burner?',
+            'label': 'ppi_in_ipa_stove',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
             },
             'is_mandatory': False,
             'translations': []
@@ -1690,23 +1586,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 56,
-            'text': 'Does your household possess a stove/gas burner?',
-            'label': 'ppi_in_stove',
+            'text': 'Does the household possess a pressure cooker/pressure pan?',
+            'label': 'ppi_in_ipa_pressurecooker',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
             },
             'is_mandatory': False,
             'translations': []
@@ -1714,30 +1610,127 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 57,
-            'text': 'Does the household possess a pressure cooker/pressure pan?',
-            'label': 'ppi_in_s_pressurecooker',
+            'text': 'Does the household possess a television?',
+            'label': 'ppi_in_ipa_television',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
             },
             'is_mandatory': False,
             'translations': []
         },
         {
-            'block_number': 18,
+            'block_number': 17,
             'tag_number': 58,
+            'text': 'Does the household possess an electric fan?',
+            'label': 'ppi_in_ipa_fan',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 59,
+            'text': 'Does the household possess an almirah/dressing table?',
+            'label': 'ppi_in_ipa_almirah',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 60,
+            'text': 'Does the household possess a chair, stool, bench or table?',
+            'label': 'ppi_in_ipa_chair_table',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 61,
+            'text': 'Does the household possess a motorcycle, scooter, motor car, or jeep?',
+            'label': 'ppi_in_ipa_motorcycle_car',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+
+        {
+            'block_number': 18,
+            'tag_number': 62,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
             'type': 'MC',
@@ -1767,7 +1760,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 59,
+            'tag_number': 63,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
             'type': 'MC',
@@ -1797,7 +1790,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 60,
+            'tag_number': 64,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
             'type': 'MC',
@@ -1827,7 +1820,7 @@ def get_questions():
         },
         {
             'block_number': 19,
-            'tag_number': 61,
+            'tag_number': 65,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
             'type': 'TE',
@@ -1846,7 +1839,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 62,
+            'tag_number': 66,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
@@ -1856,7 +1849,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 63,
+            'tag_number': 67,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
             'type': 'MC',
@@ -1876,7 +1869,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 64,
+            'tag_number': 68,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
             'type': 'MC',
@@ -1896,7 +1889,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 65,
+            'tag_number': 69,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
             'type': 'MC',
@@ -1916,7 +1909,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 66,
+            'tag_number': 70,
             'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',
             'type': 'TE',

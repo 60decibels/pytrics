@@ -29,8 +29,8 @@ tools = Tools()
 
 
 tools.create_survey_from_definition('My new agriculture survey', 'et')
-Creating Blocks |################################| 20/20
-Creating Questions |################################| 66/66
+Creating Blocks |################################| 19/19
+Creating Questions |################################| 60/60
 ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 
 
@@ -184,7 +184,7 @@ nosetests tests/qualtrics_api/client/question/build_question_display_logic_tests
 - Run all tests, collect coverage of the contents of the code dir, produce html coverage report and enforce minimum percentage, with verbose and colourful output;
 
 ```bash
-nosetests --with-coverage --cover-erase --cover-package=pytrics/. --cover-html --cover-min-percentage=70 -v --rednose
+nosetests --with-coverage --cover-erase --cover-package=pytrics/. --cover-html --cover-min-percentage=80 -v --rednose
 ```
 
 #### Linting the code

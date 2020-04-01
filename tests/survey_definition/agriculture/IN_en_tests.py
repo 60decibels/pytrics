@@ -26,4 +26,4 @@ class ETenSurveyDefinitionTestCase(unittest.TestCase):
 
         self.assertTrue(isinstance(questions, list))
 
-        self.assertEqual(len(questions), 66)
+        self.assertEqual(len(questions), 70)
