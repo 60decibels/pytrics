@@ -1525,7 +1525,7 @@ def get_questions():
                     'Display': 'No female head/spouse'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2, 3, 4],
             'variable_naming': {
                 '1': 'Primary or below, or not literate',
                 '2': 'Middle',

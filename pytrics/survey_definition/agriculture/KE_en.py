@@ -1459,7 +1459,7 @@ def get_questions():
             'block_number': 17,
             'tag_number': 52,
             'text': 'In which county does the household reside in?',
-            'label': 'ppi_ke_s_county',
+            'label': 'ppi_ke_ipa_county',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
@@ -1662,23 +1662,35 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 53,
-            'text': 'Over the past 7 days did the household either purchase/consume/acquire any bread?',
-            'label': 'ppi_ke_s_bread',
+            'text': 'What is the highest educational level that the female household head/spouse reached?',
+            'label': 'ppi_ke_ipa_education_female_head_spouse',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'Pre-primary, none, or other'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Primary'
+                },
+                '3': {
+                    'Display': 'Secondary or post-primary, vocational'
+                },
+                '4': {
+                    'Display': 'College level or higher'
+                },
+                '5': {
+                    'Display': 'There is no female household head/spouse'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3, 4, 5],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'Pre-primary, none, or other',
+                '2': 'Primary',
+                '3': 'Secondary or post-primary, vocational',
+                '4': 'College level or higher',
+                '5': 'There is no female household head/spouse',
             },
             'is_mandatory': False,
             'translations': []
@@ -1686,8 +1698,40 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 54,
-            'text': 'Over the past 7 days did the household either purchase/consumer/acquire any meat or fish?',
-            'label': 'ppi_ke_s_meat',
+            'text': 'What is the highest educational level that any member of the household reached?',
+            'label': 'ppi_ke_ipa_education_household',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Pre-primary, none, or other'
+                },
+                '2': {
+                    'Display': 'Primary'
+                },
+                '3': {
+                    'Display': 'Secondary or post-primary, vocational'
+                },
+                '4': {
+                    'Display': 'College level or higher'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'variable_naming': {
+                '1': 'Pre-primary, none, or other',
+                '2': 'Primary',
+                '3': 'Secondary or post-primary, vocational',
+                '4': 'College level or higher',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 55,
+            'text': 'Over the past 7 days, did the household either purchase/consume/acquire any bread?',
+            'label': 'ppi_ke_ipa_bread',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
@@ -1709,7 +1753,31 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 55,
+            'tag_number': 56,
+            'text': 'Over the past 7 days, did the household either purchase/consume/acquire any meat or fish?',
+            'label': 'ppi_ke_ipa_meat_fish',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Yes'
+                },
+                '2': {
+                    'Display': 'No'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'Yes',
+                '2': 'No',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 57,
             'text': 'Over the past 7 days did the household either purchase/consumer/acquire any ripe bananas?',
             'label': 'ppi_ke_s_bananas',
             'type': 'MC',
@@ -1733,9 +1801,9 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 56,
+            'tag_number': 58,
             'text': 'Does your household own any towels?',
-            'label': 'ppi_ke_s_towels',
+            'label': 'ppi_ke_ipa_towels',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
@@ -1757,9 +1825,61 @@ def get_questions():
         },
         {
             'block_number': 17,
-            'tag_number': 57,
+            'tag_number': 59,
+            'text': 'Does your household own any thermos flasks?',
+            'label': 'ppi_ke_ipa_thermos_flasks',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Yes'
+                },
+                '2': {
+                    'Display': 'No'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'Yes',
+                '2': 'No',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 60,
+            'text': 'What is the predominant wall material of the main dwelling unit?',
+            'label': 'ppi_ke_ipa_wall',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Finished walls (cement, stone with lime/cement, bricks, 8 cement blocks, covered adobe, or wood planks/shingles)'
+                },
+                '2': {
+                    'Display': 'Uncovered adobe, plywood, cardboard, reused wood, or 6 corrugated iron sheets'
+                },
+                '3': {
+                    'Display': 'Natural walls (cane/palm/trunks, grass/reeds, or 0 mud/cow dung), no walls, bamboo with mud, stone with mud, or other'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'Finished walls (cement, stone with lime/cement, bricks, 8 cement blocks, covered adobe, or wood planks/shingles)',
+                '2': 'Uncovered adobe, plywood, cardboard, reused wood, or 6 corrugated iron sheets',
+                '3': 'Natural walls (cane/palm/trunks, grass/reeds, or 0 mud/cow dung), no walls, bamboo with mud, stone with mud, or other',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 61,
             'text': 'What is the predominant floor material of the main dwelling unit?',
-            'label': 'ppi_ke_s_floor',
+            'label': 'ppi_ke_ipa_floor',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
@@ -1781,7 +1901,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 58,
+            'tag_number': 62,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
             'type': 'MC',
@@ -1811,7 +1931,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 59,
+            'tag_number': 63,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
             'type': 'MC',
@@ -1841,7 +1961,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 60,
+            'tag_number': 64,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
             'type': 'MC',
@@ -1871,7 +1991,7 @@ def get_questions():
         },
         {
             'block_number': 19,
-            'tag_number': 61,
+            'tag_number': 65,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
             'type': 'TE',
@@ -1890,7 +2010,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 62,
+            'tag_number': 66,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
@@ -1900,7 +2020,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 63,
+            'tag_number': 67,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
             'type': 'MC',
@@ -1920,7 +2040,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 64,
+            'tag_number': 68,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
             'type': 'MC',
@@ -1940,7 +2060,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 65,
+            'tag_number': 69,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
             'type': 'MC',
@@ -1960,7 +2080,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 66,
+            'tag_number': 70,
             'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',
             'type': 'TE',
