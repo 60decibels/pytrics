@@ -6,21 +6,16 @@ This repository contains code to work with the Qualtrics API and to create surve
 
 ## Usage
 
+Pytrics requires Python 3. Once you have that installed or activated you can install and use Pytrics as described below.
+
 ```bash
-python3 -m venv env
-
-source env/bin/activate
-
-pip3 install -r dev-requirements.txt
-
-pip3 install pytrics
+pip install pytrics
 
 export QUALTRICS_API_AUTH_TOKEN=your_api_token
 
 export QUALTRICS_API_BASE_URL=your_base_api_url
 
 export ABSOLUTE_PATH_TO_DATA_DIR=/absolute/path/on/disk/to/store/output
-
 ```
 
 ```python
@@ -87,8 +82,8 @@ This repository provides country specific templates for [60 Decibels](https://ww
 >>> tools = Tools()
 >>> 
 >>> tools.create_survey_from_definition('My new agriculture survey', 'et')
-Creating Blocks |################################| 20/20
-Creating Questions |################################| 66/66
+Creating Blocks |################################| 19/19
+Creating Questions |################################| 60/60
 ('https://survey.eu.qualtrics.com/jfe/form/SV_123456abcdef', '9223370455272972495', 2, '2020-02-12T08:16:43Z')
 >>>
 ```
@@ -202,118 +197,3 @@ PYTHONPATH=$PYTHONPATH:$(pwd) pylint -f parseable tests/*
 ## License
 
 This code is not actively maintained but it is provided under [the GPLv2 licence](https://opensource.org/licenses/GPL-2.0). Please refer to the `LICENSE.txt` file contained in this repository for full terms of use and ensure you include the LICENSE.txt file in all copies or substantial portions of the Software that you create.
-
-## Further Context
-
-The following section provides more information which may be of use to you when working with Qualtrics and surveys.
-
-### Blocks
-
-Questions within Qualtrics surveys can be organised into sections, or Blocks as they are called.
-
-[Qualtrics documentation](https://www.qualtrics.com/support/survey-platform/survey-module/block-options/block-options-overview/) describes blocks as _“…sets of questions within your survey. Typically, questions are separated into blocks for the purpose of conditionally displaying an entire block of questions, or for randomly presenting entire blocks of questions… Blocks can also be used to organize longer surveys…“_.
-
-We have made use of blocks to organise the survey definitions as they contain many questions and this organisation helps when managing these surveys. We have also implemented some branching display logic within the Information block so as to present relevant questions depending on the answers given by the respondent when they take the survey. Using blocks allows us to more easily contain and manage this display logic.
-
-### Mandatory and Non-Mandatory Questions
-
-We have made some of the questions mandatory, where they relate to metadata around the survey and response, however, the questions asked of respondents are non-mandatory. This is intentional to improve overall response rates.
-
-This can be amended in the survey definitions if so desired but we have found that forcing respondents to answer questions reduces response rates and therefore the amount of data captured.
-
-### Example of Processed Response Data
-
-The processed response data is written to a json file and when read into python this is a list of dictionaries.
-
-Each dictionary in the list represents one response and has a top-level key that is the unique response identifier from Qualtrics.
-
-The value of each response identifier key is a nested dictionary which has key, value pairs holding answers to each question answered by the respondent during the response.
-
-The key, value pairs take the form of `"question_label": ”Answer selected / entered”`
-
-In some cases, where we have multiple choice questions the value may be a list of answers selected by the user:
-
-`"ag_profile_usage_mainperson_mc": ["Another family member"]`
-
-In other cases where some of the multiple choice answers require the respondent to enter text, we extend the question label used for the key with the option chosen and the value is then the entered text, for example:
-
-`"ag_profile_usage_mainperson_mc_another_family_member": "Child"`
-
-A list containing one example response is shown below, note that some question labels do not appear, as these were not answered by the respondent (as we do not enforce mandatory questions in our survey definitions).
-
-```python
-[
-  {
-    "R_5oiKUFi6JyNQ7ol": {
-      "survey_date_TEXT": "2020-02-12",
-      "survey_start_time_TEXT": "16:42",
-      "survey_consent_yn": "Yes",
-      "ag_profile_usage_mainperson_mc": [
-        "Another family member"
-      ],
-      "ag_profile_usage_mainperson_mc_another_family_member": "Child",
-      "acquisition_howhear_mc": "Sensitization event / group meeting / community meeting",
-      "respondent_tenure": [
-        "Months"
-      ],
-      "respondent_tenure_years": "2",
-      "respondent_tenure_months": "3",
-      "prioraccess_yn": "No",
-      "ag_experience_training_understand_mc": "3- Some",
-      "ag_experience_training_useful_mc": "3- Some",
-      "ag_experience_training_apply_mc": "1- None",
-      "ag_experience_training_apply_barriers_mc": [
-        "Recommended materials or equipment not available"
-      ],
-      "ag_experience_training_apply_consider_yn": "Yes",
-      "ag_experience_training_apply_intention_mc": "Yes, maybe",
-      "ag_experience_training_wtp_mc": "Yes, maybe",
-      "nps_company_rating_NPS_GROUP": 1,
-      "nps_company_rating": "6",
-      "nps_company_detractor_oe_TEXT": "actions",
-      "ag_impact_way_of_farming_rating": "Got slightly worse",
-      "ag_impact_way_of_farming_worse_oe_TEXT": "worse",
-      "qol_rating": "Slightly improved",
-      "qol_improve_oe_TEXT": "slightly",
-      "ag_impact_confidence_rating": "No change",
-      "impact_moneyspend_rating": "Slightly increased",
-      "impact_moneyspend_comfort_rating": "Yes, partly",
-      "alternatives_yn": "Maybe",
-      "alternatives_mc": "Open market",
-      "alternatives_comparison_rating": "Worse",
-      "challenges_yn": "Yes",
-      "challenges_oe_TEXT": "setsetset",
-      "challenges_resolve_yn": "No",
-      "retention_improve_oe_TEXT": "qwetwetweqt",
-      "retention_1year_rating": "Yes, maybe",
-      "retention_5year_rating": "Yes, maybe",
-      "respondent_hhsize_num_TEXT": 35,
-      "ag_profile_land_farmedpastyear_num_TEXT": 35,
-      "ag_profile_land_proportioncrop_num_TEXT": 35,
-      "ag_profile_income_hhshare_company_num": "Unable to answer",
-      "ag_profile_income_hhshare_allfarming_num": "Don't have land",
-      "ppi_ng_s_zone": "South East",
-      "ppi_ng_s_hhsize": "5, 6 or 7",
-      "gn_familydynamics_important_decisions_mc": [
-        "Adult Male HH Member"
-      ],
-      "gn_familydynamics_work_burden_oe": [
-        "Other Female"
-      ],
-      "gn_familydynamics_work_burden_oe_other_male": "sdfdsfdsf",
-      "gn_familydynamics_work_burden_oe_other_female": "fdafsdf",
-      "gn_familydynamics_money_from_sale_mc": [
-        "Adult Male HH Member"
-      ],
-      "respondent_age_num_TEXT": 99,
-      "retention_anythingelse_oe_TEXT": "nope",
-      "survey_anonymity_yn": "No, please keep me anonymous",
-      "survey_marketingmaterials_yn": "Yes, you may use",
-      "respondent_gender_mc": "Female",
-      "survey_end_time_TEXT": "14:49"
-    }
-  }
-]
-```
-
-The processed form of the response data links the answers given to the labels of the questions so that this data is more readable and consumable by whatever process or system users of this code are working on.
