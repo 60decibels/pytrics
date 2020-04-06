@@ -1458,23 +1458,43 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 52,
-            'text': 'Does the household reside in Dar es Salaam?',
-            'label': 'ppi_tz_s_dar',
+            'text': 'How many household members are 18-years-old or younger?',
+            'label': 'ppi_tz_s_children_18yrs',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'Six or more'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Five'
+                },
+                '3': {
+                    'Display': 'Four'
+                },
+                '4': {
+                    'Display': 'Three'
+                },
+                '5': {
+                    'Display': 'Two'
+                },
+                '6': {
+                    'Display': 'One'
+                },
+                '7': {
+                    'Display': 'None'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3, 4, 5, 6, 7],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'Six or more',
+                '2': 'Five',
+                '3': 'Four',
+                '4': 'Three',
+                '5': 'Two',
+                '6': 'One',
+                '7': 'None',
             },
             'is_mandatory': False,
             'translations': []
@@ -1482,23 +1502,27 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 53,
-            'text': 'What is the main building material of the floor?',
-            'label': 'ppi_tz_s_floor',
+            'text': 'Are all household members ages 6 to 18 currently in school?',
+            'label': 'ppi_tz_s_childrenschool',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Cement, Ceramic tiles/marumaru, Parquet or polished wood, Vinyl or asphalt strips, Wood planks, Palm/bamboo'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'Earth/sand, Dung, Other'
+                    'Display': 'Yes'
+                },
+                '3': {
+                    'Display': 'No members aged 6 to 18'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3],
             'variable_naming': {
-                '1': 'Cement, Ceramic tiles/marumaru, Parquet or polished wood, Vinyl or asphalt strips, Wood planks, Palm/bamboo',
-                '2': 'Earth/sand, Dung, Other',
+                '1': 'No',
+                '2': 'Yes',
+                '3': 'No members aged 6 to 18'
             },
             'is_mandatory': False,
             'translations': []
@@ -1506,23 +1530,27 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 54,
-            'text': 'What is the building material used for the roof of the main building',
-            'label': 'ppi_tz_s_floor',
+            'text': 'What is the main building material used for the walls of the main building?',
+            'label': 'ppi_tz_s_wall',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Iron sheets, Tiles, Concrete, Asbestos sheets'
+                    'Display': 'Baked bricks'
                 },
                 '2': {
-                    'Display': 'Grass/leaves, Mud and leaves, Other'
+                    'Display': 'Poles and mud, grass, sun-dried bricks, or other'
+                },
+                '3': {
+                    'Display': 'Stones, cement bricks, or timber'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3],
             'variable_naming': {
-                '1': 'Iron sheets, Tiles, Concrete, Asbestos sheets',
-                '2': 'Grass/leaves, Mud and leaves, Other',
+                '1': 'Baked bricks',
+                '2': 'Poles and mud, grass, sun-dried bricks, or other',
+                '3': 'Stones, cement bricks, or timber',
             },
             'is_mandatory': False,
             'translations': []
@@ -1530,23 +1558,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 55,
-            'text': 'What is the main fuel used for cooking?',
-            'label': 'ppi_tz_s_cookingfuel',
+            'text': 'What is the main building material used for the roof of the main building',
+            'label': 'ppi_tz_s_roof',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Electricity, Solar, Generator/private sources, Gas (Industrial/Biogas), Kerosene/Paraffin, Coal, Charcoal'
+                    'Display': 'Grass/leaves, mud and leaves, or other'
                 },
                 '2': {
-                    'Display': 'Firewood, Wood/farm residuals, Other'
+                    'Display': 'Iron sheets, tiles, concrete, or asbestos'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Electricity, Solar, Generator/private sources, Gas (Industrial/Biogas), Kerosene/Paraffin, Coal, Charcoal',
-                '2': 'Firewood, Wood/farm residuals, Other',
+                '1': 'Grass/leaves, mud and leaves, or other',
+                '2': 'Iron sheets, tiles, concrete, or asbestos',
             },
             'is_mandatory': False,
             'translations': []
@@ -1554,23 +1582,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 56,
-            'text': 'Does your household have a charcoal stove?',
-            'label': 'ppi_tz_s_charcoal',
+            'text': 'What is the main fuel used for cooking?',
+            'label': 'ppi_tz_s_cookingfuel',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'Firewood, coal, solar, gas (biogas), wood/farm residuals, or animal residuals'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Charcoal, paraffin, gas (industrial), electricity, generator/private source, or other'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'Firewood, coal, solar, gas (biogas), wood/farm residuals, or animal residuals',
+                '2': 'Charcoal, paraffin, gas (industrial), electricity, generator/private source, or other',
             },
             'is_mandatory': False,
             'translations': []
@@ -1578,34 +1606,134 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 57,
-            'text': 'How many members does the household have?',
-            'label': 'ppi_tz_s_hhsize',
+            'text': 'Does your household have any televisions?',
+            'label': 'ppi_tz_s_tv',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Less than 5'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': '5 or 6'
-                },
-                '3': {
-                    'Display': '7 or more'
+                    'Display': 'Yes'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Less than 5',
-                '2': '5 or 6',
-                '3': '7 or more',
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 58,
+            'text': 'Does your household have any radios, cassette/tape recorders, or hi-fi systems?',
+            'label': 'ppi_tz_s_radio',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 59,
+            'text': 'Does your household have any lanterns?',
+            'label': 'ppi_tz_s_lanterns',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 60,
+            'text': 'Does your household have any tables?',
+            'label': 'ppi_tz_s_tables',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
+                }
+            },
+            'choice_order': [1, 2],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 61,
+            'text': 'If the household cultivated any crops in the last 12 months, does it currently own any bulls, cows, steers, heifers, male calves, female calves, or oxen?',
+            'label': 'ppi_tz_s_ag_cattle',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No crops, and no cattle'
+                },
+                '2': {
+                    'Display': 'No crops, and cattle'
+                },
+                '3': {
+                    'Display': 'Crops, but no cattle'
+                },
+                '4': {
+                    'Display': 'Crops, and cattle'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'variable_naming': {
+                '1': 'No crops, and no cattle',
+                '2': 'No crops, and cattle',
+                '3': 'Crops, but no cattle',
+                '4': 'Crops, and cattle',
             },
             'is_mandatory': False,
             'translations': []
         },
         {
             'block_number': 18,
-            'tag_number': 58,
+            'tag_number': 62,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
             'type': 'MC',
@@ -1635,7 +1763,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 59,
+            'tag_number': 63,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
             'type': 'MC',
@@ -1665,7 +1793,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 60,
+            'tag_number': 64,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
             'type': 'MC',
@@ -1695,7 +1823,7 @@ def get_questions():
         },
         {
             'block_number': 19,
-            'tag_number': 61,
+            'tag_number': 65,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
             'type': 'TE',
@@ -1714,7 +1842,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 62,
+            'tag_number': 66,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
@@ -1724,7 +1852,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 63,
+            'tag_number': 67,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
             'type': 'MC',
@@ -1744,7 +1872,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 64,
+            'tag_number': 68,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
             'type': 'MC',
@@ -1764,7 +1892,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 65,
+            'tag_number': 69,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
             'type': 'MC',
@@ -1784,7 +1912,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 66,
+            'tag_number': 70,
             'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',
             'type': 'TE',

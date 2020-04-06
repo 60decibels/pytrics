@@ -1458,46 +1458,6 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 52,
-            'text': 'Which zone does the household reside in?',
-            'label': 'ppi_ng_s_zone',
-            'type': 'MC',
-            'answer_selector': 'SAVR',
-            'answer_sub_selector': 'TX',
-            'choices': {
-                '1': {
-                    'Display': 'North Central'
-                },
-                '2': {
-                    'Display': 'North East'
-                },
-                '3': {
-                    'Display': 'South East'
-                },
-                '4': {
-                    'Display': 'North West'
-                },
-                '5': {
-                    'Display': 'South South'
-                },
-                '6': {
-                    'Display': 'South West'
-                }
-            },
-            'choice_order': [1, 2, 3, 4, 5, 6],
-            'variable_naming': {
-                '1': 'North Central',
-                '2': 'North East',
-                '3': 'South East',
-                '4': 'North West',
-                '5': 'South South',
-                '6': 'South West',
-            },
-            'is_mandatory': False,
-            'translations': []
-        },
-        {
-            'block_number': 17,
-            'tag_number': 53,
             'text': 'How many members does the household have?',
             'label': 'ppi_ng_s_hhsize',
             'type': 'MC',
@@ -1505,20 +1465,76 @@ def get_questions():
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Less than 5'
+                    'Display': 'Ten or more'
                 },
                 '2': {
-                    'Display': '5, 6 or 7'
+                    'Display': 'Eight or nine'
                 },
                 '3': {
-                    'Display': 'Greater than 7'
+                    'Display': 'Seven'
+                },
+                '4': {
+                    'Display': 'Six'
+                },
+                '5': {
+                    'Display': 'Five'
+                },
+                '6': {
+                    'Display': 'Four'
+                },
+                '7': {
+                    'Display': 'Three'
+                },
+                '8': {
+                    'Display': 'One or two'
                 }
             },
-            'choice_order': [1, 2, 3],
+            'choice_order': [1, 2, 3, 4, 5, 6, 7, 8],
             'variable_naming': {
-                '1': 'Less than 5',
-                '2': '5, 6 or 7',
-                '3': 'Greater than 7',
+                '1': 'Ten or more',
+                '2': 'Eight or nine',
+                '3': 'Seven',
+                '4': 'Six',
+                '5': 'Five',
+                '6': 'Four',
+                '7': 'Three',
+                '8': 'One or two',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 53,
+            'text': 'How many separate rooms do the members of the household occupy (do not count bathrooms, toilets, storerooms, or garage)?',
+            'label': 'ppi_ng_s_rooms',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'One'
+                },
+                '2': {
+                    'Display': 'Two'
+                },
+                '3': {
+                    'Display': 'Three'
+                },
+                '4': {
+                    'Display': 'Four'
+                },
+                '5': {
+                    'Display': 'Five or more'
+                }
+            },
+            'choice_order': [1, 2, 3, 4, 5],
+            'variable_naming': {
+                '1': 'One',
+                '2': 'Two',
+                '3': 'Three',
+                '4': 'Four',
+                '5': 'Five',
             },
             'is_mandatory': False,
             'translations': []
@@ -1526,23 +1542,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 54,
-            'text': 'Within the past 7 days, did the members of this household eat any rice or wheat within the household?',
-            'label': 'ppi_ng_s_rice',
+            'text': 'The roof of the main dwelling is predominantly made of what material?',
+            'label': 'ppi_ng_s_roof',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'Grass, clay tiles, asbestos or plastic sheets, or others'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Concrete, zinc, or iron sheets'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'Grass, clay tiles, asbestos or plastic sheets, or others',
+                '2': 'Concrete, zinc, or iron sheets',
             },
             'is_mandatory': False,
             'translations': []
@@ -1550,23 +1566,31 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 55,
-            'text': 'Within the past 7 days, did the members of this household eat any bread within the household?',
-            'label': 'ppi_ng_s_bread',
+            'text': 'What kind of toilet facility does the household use?',
+            'label': 'ppi_ng_s_toilet',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'None, bush, pail/bucket, or other'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Uncovered pit latrine, or V.I.P. latrine'
+                },
+                '3': {
+                    'Display': 'Covered pit latrine, or toilet on water'
+                },
+                '4': {
+                    'Display': 'Flush to septic tank, or flush to sewage'
                 }
             },
-            'choice_order': [1, 2],
+            'choice_order': [1, 2, 3, 4],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'None, bush, pail/bucket, or other',
+                '2': 'Uncovered pit latrine, or V.I.P. latrine',
+                '3': 'Covered pit latrine, or toilet on water',
+                '4': 'Flush to septic tank, or flush to sewage',
             },
             'is_mandatory': False,
             'translations': []
@@ -1574,23 +1598,23 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 56,
-            'text': 'Within the past 7 days, did the members of this household eat any beef within the household?',
-            'label': 'ppi_ng_s_beef',
+            'text': 'Does the household own a gas cooker, stove (electric, gas table, or kerosene), or microwave?',
+            'label': 'ppi_ng_s_cooker',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'No'
                 },
                 '2': {
-                    'Display': 'No'
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
             },
             'is_mandatory': False,
             'translations': []
@@ -1598,30 +1622,150 @@ def get_questions():
         {
             'block_number': 17,
             'tag_number': 57,
-            'text': 'Does the household own a fan?',
-            'label': 'ppi_ng_s_fan',
+            'text': 'How many mattresses does the household own?',
+            'label': 'ppi_ng_s_mattresses',
             'type': 'MC',
             'answer_selector': 'SAVR',
             'answer_sub_selector': 'TX',
             'choices': {
                 '1': {
-                    'Display': 'Yes'
+                    'Display': 'None'
                 },
                 '2': {
+                    'Display': 'One'
+                },
+                '3': {
+                    'Display': 'Two'
+                },
+                '4': {
+                    'Display': 'Three or more'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'variable_naming': {
+                '1': 'None',
+                '2': 'One',
+                '3': 'Two',
+                '4': 'Three or more'
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 58,
+            'text': 'Does the household own a TV set?',
+            'label': 'ppi_ng_s_tv',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
                     'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Yes'
                 }
             },
             'choice_order': [1, 2],
             'variable_naming': {
-                '1': 'Yes',
-                '2': 'No',
+                '1': 'No',
+                '2': 'Yes',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 59,
+            'text': 'How many mobile phones does the household own?',
+            'label': 'ppi_ng_s_phones_mobile',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'None'
+                },
+                '2': {
+                    'Display': 'One'
+                },
+                '3': {
+                    'Display': 'Two'
+                },
+                '4': {
+                    'Display': 'Three or more'
+                }
+            },
+            'choice_order': [1, 2, 3, 4],
+            'variable_naming': {
+                '1': 'None',
+                '2': 'One',
+                '3': 'Two',
+                '4': 'Three or more'
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 60,
+            'text': 'Does the household own a motorbike or a car or other vehicle?',
+            'label': 'ppi_ng_s_vehicle',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'No'
+                },
+                '2': {
+                    'Display': 'Only motorbike'
+                },
+                '3': {
+                    'Display': 'Car (regardless of motorbike)'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'No',
+                '2': 'Only motorbike',
+                '3': 'Car (regardless of motorbike)',
+            },
+            'is_mandatory': False,
+            'translations': []
+        },
+        {
+            'block_number': 17,
+            'tag_number': 61,
+            'text': 'Does any member of this household practice any agricultural activity such as crop, livestock, or fish farming, or own land that is not cultivated? If so, does the household own any sprayers, wheelbarrows, or sickles?',
+            'label': 'ppi_ng_s_ag_activity',
+            'type': 'MC',
+            'answer_selector': 'SAVR',
+            'answer_sub_selector': 'TX',
+            'choices': {
+                '1': {
+                    'Display': 'Farms or has uncultivated land, but no sprayers, wheelbarrows, or sickles'
+                },
+                '2': {
+                    'Display': 'Farms or has uncultivated land, and has sprayers, wheelbarrows, or sickles'
+                },
+                '3': {
+                    'Display': 'Does not farm nor has uncultivated land'
+                }
+            },
+            'choice_order': [1, 2, 3],
+            'variable_naming': {
+                '1': 'Farms or has uncultivated land, but no sprayers, wheelbarrows, or sickles',
+                '2': 'Farms or has uncultivated land, and has sprayers, wheelbarrows, or sickles',
+                '3': 'Does not farm nor has uncultivated land',
             },
             'is_mandatory': False,
             'translations': []
         },
         {
             'block_number': 18,
-            'tag_number': 58,
+            'tag_number': 62,
             'text': 'Who in your family made most of the important decisions related to {Crop name} crop?',
             'label': 'gn_familydynamics_important_decisions_mc',
             'type': 'MC',
@@ -1651,7 +1795,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 59,
+            'tag_number': 63,
             'text': 'Who in your family did most of the work related to {Crop name} crop?',
             'label': 'gn_familydynamics_work_burden_oe',
             'type': 'MC',
@@ -1681,7 +1825,7 @@ def get_questions():
         },
         {
             'block_number': 18,
-            'tag_number': 60,
+            'tag_number': 64,
             'text': 'Who in your family handled the money that came from {Crop name} crops?',
             'label': 'gn_familydynamics_money_from_sale_mc',
             'type': 'MC',
@@ -1711,7 +1855,7 @@ def get_questions():
         },
         {
             'block_number': 19,
-            'tag_number': 61,
+            'tag_number': 65,
             'text': 'What is your age?',
             'label': 'respondent_age_num',
             'type': 'TE',
@@ -1730,7 +1874,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 62,
+            'tag_number': 66,
             'text': 'Is there anything else you would like to share?',
             'label': 'retention_anythingelse_oe',
             'type': 'TE',
@@ -1740,7 +1884,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 63,
+            'tag_number': 67,
             'text': 'At the beginning of the call I said we would keep your name and details private. Now that you know what you have shared with me today, are you happy for me to share your name and this information with {Company} or would you prefer to remain anonymous?',
             'label': 'survey_anonymity_yn',
             'type': 'MC',
@@ -1760,7 +1904,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 64,
+            'tag_number': 68,
             'text': 'Do you mind if some of your answers and your name are used when making marketing materials?',
             'label': 'survey_marketingmaterials_yn',
             'type': 'MC',
@@ -1780,7 +1924,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 65,
+            'tag_number': 69,
             'text': 'Gender of Respondent',
             'label': 'respondent_gender_mc',
             'type': 'MC',
@@ -1800,7 +1944,7 @@ def get_questions():
         },
         {
             'block_number': 20,
-            'tag_number': 66,
+            'tag_number': 70,
             'text': 'Survey End Time (hh:mm) please enter in 24hr format',
             'label': 'survey_end_time',
             'type': 'TE',
