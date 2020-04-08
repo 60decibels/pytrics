@@ -1,6 +1,6 @@
 '''
 The main entry point to this module, allows for the creation of surveys
-and the retrieval of responses. Also provides some helper functions.
+and the retrieval of responses. Also summarises survey definitions.
 '''
 import json
 import os
