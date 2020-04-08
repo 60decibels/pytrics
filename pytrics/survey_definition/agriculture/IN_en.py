@@ -1922,13 +1922,13 @@ def get_questions():
                     'Logic': {
                         '0': {
                             '0': {
-                                'ChoiceLocator': 'q://QID66/ChoiceTextEntryValue',
+                                'ChoiceLocator': 'q://QID70/ChoiceTextEntryValue',
                                 'Description': 'Matches Regex for hh:mm',
-                                'LeftOperand': 'q://QID66/ChoiceTextEntryValue',
+                                'LeftOperand': 'q://QID70/ChoiceTextEntryValue',
                                 'LogicType': 'Question',
                                 'Operator': 'MatchesRegex',
-                                'QuestionID': 'QID66',
-                                'QuestionIDFromLocator': 'QID66',
+                                'QuestionID': 'QID70',
+                                'QuestionIDFromLocator': 'QID70',
                                 'QuestionIsInLoop': 'no',
                                 'RightOperand': '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$',
                                 'Type': 'Expression'
